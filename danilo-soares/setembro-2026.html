@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Relatório de Tráfego — Danilo Soares</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    @page { size: A4; margin: 12mm 0; }
+
+    html { background: #E8E5E0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: #F7F6F4;
+      color: #181818;
+      -webkit-font-smoothing: antialiased;
+      width: 210mm;
+      margin: 0 auto;
+      padding: 36px 44px 48px;
+    }
+
+    /* ── Header ── */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding-bottom: 18px;
+      border-bottom: 1.5px solid #181818;
+      margin-bottom: 28px;
+    }
+
+    .header-title {
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: -0.025em;
+    }
+
+    .header-meta {
+      text-align: right;
+      font-size: 11px;
+      color: #ABABAB;
+      line-height: 1.7;
+    }
+
+    /* ── Section ── */
+    .section { margin-bottom: 24px; }
+
+    .section-title {
+      font-size: 9px;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: #C0BCB5;
+      margin-bottom: 10px;
+    }
+
+    /* ── KPIs ── */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+    }
+
+    .kpi {
+      background: #fff;
+      padding: 14px 16px;
+      border-radius: 3px;
+    }
+
+    .kpi-label {
+      font-size: 10px;
+      color: #C0BCB5;
+      letter-spacing: 0.03em;
+      margin-bottom: 7px;
+    }
+
+    .kpi-value {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+
+    .kpi-sub {
+      font-size: 10px;
+      color: #D4D0CA;
+      margin-top: 4px;
+    }
+
+    /* ── Cards 2-col ── */
+    .cards-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 3px;
+      padding: 18px 20px;
+      position: relative;
+    }
+
+    .card.winner { border-left: 3px solid #2F7A57; }
+
+    .card-name {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      margin-bottom: 2px;
+      padding-right: 100px;
+    }
+
+    .card-sub {
+      font-size: 10px;
+      color: #C0BCB5;
+      margin-bottom: 16px;
+    }
+
+    .card-metrics { display: flex; }
+    .card-metric { flex: 1; }
+    .card-metric + .card-metric {
+      border-left: 1px solid #F0EDE8;
+      padding-left: 14px;
+    }
+
+    .cm-label {
+      font-size: 9px;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: #C0BCB5;
+      margin-bottom: 5px;
+    }
+
+    .cm-value {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .cm-value.good { color: #2F7A57; }
+
+    .card-metrics-row2 {
+      display: flex;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid #F0EDE8;
+    }
+
+    .card-metrics-row2 .card-metric .cm-value { font-size: 14px; }
+
+    .badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      font-size: 8px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #2F7A57;
+      background: #EBF5EF;
+      border-radius: 20px;
+      padding: 3px 9px;
+    }
+
+    /* ── Creatives Table ── */
+    .table-wrap {
+      background: #fff;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .creatives-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .creatives-table thead tr {
+      border-bottom: 1px solid #F0EDE8;
+    }
+
+    .creatives-table th {
+      font-size: 9px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #C0BCB5;
+      font-weight: 500;
+      padding: 11px 14px;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    .creatives-table td {
+      font-size: 11.5px;
+      padding: 10px 14px;
+      border-bottom: 1px solid #F7F6F4;
+      vertical-align: middle;
+    }
+
+    .creatives-table tbody tr:last-child td { border-bottom: none; }
+
+    .creatives-table tbody tr:hover td { background: #FAFAF9; }
+
+    .creatives-table tbody tr.row-top td:first-child {
+      border-left: 3px solid #2F7A57;
+      padding-left: 11px;
+    }
+
+    .creative-link {
+      color: #181818;
+      text-decoration: none;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .creative-link:hover { color: #2F7A57; }
+
+    .link-arrow {
+      font-size: 10px;
+      color: #C0BCB5;
+      flex-shrink: 0;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 8px;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .tag-f1  { color: #2F7A57; background: #EBF5EF; }
+    .tag-wpp { color: #6B7280; background: #F3F4F6; }
+
+    .cpl-good { color: #2F7A57; font-weight: 700; }
+    .cpl-mid  { color: #181818; font-weight: 600; }
+    .cpl-high { color: #B45309; font-weight: 600; }
+
+    td.num { text-align: right; }
+    th.num { text-align: right; }
+
+    /* ── Insight ── */
+    .insight {
+      background: #181818;
+      border-radius: 3px;
+      padding: 24px 28px;
+    }
+
+    .insight-text {
+      font-size: 13px;
+      line-height: 1.8;
+      color: #D8D4CE;
+    }
+
+    .insight-text strong { color: #fff; }
+
+    /* ── Footer ── */
+    .footer {
+      margin-top: 28px;
+      padding-top: 14px;
+      border-top: 1px solid #E5E2DC;
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      color: #D0CCC6;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-title">Relatório de Tráfego Pago</div>
+    <div class="header-meta">
+      <div>Danilo Soares — Método TMA</div>
+      <div>Meta Ads &middot; 1&ndash;9 set &middot; 2026</div>
+    </div>
+  </div>
+
+  <!-- KPIs -->
+  <div class="section">
+    <div class="section-title">Resultados do período</div>
+    <div class="kpi-row">
+      <div class="kpi">
+        <div class="kpi-label">Investimento total</div>
+        <div class="kpi-value">R$879,16</div>
+        <div class="kpi-sub">R$315,66 TMA Geral · R$563,50 Foz</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Leads gerados</div>
+        <div class="kpi-value">54</div>
+        <div class="kpi-sub">Fisioterapeutas (curso TMA)</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Custo por lead</div>
+        <div class="kpi-value">R$16,28</div>
+        <div class="kpi-sub">Média geral</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Pessoas alcançadas</div>
+        <div class="kpi-value">14.438</div>
+        <div class="kpi-sub">Soma das campanhas</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">CPM médio</div>
+        <div class="kpi-value">R$27,18</div>
+        <div class="kpi-sub">Duas campanhas ativas</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Cliques no link</div>
+        <div class="kpi-value">524</div>
+        <div class="kpi-sub">Total do período</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Campanhas -->
+  <div class="section">
+    <div class="section-title">Comparativo de campanhas</div>
+    <div class="cards-2">
+
+      <div class="card winner">
+        <div class="badge">Melhor CPL</div>
+        <div class="card-name">[LEADS][CBO] — TMA Geral 2026</div>
+        <div class="card-sub">5 criativos ativos &middot; CBO</div>
+        <div class="card-metrics">
+          <div class="card-metric">
+            <div class="cm-label">Investido</div>
+            <div class="cm-value">R$315,66</div>
+          </div>
+          <div class="card-metric">
+            <div class="cm-label">Leads</div>
+            <div class="cm-value good">47</div>
+          </div>
+          <div class="card-metric">
+            <div class="cm-label">Custo / lead</div>
+            <div class="cm-value good">R$6,72</div>
+          </div>
+        </div>
+        <div class="card-metrics card-metrics-row2">
+          <div class="card-metric">
+            <div class="cm-label">CTR</div>
+            <div class="cm-value">4,35%</div>
+          </div>
+          <div class="card-metric">
+            <div class="cm-label">Cliques</div>
+            <div class="cm-value">345</div>
+          </div>
+          <div class="card-metric">
+            <div class="cm-label">CPM</div>
+            <div class="cm-value">R$21,94</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-name">Foz do Iguaçu — Lombar (25-27/09)</div>
+        <div class="card-sub">12 criativos ativos &middot; evento presencial</div>
+        <div class="card-metrics">
+          <div class="card-metric">
+            <div class="cm-label">Investido</div>
+            <div class="cm-value">R$563,50</div>
+          </div>
+          <div class="card-metric">
+            <div class="cm-label">Leads</div>
+            <div class="cm-value">7</div>
+          </div>
+          <div class="card-metric">
+            <div class="cm-label">Custo / lead</div>
+            <div class="cm-value">R$80,50</div>
+          </div>
+        </div>
+        <div class="card-metrics card-metrics-row2">
+          <div class="card-metric">
+            <div class="cm-label">CTR</div>
+            <div class="cm-value">1,65%</div>
+          </div>
+          <div class="card-metric">
+            <div class="cm-label">Cliques</div>
+            <div class="cm-value">179</div>
+          </div>
+          <div class="card-metric">
+            <div class="cm-label">CPM</div>
+            <div class="cm-value">R$31,38</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Criativos -->
+  <div class="section">
+    <div class="section-title">Criativos — ordenado por CPL (menor = melhor)</div>
+    <div class="table-wrap">
+      <table class="creatives-table">
+        <thead>
+          <tr>
+            <th>Criativo</th>
+            <th>Campanha</th>
+            <th class="num">Invest.</th>
+            <th class="num">Leads</th>
+            <th class="num">CPL</th>
+            <th class="num">CTR</th>
+            <th class="num">CPM</th>
+            <th class="num">Impressões</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="row-top">
+            <td><a class="creative-link" href="https://www.instagram.com/p/DZqVFvQADk1/" target="_blank">C8 — Teste Lasègue <span class="link-arrow">↗</span></a></td>
+            <td><span class="tag tag-f1">TMA Geral</span></td>
+            <td class="num">R$229,30</td>
+            <td class="num">35</td>
+            <td class="num cpl-good">R$6,55</td>
+            <td class="num">4,10%</td>
+            <td class="num">R$20,27</td>
+            <td class="num">11.311</td>
+          </tr>
+          <tr>
+            <td><a class="creative-link" href="https://www.instagram.com/p/DZqVFzbAHrX/" target="_blank">C9 — Slump Teste <span class="link-arrow">↗</span></a></td>
+            <td><span class="tag tag-f1">TMA Geral</span></td>
+            <td class="num">R$66,98</td>
+            <td class="num">9</td>
+            <td class="num cpl-good">R$7,44</td>
+            <td class="num">5,60%</td>
+            <td class="num">R$30,00</td>
+            <td class="num">2.233</td>
+          </tr>
+          <tr>
+            <td><a class="creative-link" href="https://www.instagram.com/p/DclyELaAJiY/" target="_blank">AD00 — [Data Curso] 18-20 Set — TMA Lombar Campinas <span class="link-arrow">↗</span></a></td>
+            <td><span class="tag tag-wpp">Foz</span></td>
+            <td class="num">R$15,80</td>
+            <td class="num">1</td>
+            <td class="num cpl-mid">R$15,80</td>
+            <td class="num">1,78%</td>
+            <td class="num">R$23,44</td>
+            <td class="num">674</td>
+          </tr>
+          <tr>
+            <td><a class="creative-link" href="https://www.instagram.com/p/DclyD_AgA6D/" target="_blank">AD09 — Em 3 dias aprenda a tratar — Cópia <span class="link-arrow">↗</span></a></td>
+            <td><span class="tag tag-wpp">Foz</span></td>
+            <td class="num">R$100,82</td>
+            <td class="num">2</td>
+            <td class="num cpl-high">R$50,41</td>
+            <td class="num">0,94%</td>
+            <td class="num">R$27,08</td>
+            <td class="num">3.723</td>
+          </tr>
+          <tr>
+            <td><a class="creative-link" href="https://www.instagram.com/p/DbtAiKuAugT/" target="_blank">AD10 — Manipulação T12-L1 <span class="link-arrow">↗</span></a></td>
+            <td><span class="tag tag-wpp">Foz</span></td>
+            <td class="num">R$173,05</td>
+            <td class="num">2</td>
+            <td class="num cpl-high">R$86,53</td>
+            <td class="num">2,93%</td>
+            <td class="num">R$38,41</td>
+            <td class="num">4.505</td>
+          </tr>
+          <tr>
+            <td><a class="creative-link" href="https://www.instagram.com/p/DclyDjHguVx/" target="_blank">AD01 — Formação Presencial Exclusiva <span class="link-arrow">↗</span></a></td>
+            <td><span class="tag tag-wpp">Foz</span></td>
+            <td class="num">R$124,81</td>
+            <td class="num">1</td>
+            <td class="num cpl-high">R$124,81</td>
+            <td class="num">1,08%</td>
+            <td class="num">R$27,99</td>
+            <td class="num">4.459</td>
+          </tr>
+          <tr class="row-zero">
+            <td><a class="creative-link" href="https://www.instagram.com/p/DbtAhw5gofq/" target="_blank">AD07 — A confiança que o paciente tem em você <span class="link-arrow">↗</span></a></td>
+            <td><span class="tag tag-wpp">Foz</span></td>
+            <td class="num">R$6,07</td>
+            <td class="num">0</td>
+            <td class="num">—</td>
+            <td class="num">0,46%</td>
+            <td class="num">R$28,10</td>
+            <td class="num">216</td>
+          </tr>
+          <tr class="row-zero">
+            <td><a class="creative-link" href="https://www.instagram.com/p/DclyDrCA_us/" target="_blank">AD05 — Os 4 Pilares do Método TMA <span class="link-arrow">↗</span></a></td>
+            <td><span class="tag tag-wpp">Foz</span></td>
+            <td class="num">R$6,18</td>
+            <td class="num">0</td>
+            <td class="num">—</td>
+            <td class="num">1,09%</td>
+            <td class="num">R$33,59</td>
+            <td class="num">184</td>
+          </tr>
+          <tr class="row-zero">
+            <td><a class="creative-link" href="https://www.instagram.com/p/DbtAjRdABi8/" target="_blank">AD02 — Você fatura R$5 mil/mês <span class="link-arrow">↗</span></a></td>
+            <td><span class="tag tag-wpp">Foz</span></td>
+            <td class="num">R$15,75</td>
+            <td class="num">0</td>
+            <td class="num">—</td>
+            <td class="num">1,60%</td>
+            <td class="num">R$42,00</td>
+            <td class="num">375</td>
+          </tr>
+          <tr class="row-zero">
+            <td><a class="creative-link" href="https://www.instagram.com/p/DclyDgvAJCd/" target="_blank">AD03 — Quer dobrar seu faturamento tratando coluna? <span class="link-arrow">↗</span></a></td>
+            <td><span class="tag tag-wpp">Foz</span></td>
+            <td class="num">R$16,44</td>
+            <td class="num">0</td>
+            <td class="num">—</td>
+            <td class="num">0,60%</td>
+            <td class="num">R$24,57</td>
+            <td class="num">669</td>
+          </tr>
+          <tr class="row-zero">
+            <td><a class="creative-link" href="https://www.instagram.com/p/DbtAiDxAv9F/" target="_blank">AD10 — Radiculopatia <span class="link-arrow">↗</span></a></td>
+            <td><span class="tag tag-wpp">Foz</span></td>
+            <td class="num">R$17,33</td>
+            <td class="num">0</td>
+            <td class="num">—</td>
+            <td class="num">3,68%</td>
+            <td class="num">R$33,59</td>
+            <td class="num">516</td>
+          </tr>
+          <tr class="row-zero">
+            <td><a class="creative-link" href="https://www.instagram.com/p/DbtAiGTAA49/" target="_blank">AD10 — Modic <span class="link-arrow">↗</span></a></td>
+            <td><span class="tag tag-wpp">Foz</span></td>
+            <td class="num">R$47,67</td>
+            <td class="num">0</td>
+            <td class="num">—</td>
+            <td class="num">1,58%</td>
+            <td class="num">R$32,81</td>
+            <td class="num">1.453</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Análise -->
+  <div class="section">
+    <div class="section-title">Análise do período</div>
+    <div class="insight">
+      <div class="insight-text">
+        Os primeiros 9 dias de setembro fecharam com <strong>54 leads</strong> ao custo médio de R$16,28, sobre R$879,16 investidos. A <strong>TMA Geral</strong> é disparadamente mais eficiente: R$6,72 por lead contra <strong>R$80,50</strong> da campanha de Foz do Iguaçu — quase 12x mais cara. Dentro da TMA Geral, o <strong>C8 — Teste Lasègue</strong> carrega a campanha sozinho: 73% do investimento dela e 35 dos 47 leads, com o melhor CPL do relatório (R$6,55). O <strong>C9 — Slump Teste</strong> também performa bem (R$7,44, 9 leads) — os dois juntos são hoje o motor de leads da conta. Já a campanha de Foz está estruturalmente cara: <strong>6 dos 12 criativos ativos não geraram nenhum lead</strong>, consumindo R$109,44 juntos (Modic, Radiculopatia, "Quer dobrar seu faturamento", "Você fatura R$5 mil/mês", "4 Pilares" e "A confiança que o paciente tem em você"). O <strong>AD10 — Manipulação T12-L1</strong> é o pior desempenho com volume relevante: R$173,05 investidos por só 2 leads (R$86,53 CPL). Prioridade: pausar os 6 criativos zerados de Foz, escalar o C8 e o C9 da TMA Geral, e testar 2-3 ângulos novos específicos pro evento de Foz antes de continuar investindo nos atuais.
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <span>Danilo Soares &middot; Meta Ads &middot; 1&ndash;9 set 2026</span>
+    <span>Gerado em setembro de 2026</span>
+  </div>
+
+</body>
+</html>
