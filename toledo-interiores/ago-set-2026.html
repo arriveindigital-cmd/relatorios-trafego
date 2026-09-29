@@ -1,0 +1,154 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relatório de Marketing — Toledo Interiores | Agosto e Setembro 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #101012; --card: #18181B; --purple: #52525B; --purple-light: #A1A1AA;
+  --teal: #94A3B8; --green: #4ADE80; --orange: #FB923C; --red: #F87171;
+  --text: #F1F0FF; --text-muted: #8E8E96; --border: #27272A;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: 'Inter', -apple-system, sans-serif; line-height: 1.6; min-width: 900px; }
+.header { background: linear-gradient(135deg, #151517 0%, #1D1D20 40%, #151517 100%); padding: 24px 56px; display: flex; align-items: center; gap: 20px; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
+.header::after { content: ''; position: absolute; top: -60px; right: -60px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(82,82,91,0.15) 0%, transparent 70%); pointer-events: none; }
+.avatar { width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, var(--purple), var(--purple-light)); display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; box-shadow: 0 0 0 4px rgba(82,82,91,0.2); }
+.header-text h1 { font-size: 20px; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
+.header-text h2 { font-size: 13px; font-weight: 400; color: var(--text-muted); margin-top: 2px; }
+.header-text .period-tag { display: inline-block; margin-top: 6px; font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; background: rgba(82,82,91,0.2); color: var(--purple-light); border: 1px solid rgba(82,82,91,0.3); }
+.overview { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: var(--border); border-bottom: 1px solid var(--border); }
+.ov-item { background: var(--card); padding: 24px 28px; }
+.ov-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); font-weight: 600; margin-bottom: 8px; }
+.ov-value { font-size: 26px; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
+.ov-sub { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+.ov-purple .ov-value { color: var(--purple-light); } .ov-green .ov-value { color: var(--green); } .ov-teal .ov-value { color: var(--teal); } .ov-orange .ov-value { color: var(--orange); }
+.delta { font-size: 11px; font-weight: 700; white-space: nowrap; }
+.d-pos { color: var(--green); } .d-neg { color: var(--red); } .d-warn { color: var(--orange); }
+.content { padding: 40px 56px 56px; }
+.section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+.section-header h3 { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: var(--text-muted); white-space: nowrap; }
+.section-line { flex: 1; height: 1px; background: var(--border); }
+.badge { font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.8px; white-space: nowrap; }
+.badge-perf { background: rgba(82,82,91,0.2); color: var(--purple-light); border: 1px solid rgba(82,82,91,0.35); }
+.badge-brand { background: rgba(148,163,184,0.15); color: var(--teal); border: 1px solid rgba(148,163,184,0.3); }
+.badge-off { background: rgba(142,142,150,0.12); color: var(--text-muted); border: 1px solid rgba(142,142,150,0.2); }
+.badge-pause { background: rgba(251,146,60,0.15); color: var(--orange); border: 1px solid rgba(251,146,60,0.3); }
+.campaign-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 20px; }
+.camp-header { padding: 20px 28px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); background: linear-gradient(to right, rgba(82,82,91,0.08) 0%, transparent 100%); }
+.camp-header.brand-grad { background: linear-gradient(to right, rgba(148,163,184,0.07) 0%, transparent 100%); }
+.camp-title { font-size: 15px; font-weight: 700; color: #fff; }
+.camp-sub { font-size: 12px; color: var(--text-muted); margin-top: 3px; }
+.camp-badges { display: flex; gap: 8px; align-items: center; }
+.metrics-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; }
+.met-col { padding: 24px 28px; border-right: 1px solid var(--border); }
+.met-col:last-child { border-right: none; }
+.met-col-title { font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); font-weight: 700; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+.met-col-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.met-item { margin-bottom: 16px; }
+.met-label { font-size: 11px; color: var(--text-muted); margin-bottom: 3px; }
+.met-value { font-size: 20px; font-weight: 700; color: var(--text); }
+.met-value.lg { font-size: 28px; letter-spacing: -0.5px; }
+.met-value.sm { font-size: 14px; font-weight: 500; }
+.met-value.purple { color: var(--purple-light); } .met-value.green { color: var(--green); } .met-value.teal { color: var(--teal); } .met-value.orange { color: var(--orange); }
+.met-vs { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+.ads-section { border-top: 1px solid var(--border); padding: 20px 28px 24px; }
+.ads-heading { font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); font-weight: 700; margin-bottom: 14px; }
+table { width: 100%; border-collapse: collapse; }
+th { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); font-weight: 600; text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); }
+td { font-size: 13px; padding: 10px 10px; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--text); vertical-align: middle; }
+tr:last-child td { border-bottom: none; }
+td.bold { font-weight: 600; } td.green { color: var(--green); font-weight: 600; } td.orange { color: var(--orange); font-weight: 600; } td.muted { color: var(--text-muted); }
+.chip { display: inline-block; font-size: 10px; padding: 2px 7px; border-radius: 4px; font-weight: 700; margin-left: 6px; vertical-align: middle; }
+.chip-best { background: rgba(74,222,128,0.15); color: var(--green); }
+.chip-vol { background: rgba(161,161,170,0.15); color: var(--purple-light); }
+.chip-warn { background: rgba(251,146,60,0.15); color: var(--orange); }
+.note-box { margin: 0 28px 20px; padding: 12px 16px; background: rgba(251,146,60,0.06); border: 1px solid rgba(251,146,60,0.25); border-radius: 10px; font-size: 12px; color: var(--text-muted); }
+.note-box b { color: var(--orange); }
+.ad-link { color: var(--purple-light); text-decoration: none; border-bottom: 1px dotted rgba(161,161,170,0.5); }
+.ad-link:hover { border-bottom-style: solid; }
+.title-link { color: inherit; text-decoration: none; border-bottom: 1px dotted rgba(241,240,255,0.35); }
+.title-link:hover { border-bottom-style: solid; }
+.footer { text-align: center; padding: 28px 56px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 12px; }
+.footer span { color: var(--purple-light); font-weight: 600; }
+.bazar-list { padding: 20px 28px; }
+.bazar-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 13px; }
+.bazar-row:last-child { border-bottom: none; }
+.bazar-row .bname { font-weight: 600; }
+.bazar-row .bmeta { color: var(--text-muted); font-size: 12px; }
+</style></head><body>
+<div class="header"><div class="avatar">🛋️</div><div class="header-text"><h1>Toledo Interiores</h1><h2>Relatório de Marketing Digital</h2><div class="period-tag">Resultados de Agosto e Setembro / 2026</div></div></div>
+<div class="overview">
+  <div class="ov-item ov-purple"><div class="ov-label">Investimento Total</div><div class="ov-value">R$ 7.239,65</div><div class="ov-sub">01/08 a 29/09</div></div>
+  <div class="ov-item "><div class="ov-label">Impressões Totais</div><div class="ov-value">334.854</div><div class="ov-sub">01/08 a 29/09</div></div>
+  <div class="ov-item ov-green"><div class="ov-label">Leads (Site)</div><div class="ov-value">207</div><div class="ov-sub">Custo por lead: R$ 22,07</div></div>
+  <div class="ov-item ov-teal"><div class="ov-label">Visitas ao Perfil</div><div class="ov-value">7.405</div><div class="ov-sub">01/08 a 29/09</div></div>
+  <div class="ov-item ov-orange"><div class="ov-label">Seguidores Ganhos</div><div class="ov-value">3.481</div><div class="ov-sub">Conta inteira · via anúncios: 1.951</div></div>
+</div>
+<div class="content">
+  <div class="section-header"><h3>Performance</h3><div class="badge badge-perf">Conversão</div><div class="section-line"></div></div>
+  
+<div class="campaign-card">
+  <div class="camp-header"><div><div class="camp-title">[Leads][Site] - Local + Engaj - Performance</div><div class="camp-sub">Campanha · Meta Ads | Objetivo: Leads no site | 3 criativos</div></div>
+  <div class="camp-badges"><div class="badge badge-perf">Performance</div><div class="badge badge-off">Ativo</div></div></div>
+  <div class="metrics-grid">
+    <div class="met-col"><div class="met-col-title">Período e Investimento</div>
+      <div class="met-item"><div class="met-label">Período de Veiculação</div><div class="met-value sm ">01/08/2026 — 29/09/2026</div></div>
+      <div class="met-item"><div class="met-label">Valor Investido</div><div class="met-value lg purple">R$ 4.567,61</div></div>
+      <div class="met-item"><div class="met-label">CPM · Cliques no Link</div><div class="met-value sm ">R$ 45,32 &nbsp;·&nbsp; 3.087 cliques</div></div></div>
+    <div class="met-col"><div class="met-col-title">Alcance e Impressões</div>
+      <div class="met-item"><div class="met-label">Impressões</div><div class="met-value lg ">100.795</div></div>
+      <div class="met-item"><div class="met-label">Alcance</div><div class="met-value  ">33.534</div></div>
+      <div class="met-item"><div class="met-label">Frequência · CTR</div><div class="met-value sm ">3,01× &nbsp;·&nbsp; 5,37%</div></div></div>
+    <div class="met-col"><div class="met-col-title">Resultados de Performance</div>
+      <div class="met-item"><div class="met-label">Leads Gerados</div><div class="met-value lg green">207</div></div>
+      <div class="met-item"><div class="met-label">Custo por Lead (média)</div><div class="met-value  green">R$ 22,07</div></div>
+      <div class="met-item"><div class="met-label">Melhor eficiência</div><div class="met-value sm ">Post "Cada Detalhe" · R$ 21,47/lead</div></div></div>
+  </div>
+  <div class="ads-section"><div class="ads-heading">Detalhamento por Criativo</div>
+  <table><thead><tr><th>Criativo</th><th>Investido</th><th>Leads</th><th>Custo / Lead</th><th>CTR</th><th>Impressões</th></tr></thead><tbody>
+  <tr><td class="bold"><a class="ad-link" href="https://www.instagram.com/p/DLh8SFTMc7d/" target="_blank" rel="noopener">Publicação do Instagram: Cada Detalhe</a><span class="chip chip-best">Melhor CPL · Mais Leads</span></td><td>R$ 3.371,56</td><td class="green">157</td><td class="orange">R$ 21,47</td><td>5,24%</td><td>78.125</td></tr>
+  <tr><td class="bold"><a class="ad-link" href="https://www.instagram.com/p/DI_nXclspdV/" target="_blank" rel="noopener">Publicação do Instagram: Um ambiente que traduz</a></td><td>R$ 1.008,26</td><td class="green">42</td><td class="orange">R$ 24,01</td><td>6,14%</td><td>18.539</td></tr>
+  <tr><td class="bold"><a class="ad-link" href="https://www.instagram.com/p/DTijOxUDCWg/" target="_blank" rel="noopener">Publicação do Instagram: Mesa Colossus</a></td><td>R$ 186,39</td><td class="green">8</td><td class="orange">R$ 23,30</td><td>4,26%</td><td>4.109</td></tr>
+  </tbody></table></div>
+</div>
+  
+<div class="campaign-card">
+  <div class="camp-header"><div><div class="camp-title">[Leads] [WPP] - Performance Adv+</div><div class="camp-sub">Campanha · Meta Ads | Objetivo: Conversas no WhatsApp | 4 criativos | início em 11/09</div></div>
+  <div class="camp-badges"><div class="badge badge-perf">Performance</div><div class="badge badge-off">Ativo</div></div></div>
+  <div class="metrics-grid">
+    <div class="met-col"><div class="met-col-title">Período e Investimento</div>
+      <div class="met-item"><div class="met-label">Período de Veiculação</div><div class="met-value sm ">11/09/2026 — 29/09/2026</div></div>
+      <div class="met-item"><div class="met-label">Valor Investido</div><div class="met-value lg purple">R$ 363,47</div></div>
+      <div class="met-item"><div class="met-label">CPM · Cliques no Link</div><div class="met-value sm ">R$ 30,46 &nbsp;·&nbsp; 143 cliques</div></div></div>
+    <div class="met-col"><div class="met-col-title">Alcance e Impressões</div>
+      <div class="met-item"><div class="met-label">Impressões</div><div class="met-value lg ">11.931</div></div>
+      <div class="met-item"><div class="met-label">Alcance</div><div class="met-value  ">5.720</div></div>
+      <div class="met-item"><div class="met-label">Frequência · CTR</div><div class="met-value sm ">2,09× &nbsp;·&nbsp; 3,35%</div></div></div>
+    <div class="met-col"><div class="met-col-title">Resultados de Performance</div>
+      <div class="met-item"><div class="met-label">Conversas Iniciadas</div><div class="met-value lg green">51</div></div>
+      <div class="met-item"><div class="met-label">Custo por Conversa (média)</div><div class="met-value  green">R$ 7,13</div></div>
+      <div class="met-item"><div class="met-label">Melhor eficiência</div><div class="met-value sm ">AD04 Sala de jantar · R$ 6,17/conversa</div></div></div>
+  </div>
+  <div class="ads-section"><div class="ads-heading">Detalhamento por Criativo</div>
+  <table><thead><tr><th>Criativo</th><th>Investido</th><th>Conversas</th><th>Custo / Conversa</th><th>CTR</th><th>Impressões</th></tr></thead><tbody>
+  <tr><td class="bold"><a class="ad-link" href="https://www.instagram.com/p/DdKO20LsZmp/" target="_blank" rel="noopener">AD04 — Sala de jantar</a><span class="chip chip-best">Melhor custo</span></td><td>R$ 166,51</td><td class="green">27</td><td class="orange">R$ 6,17</td><td>3,58%</td><td>5.193</td></tr>
+  <tr><td class="bold"><a class="ad-link" href="https://www.instagram.com/p/DdKO_XBM_LZ/" target="_blank" rel="noopener">AD03 — Montagem ambiente Showroom</a></td><td>R$ 125,99</td><td class="green">20</td><td class="orange">R$ 6,30</td><td>4,73%</td><td>3.722</td></tr>
+  <tr><td class="bold"><a class="ad-link" href="https://www.instagram.com/p/DdKPEkKMfeu/" target="_blank" rel="noopener">AD02 — Portaria do prédio</a></td><td>R$ 68,30</td><td class="green">4</td><td class="orange">R$ 17,08</td><td>1,24%</td><td>2.903</td></tr>
+  <tr><td class="bold"><a class="ad-link" href="https://www.instagram.com/p/DZuyhyUs2rs/" target="_blank" rel="noopener">AD01 — Esse sofá não subia (Curadoria)</a></td><td>R$ 2,83</td><td class="muted">—</td><td class="muted">—</td><td>1,75%</td><td>114</td></tr>
+  </tbody></table></div>
+</div>
+  
+<div class="campaign-card">
+  <div class="camp-header"><div><div class="camp-title">[LEADS] - Vagas Toledo - Muriaé</div><div class="camp-sub">Recrutamento (Auxiliar Administrativo e Consultora de Vendas) · 26/08 a 11/09 · Não é captação de clientes</div></div>
+  <div class="camp-badges"><div class="badge badge-off">Pausada</div></div></div>
+  <div class="bazar-list"><div class="bazar-row"><span class="bname">Total do período</span><span class="bmeta bold" style="color:var(--purple-light);font-weight:700;">R$ 192,29 · 110 candidatos · R$ 1,75/candidato</span></div></div>
+</div>
+  <div class="section-header" style="margin-top:40px;"><h3>Branding</h3><div class="badge badge-brand">Reconhecimento</div><div class="section-line"></div></div>
+  
+<div class="campaign-card">
+  <div class="camp-header brand-grad"><div><div class="camp-title">Posts impulsionados — Visitas ao Perfil do Instagram</div><div class="camp-sub">Objetivo: Visitas ao Perfil · 01/08/2026 — 29/09/2026</div></div>
+  <div class="camp-badges"><div class="badge badge-brand">Branding</div><div class="badge badge-off">Ativo</div></div></div>
+  <div class="ads-section" style="border-top:none"><table><thead><tr><th>Post</th><th>Investido</th><th>Visitas ao Perfil</th><th>Custo / Visita</th><th>CTR</th><th>Novos Seguidores</th></tr></thead><tbody><tr><td class="bold"><a class="ad-link" href="https://www.instagram.com/p/DJ1esGQMBoX/" target="_blank" rel="noopener">Funcional, versátil e…</a></td><td>R$ 558,28</td><td>2.329</td><td>R$ 0,24</td><td>3,95%</td><td class="green">514</td></tr><tr><td class="bold"><a class="ad-link" href="https://www.instagram.com/p/DCUHMpDgXex/" target="_blank" rel="noopener">Aposte na versatilidade e…</a></td><td>R$ 463,49</td><td>1.977</td><td>R$ 0,23</td><td>5,38%</td><td class="green">447</td></tr><tr><td class="bold"><a class="ad-link" href="https://www.instagram.com/p/DWB9nlsDD0T/" target="_blank" rel="noopener">Uma composição que acompanha…</a></td><td>R$ 446,80</td><td>1.526</td><td>R$ 0,29</td><td>3,70%</td><td class="green">331</td></tr><tr><td class="bold"><a class="ad-link" href="https://www.instagram.com/p/DVgZs6gjMd-/" target="_blank" rel="noopener">Montagem mesa – Top Ads</a></td><td>R$ 472,33</td><td>1.308</td><td>R$ 0,36</td><td>3,18%</td><td class="green">247</td></tr><tr><td class="bold"><a class="ad-link" href="https://www.instagram.com/p/DZuyhyUs2rs/" target="_blank" rel="noopener">Esse apartamento foi…</a></td><td>R$ 175,38</td><td>265</td><td>R$ 0,66</td><td>3,21%</td><td class="green">28</td></tr></tbody></table></div>
+</div>
+</div>
+<div class="footer">Relatório gerado por <span>Arrive In Digital</span> &nbsp;·&nbsp; Período: 01/08 a 29/09/2026 &nbsp;·&nbsp; Dados: Meta Ads Manager e Instagram</div>
+</body></html>

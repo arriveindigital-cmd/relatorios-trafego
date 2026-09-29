@@ -1,0 +1,108 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Leads — Toledo Interiores | Ago–Set 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--bg:#101012;--card:#18181B;--line:#27272A;--ink:#F1F0FF;--mut:#8E8E96;--camp:#4ADE80;--bio:#60A5FA;--sem:#FB923C;--soft:#202024}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',-apple-system,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+.top{background:var(--card);border-bottom:1px solid var(--line)}
+.top-in{max-width:1120px;margin:0 auto;padding:34px 32px 30px;display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--mut);margin-bottom:8px}
+.top h1{font-size:30px;font-weight:800;letter-spacing:-.8px;line-height:1.15}
+.top p{font-size:14px;color:var(--mut);margin-top:6px}
+.chip{font-size:12px;font-weight:600;color:var(--mut);background:var(--soft);border:1px solid var(--line);border-radius:999px;padding:6px 14px;white-space:nowrap}
+.wrap{max-width:1120px;margin:0 auto;padding:28px 32px 56px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:14px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 24px}
+.kpi .l{font-size:12px;font-weight:600;color:var(--mut);display:flex;align-items:center;gap:8px}
+.kpi .l i{width:9px;height:9px;border-radius:50%;background:var(--c)}
+.kpi .v{font-size:40px;font-weight:800;letter-spacing:-1.5px;margin-top:6px;line-height:1.1}
+.kpi .s{font-size:12.5px;color:var(--mut);margin-top:4px}
+.row{display:grid;gap:14px;margin-bottom:14px}.r2{grid-template-columns:1fr 1.7fr}.r11{grid-template-columns:1fr 1fr}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;min-width:0}
+.card h2{font-size:15px;font-weight:700;letter-spacing:-.2px}
+.card .sub{font-size:12.5px;color:var(--mut);margin:2px 0 16px}
+.cv{position:relative;height:240px}
+h3.sec{font-size:12px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--mut);margin:30px 2px 12px}
+table{width:100%;border-collapse:collapse}th{font-size:11px;font-weight:600;color:var(--mut);text-align:left;padding:8px 6px;border-bottom:1px solid var(--line)}
+td{font-size:13.5px;padding:12px 6px;border-bottom:1px solid var(--soft)}tr:last-child td{border-bottom:none}
+.r{text-align:right}.good{color:var(--camp);font-weight:700}.warn{color:#FB923C;font-weight:700}.mut{color:var(--mut)}
+.big{display:flex;gap:26px;flex-wrap:wrap;margin-bottom:18px}.big div .n{white-space:nowrap;font-size:24px;font-weight:800;letter-spacing:-.8px}.big div .t{font-size:12px;color:var(--mut)}
+.bar{height:8px;background:var(--soft);border-radius:6px;overflow:hidden}.bar b{display:block;height:100%;border-radius:6px;background:var(--camp)}
+.rec{margin:0 0 16px}.rec .h{display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px}
+.note{font-size:12.5px;color:var(--mut);background:var(--soft);border-radius:10px;padding:11px 14px;margin-top:14px}.note b{color:var(--ink)}
+.legend{display:flex;gap:16px;font-size:12px;color:var(--mut);margin-top:12px}.legend span::before{content:'';display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--c);margin-right:6px}
+.q{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.q div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px}.q .n{font-size:28px;font-weight:800;letter-spacing:-1px}.q .t{font-size:12.5px;color:var(--mut);margin-top:2px}
+.foot{text-align:center;font-size:12px;color:var(--mut);padding:8px 0 40px}
+@media(max-width:900px){.kpis,.q{grid-template-columns:1fr 1fr}.r2,.r11{grid-template-columns:1fr}.top-in,.wrap{padding-left:18px;padding-right:18px}.top h1{font-size:24px}}
+</style></head><body>
+<div class="top"><div class="top-in">
+  <div><div class="eyebrow">Toledo Interiores</div><h1>De onde vêm os leads</h1><p>Campanha, bio do Instagram e demais origens · 13/08 a 29/09/2026</p></div>
+  <div class="chip">Atualizado em 29/09</div>
+</div></div>
+<div class="wrap">
+<div class="kpis" id="kpis"></div>
+<div class="row r2">
+  <div class="card"><h2>Origem</h2><div class="sub">Participação no total de leads</div><div class="cv"><canvas id="cOrig"></canvas></div></div>
+  <div class="card"><h2>Por semana</h2><div class="sub">Leads de cada origem por semana (data de início da semana)</div><div class="cv"><canvas id="cWeek"></canvas></div></div>
+</div>
+
+<h3 class="sec">Campanha</h3>
+<div class="row r11">
+  <div class="card"><h2>Criativos em setembro</h2><div class="sub">Leads contados pelo Meta × leads que chegaram ao CRM</div>
+   <table><thead><tr><th>Criativo</th><th class="r">Invest.</th><th class="r">Meta</th><th class="r">CRM</th><th class="r">CPL Meta</th></tr></thead><tbody id="tcre"></tbody></table></div>
+  <div class="card"><h2>Meta × CRM</h2><div class="sub">Quantos leads do Meta chegaram ao CRM com origem de campanha</div><div id="rec"></div><div class="big" id="cpl" style="margin:8px 0 0"></div></div>
+</div>
+
+<h3 class="sec">Bio do Instagram</h3>
+<div class="row r11">
+  <div class="card"><h2>Leads via bio</h2><div class="sub">Leads da bio (sem custo direto) e seguidores da conta @toledointeriores­muriae</div><div class="big" style="margin-bottom:8px"><div><div class="n">2.089</div><div class="t">seguidores ganhos em agosto</div></div><div><div class="n">1.392</div><div class="t">em setembro (até 28/09)</div></div><div><div class="n">63.850</div><div class="t">seguidores hoje</div></div></div><div class="cv" style="height:170px"><canvas id="cBio"></canvas></div></div>
+  <div class="card"><h2>Atendimento</h2><div class="sub">Leads por vendedora e origem</div><div class="cv" style="height:200px"><canvas id="cVend"></canvas></div></div>
+</div>
+
+<h3 class="sec">CRM e qualidade dos dados</h3>
+<div class="row r11">
+  <div class="card"><h2>Situação no CRM</h2><div class="sub">Export de 29/09 · negócios abertos criados desde 23/09</div><div id="crm"></div></div>
+  <div class="card"><h2>Pontos de atenção</h2><div class="sub">Onde a contagem de leads perde precisão</div><div id="flags"></div></div>
+</div>
+<div class="foot">Arrive In Digital · Fontes: Rota Toledo, CRM Ollow/Moskit e Meta Ads · origem rastreada a partir de 13/08</div>
+</div>
+<script>
+const D={"tot": {"campanha": 126, "bio": 82, "sem": 12}, "uniq": {"campanha": 110, "bio": 72, "sem": 12}, "por_mes": {"8": {"campanha": 57, "bio": 35, "sem": 7}, "9": {"campanha": 69, "bio": 47, "sem": 5}}, "uniq_mes": {"8": {"campanha": 51, "bio": 29, "sem": 7}, "9": {"campanha": 64, "bio": 43, "sem": 5}}, "wlab": ["13/08–16/08", "17/08–23/08", "24/08–30/08", "31/08–06/09", "07/09–13/09", "14/09–20/09", "21/09–27/09", "28/09–29/09"], "wdata": {"campanha": [19, 22, 15, 20, 23, 11, 14, 2], "bio": [4, 19, 10, 18, 1, 6, 20, 4], "sem": [1, 3, 3, 2, 1, 2, 0, 0]}, "vend": {"Anne": {"campanha": 55, "bio": 70, "sem": 8}, "Brenda": {"campanha": 65, "bio": 4, "sem": 4}, "Juliana": {"campanha": 6, "bio": 8, "sem": 0}}, "crm": {"total": 25, "api": 18, "man": 7, "man_val": 106377.0, "api_fase": {"Lead": 18}, "man_lista": [{"fase": "Atendimento", "valor": 1672.0}, {"fase": "Atendimento", "valor": 16062.0}, {"fase": "Atendimento", "valor": 0}, {"fase": "Atendimento", "valor": 23180.0}, {"fase": "Orçamento/Negociação", "valor": 15000.0}, {"fase": "Lead", "valor": 10463.0}, {"fase": "Atendimento", "valor": 40000.0}]}, "q": {"dup_extra": 29, "dup_people": 27, "multi_vend": 13, "typos": 8, "macro": 2, "chatgpt": 1, "sem_utm": 12, "total_rows": 220}, "rec": {"meta_13_31": 84, "rota_13_31": 57, "meta_sep": 93, "rota_sep": 69, "meta_1_12": 30, "spend_13_31": 1423.41}, "sp_site": 3545.38};
+const br=(n,d=0)=>n.toLocaleString('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d});
+const R=n=>'R$ '+br(n,2);
+const C={camp:'#4ADE80',bio:'#60A5FA',sem:'#FB923C'};
+Chart.defaults.color='#8E8E96';Chart.defaults.font.family='Inter';Chart.defaults.font.size=12;Chart.defaults.borderColor='#27272A';
+const T=D.tot,total=T.campanha+T.bio+T.sem,pc=n=>Math.round(n/total*100)+'%';
+const k=[['Leads no total',total,'e-mails únicos: '+(D.uniq.campanha+D.uniq.bio+D.uniq.sem),'#F1F0FF'],['Campanha',T.campanha,pc(T.campanha)+' do total',C.camp],['Bio do Instagram',T.bio,pc(T.bio)+' do total',C.bio],['Sem origem',T.sem,pc(T.sem)+' do total',C.sem]];
+document.getElementById('kpis').innerHTML=k.map(x=>`<div class="kpi"><div class="l"><i style="--c:${x[3]}"></i>${x[0]}</div><div class="v">${x[1]}</div><div class="s">${x[2]}</div></div>`).join('');
+new Chart('cOrig',{type:'doughnut',data:{labels:['Campanha','Bio','Sem origem'],datasets:[{data:[T.campanha,T.bio,T.sem],backgroundColor:[C.camp,C.bio,C.sem],borderColor:'#18181B',borderWidth:3}]},options:{maintainAspectRatio:false,cutout:'68%',plugins:{legend:{position:'bottom',labels:{usePointStyle:true,boxWidth:8}}}}});
+new Chart('cWeek',{type:'bar',data:{labels:D.wlab.map(l=>l.split('–')[0].replace('/',' / ').replace(' / ','/')),datasets:[{label:'Campanha',data:D.wdata.campanha,backgroundColor:C.camp},{label:'Bio',data:D.wdata.bio,backgroundColor:C.bio},{label:'Sem origem',data:D.wdata.sem,backgroundColor:C.sem}]},options:{maintainAspectRatio:false,scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,border:{display:false}}},plugins:{legend:{position:'bottom',labels:{usePointStyle:true,boxWidth:8}}}}});
+// criativos set
+const cre=[['Cada Detalhe',1665.34,77,53],['Um ambiente que traduz',291.23,11,15],['Mesa Colossus',163.84,5,0]];
+document.getElementById('tcre').innerHTML=cre.map(c=>`<tr><td><b>${c[0]}</b></td><td class="r">${R(c[1])}</td><td class="r">${c[2]}</td><td class="r ${c[3]?'good':'warn'}">${c[3]}</td><td class="r">${R(c[1]/c[2])}</td></tr>`).join('');
+// reconc
+const rec=[['13/08 a 31/08',D.rec.meta_13_31,D.rec.rota_13_31],['01/09 a 29/09',D.rec.meta_sep,D.rec.rota_sep]];
+const tm=rec[0][1]+rec[1][1],tr=rec[0][2]+rec[1][2];rec.push(['Total',tm,tr]);
+document.getElementById('rec').innerHTML=rec.map(r=>{const p=r[2]/r[1]*100;return `<div class="rec"><div class="h"><span>${r[0]}</span><span><b>${r[2]}</b> de ${r[1]} <span class="mut">· ${p.toFixed(0)}%</span></span></div><div class="bar"><b style="width:${p}%"></b></div></div>`}).join('');
+document.getElementById('cpl').innerHTML=`<div><div class="n">${R(D.sp_site/tm)}</div><div class="t">CPL no Meta</div></div><div><div class="n good">${R(D.sp_site/tr)}</div><div class="t">CPL dos leads que chegaram ao CRM</div></div>`;
+// bio
+new Chart('cBio',{type:'bar',data:{labels:['Agosto (13–31)','Setembro (01–29)'],datasets:[{label:'Leads',data:[D.por_mes['8'].bio,D.por_mes['9'].bio],backgroundColor:C.bio,borderRadius:8,maxBarThickness:70},{label:'Pessoas únicas',data:[D.uniq_mes['8'].bio,D.uniq_mes['9'].bio],backgroundColor:'#2F3F5C',borderRadius:8,maxBarThickness:70}]},options:{maintainAspectRatio:false,scales:{x:{grid:{display:false}},y:{border:{display:false}}},plugins:{legend:{position:'bottom',labels:{usePointStyle:true,boxWidth:8}}}}});
+const vn=Object.keys(D.vend);
+new Chart('cVend',{type:'bar',data:{labels:vn,datasets:[{label:'Campanha',data:vn.map(v=>D.vend[v].campanha),backgroundColor:C.camp},{label:'Bio',data:vn.map(v=>D.vend[v].bio),backgroundColor:C.bio},{label:'Sem origem',data:vn.map(v=>D.vend[v].sem),backgroundColor:C.sem}]},options:{indexAxis:'y',layout:{padding:{left:26}},maintainAspectRatio:false,scales:{x:{stacked:true,border:{display:false}},y:{stacked:true,grid:{display:false}}},plugins:{legend:{position:'bottom',labels:{usePointStyle:true,boxWidth:8}}}}});
+// crm
+const cr=D.crm;const fs={};cr.man_lista.forEach(x=>fs[x.fase]=(fs[x.fase]||0)+1);
+document.getElementById('crm').innerHTML=`<div class="big"><div><div class="n">${cr.api}</div><div class="t">leads do site, todos na fase “Lead”</div></div><div><div class="n">${cr.man}</div><div class="t">negócios criados à mão</div></div><div><div class="n">R$ ${Math.round(cr.man_val/1000)} mil</div><div class="t">em oportunidades</div></div></div>
+<table><tbody>${Object.entries(fs).map(([f,n])=>`<tr><td>${f}</td><td class="r">${n}</td></tr>`).join('')}</tbody></table>
+<div class="note">Nenhum lead do site avançou de fase neste export; o valor em negociação está nos negócios criados manualmente. Vale confirmar se o atendimento acontece fora do CRM.</div>`;
+const q=D.q;
+document.getElementById('flags').innerHTML=`<table><tbody>
+<tr><td>Pessoas com cadastro repetido</td><td class="r"><b>${q.dup_people}</b></td></tr>
+<tr><td>Pessoas atendidas por 2 vendedoras</td><td class="r"><b>${q.multi_vend}</b></td></tr>
+<tr><td>Leads sem origem (sem UTM)</td><td class="r"><b>${q.sem_utm}</b></td></tr>
+<tr><td>Leads com UTM quebrada</td><td class="r"><b>${q.macro}</b></td></tr>
+<tr><td>E-mails com erro de digitação</td><td class="r"><b>${q.typos}</b></td></tr>
+<tr><td>Telefones inválidos</td><td class="r"><b>2</b></td></tr></tbody></table>
+<div class="note">O criativo <b>Mesa Colossus</b> tem 5 leads no Meta e nenhum no CRM: provável link sem UTM.</div>`;
+</script></body></html>
