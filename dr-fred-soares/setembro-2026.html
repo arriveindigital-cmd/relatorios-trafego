@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Relatório de Tráfego — Dr. Frederico Soares</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    @page { size: A4; margin: 12mm 0; }
+
+    html { background: #E8E5E0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: #F7F6F4;
+      color: #181818;
+      -webkit-font-smoothing: antialiased;
+      width: 210mm;
+      margin: 0 auto;
+      padding: 36px 44px 48px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding-bottom: 18px;
+      border-bottom: 1.5px solid #353552;
+      margin-bottom: 28px;
+    }
+
+    .header-title { font-size: 20px; font-weight: 600; letter-spacing: -0.025em; color: #353552; }
+    .header-meta { text-align: right; font-size: 11px; color: #ABABAB; line-height: 1.7; }
+
+    .section { margin-bottom: 24px; }
+
+    .section-title {
+      font-size: 9px; letter-spacing: 0.13em; text-transform: uppercase; color: #C0BCB5; margin-bottom: 10px;
+    }
+
+    .kpi-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+
+    .kpi { background: #fff; padding: 14px 16px; border-radius: 3px; }
+    .kpi-label { font-size: 10px; color: #C0BCB5; letter-spacing: 0.03em; margin-bottom: 7px; }
+    .kpi-value { font-size: 22px; font-weight: 700; letter-spacing: -0.04em; line-height: 1; color: #353552; }
+    .kpi-sub { font-size: 10px; color: #D4D0CA; margin-top: 4px; }
+    .kpi-growth { font-size: 10px; color: #2F7A57; font-weight: 600; margin-top: 4px; }
+
+    .ig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+    .ig-card { background: #fff; border-radius: 3px; padding: 18px 20px; }
+    .ig-card-label { font-size: 12px; color: #4A4A4A; font-weight: 500; margin-bottom: 10px; }
+    .ig-card-value-row { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+    .ig-value { font-size: 26px; font-weight: 700; letter-spacing: -0.03em; color: #181818; line-height: 1; }
+    .ig-growth { font-size: 12.5px; font-weight: 600; color: #2F7A57; }
+    .ig-sub { font-size: 10px; color: #C0BCB5; margin-top: 8px; }
+
+    .cards-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+    .card { background: #fff; border-radius: 3px; padding: 18px 20px; position: relative; }
+    .card.winner { border-left: 3px solid #2F7A57; }
+    .card.brand { border-left: 3px solid #353552; }
+
+    .card-name { font-size: 13px; font-weight: 600; letter-spacing: -0.01em; color: #353552; margin-bottom: 2px; }
+    .card-sub { font-size: 10px; color: #C0BCB5; margin-bottom: 16px; }
+
+    .card-metrics { display: flex; }
+    .card-metric { flex: 1; }
+    .card-metric + .card-metric { border-left: 1px solid #F0EDE8; padding-left: 14px; }
+
+    .cm-label { font-size: 9px; letter-spacing: 0.07em; text-transform: uppercase; color: #C0BCB5; margin-bottom: 5px; }
+    .cm-value { font-size: 18px; font-weight: 600; letter-spacing: -0.02em; color: #181818; }
+    .cm-value.good { color: #2F7A57; }
+    .cm-value.brand { color: #353552; }
+
+    .card-metrics-row2 { display: flex; margin-top: 12px; padding-top: 12px; border-top: 1px solid #F0EDE8; }
+    .card-metrics-row2 .card-metric .cm-value { font-size: 14px; }
+
+    .badge {
+      position: absolute; top: 14px; right: 14px; font-size: 8px; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: #2F7A57; background: #EBF5EF; border-radius: 20px; padding: 3px 9px;
+    }
+    .badge.brand { color: #353552; background: #ECEBF1; }
+
+    .table-wrap { background: #fff; border-radius: 3px; overflow: hidden; }
+    .creatives-table { width: 100%; border-collapse: collapse; }
+    .creatives-table thead tr { border-bottom: 1px solid #F0EDE8; }
+    .creatives-table th {
+      font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: #C0BCB5;
+      font-weight: 500; padding: 11px 14px; text-align: left; white-space: nowrap;
+    }
+    .creatives-table td { font-size: 11.5px; padding: 10px 14px; border-bottom: 1px solid #F7F6F4; vertical-align: middle; }
+    .creatives-table tbody tr:last-child td { border-bottom: none; }
+    .creatives-table tbody tr:hover td { background: #FAFAF9; }
+    .creatives-table tbody tr.row-top td:first-child { border-left: 3px solid #2F7A57; padding-left: 11px; }
+    .creatives-table tbody tr.row-zero td { color: #C0BCB5; }
+
+    .creative-link {
+      color: #181818; text-decoration: none; font-weight: 500; display: inline-flex; align-items: center; gap: 4px;
+    }
+    .creative-link:hover { color: #2F7A57; }
+    .link-arrow { font-size: 10px; color: #C0BCB5; flex-shrink: 0; }
+
+    .tag {
+      display: inline-block; font-size: 8px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase;
+      padding: 2px 8px; border-radius: 20px; white-space: nowrap;
+    }
+    .tag-msg { color: #2F7A57; background: #EBF5EF; }
+    .tag-eng { color: #353552; background: #ECEBF1; }
+
+    .cpl-good { color: #2F7A57; font-weight: 700; }
+    .cpl-mid  { color: #181818; font-weight: 600; }
+    .cpl-high { color: #B45309; font-weight: 600; }
+
+    td.num { text-align: right; }
+    th.num { text-align: right; }
+
+    .insight { background: #353552; border-radius: 3px; padding: 24px 28px; }
+    .insight-text { font-size: 13px; line-height: 1.8; color: #D8D5E0; }
+    .insight-text strong { color: #fff; }
+
+    .footer {
+      margin-top: 28px; padding-top: 14px; border-top: 1px solid #E5E2DC;
+      display: flex; justify-content: space-between; font-size: 10px; color: #D0CCC6;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="header-title">Relatório de Tráfego Pago</div>
+    <div class="header-meta">
+      <div>Dr. Frederico Soares</div>
+      <div>Meta Ads &middot; 1&ndash;30 set &middot; 2026</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Instagram orgânico — setembro (vs. agosto)</div>
+    <div class="ig-grid">
+      <div class="ig-card">
+        <div class="ig-card-label">Visualizações</div>
+        <div class="ig-card-value-row">
+          <div class="ig-value">28,1 mil</div>
+          <div class="ig-growth">↑ 2,0%</div>
+        </div>
+      </div>
+      <div class="ig-card">
+        <div class="ig-card-label">Alcance</div>
+        <div class="ig-card-value-row">
+          <div class="ig-value">12,2 mil</div>
+          <div class="ig-growth">↑ 47,8%</div>
+        </div>
+      </div>
+      <div class="ig-card">
+        <div class="ig-card-label">Interações com o conteúdo</div>
+        <div class="ig-card-value-row">
+          <div class="ig-value">404</div>
+          <div class="ig-growth">↑ 12,5%</div>
+        </div>
+      </div>
+      <div class="ig-card">
+        <div class="ig-card-label">Cliques no link</div>
+        <div class="ig-card-value-row">
+          <div class="ig-value">22</div>
+          <div class="ig-growth">↑ 15,8%</div>
+        </div>
+      </div>
+      <div class="ig-card">
+        <div class="ig-card-label">Visitas ao perfil</div>
+        <div class="ig-card-value-row">
+          <div class="ig-value">392</div>
+          <div class="ig-growth">↑ 41,5%</div>
+        </div>
+      </div>
+      <div class="ig-card">
+        <div class="ig-card-label">Novos seguidores</div>
+        <div class="ig-card-value-row">
+          <div class="ig-value">—</div>
+        </div>
+        <div class="ig-sub">Fora da janela de 30 dias da API do Instagram — checar no Meta Business Suite se precisar do número exato</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Resultados do período &mdash; tráfego pago</div>
+    <div class="kpi-row">
+      <div class="kpi">
+        <div class="kpi-label">Investimento total</div>
+        <div class="kpi-value">R$602,42</div>
+        <div class="kpi-sub">Uma campanha ativa</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Conversas geradas</div>
+        <div class="kpi-value">29</div>
+        <div class="kpi-sub">Via WhatsApp</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Custo por conversa</div>
+        <div class="kpi-value">R$20,77</div>
+        <div class="kpi-sub">Campanha de conversas</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Pessoas alcançadas</div>
+        <div class="kpi-value">9.570</div>
+        <div class="kpi-sub">Alcance da campanha</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">CPM médio</div>
+        <div class="kpi-value">R$31,31</div>
+        <div class="kpi-sub">Custo por mil impressões</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Cliques no link</div>
+        <div class="kpi-value">244</div>
+        <div class="kpi-sub">Total do período</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Campanha ativa</div>
+    <div class="cards-2">
+      <div class="card winner" style="grid-column: span 2;">
+        <div class="badge">Única campanha do mês</div>
+        <div class="card-name">[ENG] [WPP] - [Adv+ Local] [Ads Posts]</div>
+        <div class="card-sub">5 criativos testados &middot; Advantage+ Local</div>
+        <div class="card-metrics">
+          <div class="card-metric">
+            <div class="cm-label">Investido</div>
+            <div class="cm-value">R$602,42</div>
+          </div>
+          <div class="card-metric">
+            <div class="cm-label">Conversas</div>
+            <div class="cm-value good">29</div>
+          </div>
+          <div class="card-metric">
+            <div class="cm-label">Custo / conv.</div>
+            <div class="cm-value good">R$20,77</div>
+          </div>
+        </div>
+        <div class="card-metrics card-metrics-row2">
+          <div class="card-metric">
+            <div class="cm-label">CTR</div>
+            <div class="cm-value">1,27%</div>
+          </div>
+          <div class="card-metric">
+            <div class="cm-label">Cliques</div>
+            <div class="cm-value">244</div>
+          </div>
+          <div class="card-metric">
+            <div class="cm-label">CPM</div>
+            <div class="cm-value">R$31,31</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Criativos ativos — ordenado por CPL (menor = melhor)</div>
+    <div class="table-wrap">
+      <table class="creatives-table">
+        <thead>
+          <tr>
+            <th>Criativo</th>
+            <th>Campanha</th>
+            <th class="num">Invest.</th>
+            <th class="num">Conv.</th>
+            <th class="num">CPL</th>
+            <th class="num">CTR</th>
+            <th class="num">CPM</th>
+            <th class="num">Impressões</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="row-top">
+            <td><a class="creative-link" href="https://www.instagram.com/p/DZ70DMIgyyU/" target="_blank">AD03 — A coluna do Marcelo travou do nada. <span class="link-arrow">↗</span></a></td>
+            <td><span class="tag tag-msg">Conversas</span></td>
+            <td class="num">R$434,78</td>
+            <td class="num">24</td>
+            <td class="num cpl-good">R$18,12</td>
+            <td class="num">1,25%</td>
+            <td class="num">R$31,72</td>
+            <td class="num">13.706</td>
+          </tr>
+          <tr>
+            <td><a class="creative-link" href="https://www.instagram.com/p/DZ70CUDAo8h/" target="_blank">AD04 — A dor nem sempre começa onde aparece. <span class="link-arrow">↗</span></a></td>
+            <td><span class="tag tag-msg">Conversas</span></td>
+            <td class="num">R$98,34</td>
+            <td class="num">3</td>
+            <td class="num cpl-mid">R$32,78</td>
+            <td class="num">1,41%</td>
+            <td class="num">R$27,76</td>
+            <td class="num">3.543</td>
+          </tr>
+          <tr>
+            <td><a class="creative-link" href="https://www.instagram.com/p/DZ70CqdgPQc/" target="_blank">AD01 — Quem sou eu? <span class="link-arrow">↗</span></a></td>
+            <td><span class="tag tag-msg">Conversas</span></td>
+            <td class="num">R$28,32</td>
+            <td class="num">2</td>
+            <td class="num cpl-mid">R$14,16</td>
+            <td class="num">1,56%</td>
+            <td class="num">R$31,61</td>
+            <td class="num">896</td>
+          </tr>
+          <tr class="row-zero">
+            <td><a class="creative-link" href="https://www.instagram.com/p/DZ70CdrAFCE/" target="_blank">AD02 — A dor na coluna que melhora e volta não é falta de tratamento. <span class="link-arrow">↗</span></a></td>
+            <td><span class="tag tag-msg">Conversas</span></td>
+            <td class="num">R$20,61</td>
+            <td class="num">0</td>
+            <td class="num">—</td>
+            <td class="num">1,32%</td>
+            <td class="num">R$38,74</td>
+            <td class="num">532</td>
+          </tr>
+          <tr class="row-zero">
+            <td><a class="creative-link" href="https://www.instagram.com/p/DZ70CqDAOp7/" target="_blank">AD05 — Você evita tratar a coluna por medo do Estalo? <span class="link-arrow">↗</span></a></td>
+            <td><span class="tag tag-msg">Conversas</span></td>
+            <td class="num">R$20,37</td>
+            <td class="num">0</td>
+            <td class="num">—</td>
+            <td class="num">0,18%</td>
+            <td class="num">R$36,05</td>
+            <td class="num">565</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Análise do período</div>
+    <div class="insight">
+      <div class="insight-text">
+        Setembro fechou com <strong>29 conversas</strong> ao custo médio de <strong>R$20,77</strong> — bem acima dos R$14,98 de julho. A causa é visível na tabela: o <strong>AD03 — A coluna do Marcelo travou do nada</strong> concentrou sozinho <strong>72%</strong> do orçamento do mês (R$434,78) e, mesmo sendo o criativo com mais volume (24 conversas), rodou a um CPL de R$18,12 — pior do que o R$15,63 que ele mesmo entregou em julho, sinal de fadiga de público pelo uso contínuo do mesmo criativo por dois meses seguidos. Os dois criativos que não geraram nenhuma conversa (<strong>AD02</strong> e <strong>AD05</strong>) já tinham ficado a zero em julho também — ambos devem ser pausados e substituídos por ângulos novos. Do lado orgânico, o mês foi positivo: alcance subiu <strong>47,8%</strong> e visitas ao perfil <strong>41,5%</strong> frente a agosto, mostrando que o perfil continua esquentando mesmo com o tráfego pago mais caro. Prioridade para outubro: trocar o criativo principal (o AD03 já rodou 2 meses seguidos como top gasto), pausar AD02 e AD05, e testar 2-3 ângulos novos para recuperar o CPL para a faixa de R$15.
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>Dr. Frederico Soares &middot; Meta Ads &middot; 1&ndash;30 set 2026</span>
+    <span>Gerado em outubro de 2026</span>
+  </div>
+
+</body>
+</html>
