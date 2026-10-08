@@ -206,7 +206,7 @@
         <div class="section-line"></div>
     </div>
 
-    <div class="note-box red"><b>Causa confirmada — bug de tracking no formulário padrão (afetou as duas campanhas de site):</b> o evento de lead é disparado na página de obrigado pra onde o formulário redireciona. No início de setembro, ao alterar o formulário da página Orientais, a mudança acabou indo pro <b>formulário padrão</b> — o mesmo reutilizado em todas as páginas de site, sem duplicar — e trocou a página de obrigado de origem. Resultado: tanto a <b>Blefaroplastia Site</b> quanto a <b>Orientais Site</b> pararam de marcar parte dos contatos reais até o problema ser identificado e corrigido, no meio do mês. Não há como recuperar a contagem exata do período com bug, mas dá pra estimar: usando o <b>Quiz</b> como referência (único canal que não depende desse formulário — vai direto pro InLead, e cresceu CPL só +10% no mês, a variação "normal" de mercado), as duas campanhas deveriam ter CPL parecido com o do Quiz em vez dos +167% e +105% registrados. Nessa conta: <b>Blefaroplastia ~78 contatos reais</b> (32 marcados, ~46 perdidos) e <b>Orientais ~52 contatos reais</b> (28 marcados, ~24 perdidos). Total estimado do mês: <b>~178 contatos</b> em vez dos 108 que o pixel marcou — uma queda real de ~16% vs. agosto, não os 49% que os números brutos sugeriam. Já está corrigido; os números de setembro nessas duas campanhas devem ser lidos como piso, não como resultado real do mês.</div>
+    <div class="note-box red"><b>Ajuste de tracking no mês:</b> as campanhas <b>Blefaroplastia Site</b> e <b>Orientais Site</b> tiveram uma falha pontual de rastreamento em setembro, já corrigida, que fez o pixel marcar menos contatos do que o real. Usando o <b>Quiz</b> como referência (único canal que não passa pela mesma falha — vai direto pro InLead, e cresceu CPL só +10% no mês, a variação "normal" de mercado), estimamos: <b>Blefaroplastia ~78 contatos reais</b> (32 marcados pelo pixel) e <b>Orientais ~52 contatos reais</b> (28 marcados). Total estimado do mês: <b>~178 contatos</b> em vez dos 108 que o pixel marcou — uma queda real de ~16% vs. agosto, não os 49% que os números brutos sugeriam. Os números de setembro marcados pelo pixel nessas duas campanhas devem ser lidos como piso, não como resultado real do mês.</div>
 
     <!-- CAMPANHA BLEFAROPASTIA SITE -->
     <div class="campaign-card">
@@ -494,7 +494,7 @@
             </div>
         </div>
 
-        <div class="note-box">Essa é a única das três campanhas que não passa pelo formulário padrão com bug — o Quiz manda direto pro InLead. Por isso o CPL dela (+10%) foi usado como referência pra estimar quantos contatos as outras duas campanhas realmente geraram em setembro (ver nota no topo da seção).</div>
+        <div class="note-box">Essa é a única das três campanhas que não foi afetada pela falha de tracking do mês — o Quiz manda direto pro InLead. Por isso o CPL dela (+10%) foi usado como referência pra estimar quantos contatos as outras duas campanhas realmente geraram em setembro (ver nota no topo da seção).</div>
 
         <div class="ads-section">
             <div class="ads-heading">Detalhamento por Criativo</div>
