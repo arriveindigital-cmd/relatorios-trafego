@@ -182,8 +182,8 @@
     </div>
     <div class="ov-item ov-green">
         <div class="ov-label">Contatos (Leads)</div>
-        <div class="ov-value">108 <span style="font-size:13px; color: var(--text-muted);">(~132 real est.)</span></div>
-        <div class="ov-sub">Agosto: 211 &nbsp;<span class="delta d-neg">↓49% marcado / ↓37% estimado</span></div>
+        <div class="ov-value">108 <span style="font-size:13px; color: var(--text-muted);">(~178 real est.)</span></div>
+        <div class="ov-sub">Agosto: 211 &nbsp;<span class="delta d-neg">↓49% marcado / ↓16% estimado</span></div>
     </div>
     <div class="ov-item ov-teal">
         <div class="ov-label">Visitas ao Perfil</div>
@@ -206,7 +206,7 @@
         <div class="section-line"></div>
     </div>
 
-    <div class="note-box red"><b>Causa confirmada — bug de tracking na página Orientais:</b> no início de setembro foi criada a nova página da campanha Orientais, reaproveitando o mesmo modelo de formulário da página padrão (Blefaroplastia) — só que esse formulário trocado não estava integrado ao pixel. Resultado: a campanha <b>Orientais Site</b> parou de marcar parte dos contatos reais até o problema ser identificado e corrigido, no meio do mês. Não há como recuperar a contagem exata do período com bug, mas dá pra estimar: usando o <b>Quiz</b> como referência (único canal que não passa pelo pixel "Contato" — vai direto pro InLead, e cresceu CPL só +10% no mês, o que é a variação "normal" de mercado), a Orientais deveria ter um CPL parecido com o do Quiz em vez do +105% registrado. Nessa conta, a campanha teria gerado <b>~52 contatos reais</b> em vez dos 28 marcados pelo pixel — ou seja, cerca de <b>24 contatos não capturados</b> pelo bug. Isso já está corrigido, mas o número de setembro na campanha Orientais deve ser lido como piso, não como o resultado real do mês.<br><br><b>Em aberto:</b> a campanha <b>Blefaroplastia Site</b> teve um salto de CPL de magnitude parecida (+167%) e não foi mencionada como afetada pelo bug — se o mesmo problema tiver batido nela também (ex: formulário trocado nessa página por engano), a mesma conta sugeriria ~78 contatos reais em vez dos 32 marcados. Vale confirmar com quem mexeu nas páginas se a Blefaroplastia também foi tocada nesse período.</div>
+    <div class="note-box red"><b>Causa confirmada — bug de tracking no formulário padrão (afetou as duas campanhas de site):</b> o evento de lead é disparado na página de obrigado pra onde o formulário redireciona. No início de setembro, ao alterar o formulário da página Orientais, a mudança acabou indo pro <b>formulário padrão</b> — o mesmo reutilizado em todas as páginas de site, sem duplicar — e trocou a página de obrigado de origem. Resultado: tanto a <b>Blefaroplastia Site</b> quanto a <b>Orientais Site</b> pararam de marcar parte dos contatos reais até o problema ser identificado e corrigido, no meio do mês. Não há como recuperar a contagem exata do período com bug, mas dá pra estimar: usando o <b>Quiz</b> como referência (único canal que não depende desse formulário — vai direto pro InLead, e cresceu CPL só +10% no mês, a variação "normal" de mercado), as duas campanhas deveriam ter CPL parecido com o do Quiz em vez dos +167% e +105% registrados. Nessa conta: <b>Blefaroplastia ~78 contatos reais</b> (32 marcados, ~46 perdidos) e <b>Orientais ~52 contatos reais</b> (28 marcados, ~24 perdidos). Total estimado do mês: <b>~178 contatos</b> em vez dos 108 que o pixel marcou — uma queda real de ~16% vs. agosto, não os 49% que os números brutos sugeriam. Já está corrigido; os números de setembro nessas duas campanhas devem ser lidos como piso, não como resultado real do mês.</div>
 
     <!-- CAMPANHA BLEFAROPASTIA SITE -->
     <div class="campaign-card">
@@ -260,18 +260,19 @@
             <div class="met-col">
                 <div class="met-col-title">Resultados de Performance</div>
                 <div class="met-item">
-                    <div class="met-label">Contatos Gerados</div>
-                    <div class="met-value lg red">32</div>
+                    <div class="met-label">Contatos Gerados (marcados pelo pixel)</div>
+                    <div class="met-value lg red">32 <span class="chip chip-warn">Bug de tracking</span></div>
                     <div class="met-vs">Agosto: 93 &nbsp;<span class="delta d-neg">↓66%</span></div>
                 </div>
                 <div class="met-item">
-                    <div class="met-label">Custo por Contato (média)</div>
-                    <div class="met-value red">R$ 53,49</div>
-                    <div class="met-vs">Agosto: R$ 20,02 &nbsp;<span class="delta d-neg">↑167%</span></div>
+                    <div class="met-label">Contatos reais (estimado)</div>
+                    <div class="met-value lg teal">~78</div>
+                    <div class="met-vs">~46 contatos não capturados pelo bug &middot; estimativa via CPL do Quiz</div>
                 </div>
                 <div class="met-item">
-                    <div class="met-label">Melhor eficiência</div>
-                    <div class="met-value sm">AD13 Conv. New 04 &nbsp;·&nbsp; R$ 21,91 / contato (baixo volume)</div>
+                    <div class="met-label">Custo por Contato (média, pixel)</div>
+                    <div class="met-value red">R$ 53,49</div>
+                    <div class="met-vs">Agosto: R$ 20,02 &nbsp;<span class="delta d-neg">↑167% (real estimado: ~+10%)</span></div>
                 </div>
             </div>
         </div>
@@ -493,7 +494,7 @@
             </div>
         </div>
 
-        <div class="note-box">Diferente das outras duas, essa campanha é a mais estável do mês (CPL +10% só) — reforça a suspeita de que o problema das outras duas é de rastreamento (pixel), não de público ou criativo, já que o Quiz usa o InLead como fonte de verdade e não depende só do pixel "Contato" do Meta.</div>
+        <div class="note-box">Essa é a única das três campanhas que não passa pelo formulário padrão com bug — o Quiz manda direto pro InLead. Por isso o CPL dela (+10%) foi usado como referência pra estimar quantos contatos as outras duas campanhas realmente geraram em setembro (ver nota no topo da seção).</div>
 
         <div class="ads-section">
             <div class="ads-heading">Detalhamento por Criativo</div>
