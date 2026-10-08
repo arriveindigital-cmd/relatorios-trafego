@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório de Marketing — Dra. Patrícia Sugino | Setembro 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #101012;
+            --card: #18181B;
+            --purple: #52525B;
+            --purple-light: #A1A1AA;
+            --teal: #94A3B8;
+            --green: #4ADE80;
+            --orange: #FB923C;
+            --red: #F87171;
+            --text: #F1F0FF;
+            --text-muted: #8E8E96;
+            --border: #27272A;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', -apple-system, sans-serif;
+            line-height: 1.6;
+            min-width: 900px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #151517 0%, #1D1D20 40%, #151517 100%);
+            padding: 24px 56px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+        .header::after {
+            content: '';
+            position: absolute;
+            top: -60px; right: -60px;
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(82,82,91,0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .avatar {
+            width: 52px; height: 52px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--purple), var(--purple-light));
+            display: flex; align-items: center; justify-content: center;
+            font-size: 22px; flex-shrink: 0;
+            box-shadow: 0 0 0 4px rgba(82,82,91,0.2);
+        }
+        .header-text h1 { font-size: 20px; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
+        .header-text h2 { font-size: 13px; font-weight: 400; color: var(--text-muted); margin-top: 2px; }
+        .header-text .period-tag {
+            display: inline-block; margin-top: 6px;
+            font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px;
+            background: rgba(82,82,91,0.2); color: var(--purple-light);
+            border: 1px solid rgba(82,82,91,0.3);
+        }
+
+        .overview {
+            display: grid; grid-template-columns: repeat(5, 1fr);
+            gap: 1px; background: var(--border); border-bottom: 1px solid var(--border);
+        }
+        .ov-item { background: var(--card); padding: 24px 28px; }
+        .ov-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); font-weight: 600; margin-bottom: 8px; }
+        .ov-value { font-size: 26px; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
+        .ov-sub { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+        .ov-purple .ov-value { color: var(--purple-light); }
+        .ov-green .ov-value  { color: var(--green); }
+        .ov-teal .ov-value   { color: var(--teal); }
+        .ov-orange .ov-value { color: var(--orange); }
+
+        .delta { font-size: 11px; font-weight: 700; white-space: nowrap; }
+        .d-pos  { color: var(--green); }
+        .d-neg  { color: var(--red); }
+        .d-warn { color: var(--orange); }
+
+        .content { padding: 40px 56px 56px; }
+
+        .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+        .section-header h3 { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: var(--text-muted); white-space: nowrap; }
+        .section-line { flex: 1; height: 1px; background: var(--border); }
+
+        .badge { font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.8px; white-space: nowrap; }
+        .badge-perf  { background: rgba(82,82,91,0.2); color: var(--purple-light); border: 1px solid rgba(82,82,91,0.35); }
+        .badge-brand { background: rgba(148,163,184,0.15); color: var(--teal); border: 1px solid rgba(148,163,184,0.3); }
+        .badge-off   { background: rgba(142,142,150,0.12); color: var(--text-muted); border: 1px solid rgba(142,142,150,0.2); }
+        .badge-pause { background: rgba(251,146,60,0.15); color: var(--orange); border: 1px solid rgba(251,146,60,0.3); }
+        .badge-warn  { background: rgba(248,113,113,0.15); color: var(--red); border: 1px solid rgba(248,113,113,0.3); }
+
+        .campaign-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 20px; }
+        .camp-header {
+            padding: 20px 28px; display: flex; align-items: center; justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+            background: linear-gradient(to right, rgba(82,82,91,0.08) 0%, transparent 100%);
+        }
+        .camp-header.brand-grad { background: linear-gradient(to right, rgba(148,163,184,0.07) 0%, transparent 100%); }
+        .camp-title { font-size: 15px; font-weight: 700; color: #fff; }
+        .camp-sub { font-size: 12px; color: var(--text-muted); margin-top: 3px; }
+        .camp-badges { display: flex; gap: 8px; align-items: center; }
+
+        .metrics-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; }
+        .met-col { padding: 24px 28px; border-right: 1px solid var(--border); }
+        .met-col:last-child { border-right: none; }
+        .met-col-title {
+            font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px;
+            color: var(--text-muted); font-weight: 700; margin-bottom: 20px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .met-col-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+        .met-item { margin-bottom: 16px; }
+        .met-label { font-size: 11px; color: var(--text-muted); margin-bottom: 3px; }
+        .met-value { font-size: 20px; font-weight: 700; color: var(--text); }
+        .met-value.lg { font-size: 28px; letter-spacing: -0.5px; }
+        .met-value.sm { font-size: 14px; font-weight: 500; }
+        .met-value.purple { color: var(--purple-light); }
+        .met-value.green  { color: var(--green); }
+        .met-value.teal   { color: var(--teal); }
+        .met-value.orange { color: var(--orange); }
+        .met-value.red { color: var(--red); }
+        .met-vs { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+
+        .ads-section { border-top: 1px solid var(--border); padding: 20px 28px 24px; }
+        .ads-heading { font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); font-weight: 700; margin-bottom: 14px; }
+        table { width: 100%; border-collapse: collapse; }
+        th { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); font-weight: 600; text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); }
+        td { font-size: 13px; padding: 10px 10px; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--text); vertical-align: middle; }
+        tr:last-child td { border-bottom: none; }
+        td.bold   { font-weight: 600; }
+        td.green  { color: var(--green); font-weight: 600; }
+        td.orange { color: var(--orange); font-weight: 600; }
+        td.muted  { color: var(--text-muted); }
+
+        .chip { display: inline-block; font-size: 10px; padding: 2px 7px; border-radius: 4px; font-weight: 700; margin-left: 6px; vertical-align: middle; }
+        .chip-best { background: rgba(74,222,128,0.15); color: var(--green); }
+        .chip-vol  { background: rgba(161,161,170,0.15); color: var(--purple-light); }
+        .chip-warn { background: rgba(251,146,60,0.15); color: var(--orange); }
+        .chip-new  { background: rgba(148,163,184,0.12); color: var(--teal); }
+
+        .note-box { margin: 0 28px 20px; padding: 12px 16px; background: rgba(251,146,60,0.06); border: 1px solid rgba(251,146,60,0.25); border-radius: 10px; font-size: 12px; color: var(--text-muted); }
+        .note-box b { color: var(--orange); }
+        .note-box.red { background: rgba(248,113,113,0.06); border-color: rgba(248,113,113,0.25); }
+        .note-box.red b { color: var(--red); }
+
+        .ad-link { color: var(--purple-light); text-decoration: none; border-bottom: 1px dotted rgba(161,161,170,0.5); }
+        .ad-link:hover { border-bottom-style: solid; }
+        .title-link { color: inherit; text-decoration: none; border-bottom: 1px dotted rgba(241,240,255,0.35); }
+        .title-link:hover { border-bottom-style: solid; }
+
+        .footer { text-align: center; padding: 28px 56px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 12px; }
+        .footer span { color: var(--purple-light); font-weight: 600; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="avatar">👁️</div>
+    <div class="header-text">
+        <h1>Dra. Patrícia Sugino</h1>
+        <h2>Relatório de Marketing Digital — MKBZ</h2>
+        <div class="period-tag">Resultados de Setembro / 2026</div>
+    </div>
+</div>
+
+<div class="overview">
+    <div class="ov-item ov-purple">
+        <div class="ov-label">Investimento Total</div>
+        <div class="ov-value">R$ 5.556,54</div>
+        <div class="ov-sub">Agosto: R$ 5.638,02 &nbsp;<span class="delta d-pos">↓1%</span></div>
+    </div>
+    <div class="ov-item">
+        <div class="ov-label">Impressões Totais</div>
+        <div class="ov-value">86.184</div>
+        <div class="ov-sub">Agosto: 80.387 &nbsp;<span class="delta d-pos">↑7%</span></div>
+    </div>
+    <div class="ov-item ov-green">
+        <div class="ov-label">Contatos (Leads)</div>
+        <div class="ov-value">108</div>
+        <div class="ov-sub">Agosto: 211 &nbsp;<span class="delta d-neg">↓49%</span></div>
+    </div>
+    <div class="ov-item ov-teal">
+        <div class="ov-label">Visitas ao Perfil</div>
+        <div class="ov-value">2.226</div>
+        <div class="ov-sub">Agosto: 1.575 &nbsp;<span class="delta d-pos">↑41%</span></div>
+    </div>
+    <div class="ov-item ov-orange">
+        <div class="ov-label">Seguidores Ganhos</div>
+        <div class="ov-value">—</div>
+        <div class="ov-sub">Meta não atribui seguidor por anúncio de forma confiável — checar Business Suite</div>
+    </div>
+</div>
+
+<div class="content">
+
+    <div class="section-header">
+        <h3>Performance</h3>
+        <div class="badge badge-perf">Conversão</div>
+        <div class="badge badge-warn">CPL em alta</div>
+        <div class="section-line"></div>
+    </div>
+
+    <div class="note-box red"><b>Alerta do mês:</b> os contatos caíram 49% (211 → 108) com o investimento praticamente estável (−1%). A queda não é uniforme: <b>Blefaroplastia Site</b> e <b>Orientais Site</b> tiveram o CPL mais que dobrar (+167% e +105%), enquanto o <b>Quiz</b> ficou quase estável (+10%). Como o Quiz manda o lead pro InLead (fora do pixel do Meta) e os outros dois usam o pixel de conversão "Contato" direto — a mesma falha de rastreamento do pixel já registrada em Julho é a primeira hipótese a descartar antes de cortar verba. Vale cruzar com o volume real de contatos recebidos no WhatsApp/CRM antes de agir.</div>
+
+    <!-- CAMPANHA BLEFAROPASTIA SITE -->
+    <div class="campaign-card">
+        <div class="camp-header">
+            <div>
+                <div class="camp-title">[LEAD][SITE][CONTATO] — BLEFAROPASTIA · Local + ADV+</div>
+                <div class="camp-sub">Campanha · Meta Ads &nbsp;|&nbsp; Objetivo: Contatos &nbsp;|&nbsp; 8 criativos ativos</div>
+            </div>
+            <div class="camp-badges">
+                <div class="badge badge-perf">Performance</div>
+                <div class="badge badge-off">Ativo</div>
+            </div>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="met-col">
+                <div class="met-col-title">Período e Investimento</div>
+                <div class="met-item">
+                    <div class="met-label">Período de Veiculação</div>
+                    <div class="met-value sm">01/09/2026 — 30/09/2026</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Valor Investido</div>
+                    <div class="met-value lg purple">R$ 1.711,63</div>
+                    <div class="met-vs">Agosto: R$ 1.861,83 &nbsp;<span class="delta d-pos">↓8%</span></div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">CPM · Cliques no Link</div>
+                    <div class="met-value sm">R$ 124,66 &nbsp;·&nbsp; 876 cliques</div>
+                    <div class="met-vs">Agosto: R$ 109,64 · 1.015 cliques</div>
+                </div>
+            </div>
+            <div class="met-col">
+                <div class="met-col-title">Alcance e Impressões</div>
+                <div class="met-item">
+                    <div class="met-label">Impressões</div>
+                    <div class="met-value lg">13.730</div>
+                    <div class="met-vs">Agosto: 16.982 &nbsp;<span class="delta d-warn">↓19%</span></div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Alcance</div>
+                    <div class="met-value">9.186</div>
+                    <div class="met-vs">Agosto: 10.584 &nbsp;<span class="delta d-warn">↓13%</span></div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Frequência · CTR</div>
+                    <div class="met-value sm">1,49× &nbsp;·&nbsp; 6,38%</div>
+                    <div class="met-vs">Agosto: 1,60× · 5,98%</div>
+                </div>
+            </div>
+            <div class="met-col">
+                <div class="met-col-title">Resultados de Performance</div>
+                <div class="met-item">
+                    <div class="met-label">Contatos Gerados</div>
+                    <div class="met-value lg red">32</div>
+                    <div class="met-vs">Agosto: 93 &nbsp;<span class="delta d-neg">↓66%</span></div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Custo por Contato (média)</div>
+                    <div class="met-value red">R$ 53,49</div>
+                    <div class="met-vs">Agosto: R$ 20,02 &nbsp;<span class="delta d-neg">↑167%</span></div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Melhor eficiência</div>
+                    <div class="met-value sm">AD13 Conv. New 04 &nbsp;·&nbsp; R$ 21,91 / contato (baixo volume)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ads-section">
+            <div class="ads-heading">Detalhamento por Criativo</div>
+            <table>
+                <thead>
+                    <tr><th>Criativo</th><th>Investido</th><th>Contatos</th><th>Custo / Contato</th><th>CTR</th><th>Impressões</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="bold"><a class="ad-link" href="https://www.instagram.com/p/DYFrfn8AFvT/" target="_blank">AD11 — Conv. New 02 · "Dra. você faz blefaro com Cantoplastia..."</a> <span class="chip chip-vol">Mais Contatos</span></td>
+                        <td>R$ 1.662,65</td><td class="green">31</td><td class="orange">R$ 53,63</td><td>6,45%</td><td>13.266</td>
+                    </tr>
+                    <tr>
+                        <td class="bold"><a class="ad-link" href="https://www.instagram.com/p/DYFrfj_gLAl/" target="_blank">AD13 — Conv. New 04 · "Por que realizar minha cirurgia com o Laser de CO2?"</a> <span class="chip chip-best">Melhor CPL</span></td>
+                        <td>R$ 21,91</td><td class="green">1</td><td class="green">R$ 21,91</td><td>5,93%</td><td>135</td>
+                    </tr>
+                    <tr class="muted">
+                        <td class="muted"><a class="ad-link" href="https://www.instagram.com/p/DY7sJvPgLL9/" target="_blank">AD07 — Conv. 08 · "Você já parou pra pensar"</a></td>
+                        <td class="muted">R$ 7,60</td><td class="muted">—</td><td class="muted">—</td><td class="muted">0,00%</td><td class="muted">72</td>
+                    </tr>
+                    <tr class="muted">
+                        <td class="muted"><a class="ad-link" href="https://www.instagram.com/p/DYFrfdxgEpI/" target="_blank">AD14 — Conv. New 05 · "Esse aqui é o caso mais comum..."</a></td>
+                        <td class="muted">R$ 5,96</td><td class="muted">—</td><td class="muted">—</td><td class="muted">6,56%</td><td class="muted">61</td>
+                    </tr>
+                    <tr class="muted">
+                        <td class="muted"><a class="ad-link" href="https://www.instagram.com/p/DYFrfwZAL9I/" target="_blank">AD12 — Conv. New 03 · "O que é um cirurgião Oculoplástico?"</a></td>
+                        <td class="muted">R$ 5,23</td><td class="muted">—</td><td class="muted">—</td><td class="muted">1,85%</td><td class="muted">54</td>
+                    </tr>
+                    <tr class="muted">
+                        <td class="muted"><a class="ad-link" href="https://www.instagram.com/p/DYFrflNAM6o/" target="_blank">AD10 — Conv. New 01 · "Por que realizar a blefaroplastia com cirurgião Oculoplástico?"</a></td>
+                        <td class="muted">R$ 4,29</td><td class="muted">—</td><td class="muted">—</td><td class="muted">5,88%</td><td class="muted">68</td>
+                    </tr>
+                    <tr class="muted">
+                        <td class="muted"><a class="ad-link" href="https://www.instagram.com/p/DY7nLdcgLDd/" target="_blank">AD04 — Conv. 05 Caixa de Perguntas · "O que você acha do plasma?"</a></td>
+                        <td class="muted">R$ 2,10</td><td class="muted">—</td><td class="muted">—</td><td class="muted">6,25%</td><td class="muted">32</td>
+                    </tr>
+                    <tr class="muted">
+                        <td class="muted">AD01 — Conv. 01 · "Seu olhar cansado"</td>
+                        <td class="muted">R$ 1,89</td><td class="muted">—</td><td class="muted">—</td><td class="muted">2,38%</td><td class="muted">42</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- CAMPANHA ORIENTAIS SITE -->
+    <div class="campaign-card">
+        <div class="camp-header">
+            <div>
+                <div class="camp-title">[LEAD][SITE] [CONTATO]- ORIENTAIS BLEFAROPASTIA · Local + ADV+</div>
+                <div class="camp-sub">Campanha · Meta Ads &nbsp;|&nbsp; Objetivo: Contatos &nbsp;|&nbsp; 6 criativos ativos</div>
+            </div>
+            <div class="camp-badges">
+                <div class="badge badge-perf">Performance</div>
+                <div class="badge badge-off">Ativo</div>
+            </div>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="met-col">
+                <div class="met-col-title">Período e Investimento</div>
+                <div class="met-item">
+                    <div class="met-label">Período de Veiculação</div>
+                    <div class="met-value sm">01/09/2026 — 30/09/2026</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Valor Investido</div>
+                    <div class="met-value lg purple">R$ 1.708,48</div>
+                    <div class="met-vs">Agosto: R$ 1.879,67 &nbsp;<span class="delta d-pos">↓9%</span></div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">CPM · Cliques no Link</div>
+                    <div class="met-value sm">R$ 102,54 &nbsp;·&nbsp; 826 cliques</div>
+                    <div class="met-vs">Agosto: R$ 101,69 · 970 cliques</div>
+                </div>
+            </div>
+            <div class="met-col">
+                <div class="met-col-title">Alcance e Impressões</div>
+                <div class="met-item">
+                    <div class="met-label">Impressões</div>
+                    <div class="met-value lg">16.662</div>
+                    <div class="met-vs">Agosto: 18.485 &nbsp;<span class="delta d-warn">↓10%</span></div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Alcance</div>
+                    <div class="met-value">9.258</div>
+                    <div class="met-vs">Agosto: 9.114 &nbsp;<span class="delta d-pos">↑2%</span></div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Frequência · CTR</div>
+                    <div class="met-value sm">1,80× &nbsp;·&nbsp; 4,96%</div>
+                    <div class="met-vs">Agosto: 2,03× · 5,25%</div>
+                </div>
+            </div>
+            <div class="met-col">
+                <div class="met-col-title">Resultados de Performance</div>
+                <div class="met-item">
+                    <div class="met-label">Contatos Gerados</div>
+                    <div class="met-value lg red">28</div>
+                    <div class="met-vs">Agosto: 63 &nbsp;<span class="delta d-neg">↓56%</span></div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Custo por Contato (média)</div>
+                    <div class="met-value red">R$ 61,02</div>
+                    <div class="met-vs">Agosto: R$ 29,84 &nbsp;<span class="delta d-neg">↑105%</span></div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Melhor eficiência</div>
+                    <div class="met-value sm">AD04 Oriental New 01 &nbsp;·&nbsp; R$ 9,03 / contato (baixo volume)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ads-section">
+            <div class="ads-heading">Detalhamento por Criativo</div>
+            <table>
+                <thead>
+                    <tr><th>Criativo</th><th>Investido</th><th>Contatos</th><th>Custo / Contato</th><th>CTR</th><th>Impressões</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="bold"><a class="ad-link" href="https://www.instagram.com/p/DWPXWVbgHdl/" target="_blank">AD02 — Oriental 03 · "Sim, eu sou — Cópia"</a> <span class="chip chip-vol">Mais Contatos</span></td>
+                        <td>R$ 1.541,82</td><td class="green">26</td><td class="orange">R$ 59,30</td><td>4,90%</td><td>14.640</td>
+                    </tr>
+                    <tr>
+                        <td class="bold"><a class="ad-link" href="https://www.instagram.com/p/DWPXWcKgME1/" target="_blank">AD03 — Oriental 03 · "Como é feita para asiáticos — Cópia"</a></td>
+                        <td>R$ 110,79</td><td class="green">1</td><td class="orange">R$ 110,79</td><td>6,62%</td><td>1.450</td>
+                    </tr>
+                    <tr>
+                        <td class="bold"><a class="ad-link" href="https://www.instagram.com/p/DYFlngCAOag/" target="_blank">AD04 — Oriental New 01 · "Além de entender os traços..."</a> <span class="chip chip-best">Melhor CPL</span></td>
+                        <td>R$ 9,03</td><td class="green">1</td><td class="green">R$ 9,03</td><td>0,90%</td><td>111</td>
+                    </tr>
+                    <tr class="muted">
+                        <td class="muted"><a class="ad-link" href="https://www.instagram.com/p/DWPXWb3gLnO/" target="_blank">AD01 — Oriental 02 · "Pálpebra é tudo igual? — Cópia — Cópia"</a></td>
+                        <td class="muted">R$ 35,01</td><td class="muted">—</td><td class="muted">—</td><td class="muted">2,79%</td><td class="muted">287</td>
+                    </tr>
+                    <tr class="muted">
+                        <td class="muted"><a class="ad-link" href="https://www.instagram.com/p/DYFlm8OgAeZ/" target="_blank">AD06 — Oriental New 03 · "O que muda no planejamento da cirurgia..."</a></td>
+                        <td class="muted">R$ 9,87</td><td class="muted">—</td><td class="muted">—</td><td class="muted">2,40%</td><td class="muted">125</td>
+                    </tr>
+                    <tr class="muted">
+                        <td class="muted">AD05 — Oriental New 02 · "Doutora eu quero muito a dobrinha..."</td>
+                        <td class="muted">R$ 1,96</td><td class="muted">—</td><td class="muted">—</td><td class="muted">0,00%</td><td class="muted">49</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- CAMPANHA QUIZ BLEFAROPASTIA -->
+    <div class="campaign-card">
+        <div class="camp-header">
+            <div>
+                <div class="camp-title">[LEAD][Quiz][CONTATO] — BLEFAROPASTIA · Local + ADV+</div>
+                <div class="camp-sub">Campanha · Meta Ads → Quiz (InLead) &nbsp;|&nbsp; Objetivo: Contatos &nbsp;|&nbsp; 6 criativos ativos</div>
+            </div>
+            <div class="camp-badges">
+                <div class="badge badge-perf">Performance</div>
+                <div class="badge badge-off">Ativo</div>
+            </div>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="met-col">
+                <div class="met-col-title">Período e Investimento</div>
+                <div class="met-item">
+                    <div class="met-label">Período de Veiculação</div>
+                    <div class="met-value sm">01/09/2026 — 30/09/2026</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Valor Investido</div>
+                    <div class="met-value lg purple">R$ 1.189,61</div>
+                    <div class="met-vs">Agosto: R$ 1.240,85 &nbsp;<span class="delta d-pos">↓4%</span></div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">CPM · Cliques no Link</div>
+                    <div class="met-value sm">R$ 102,05 &nbsp;·&nbsp; 714 cliques</div>
+                    <div class="met-vs">Agosto: R$ 106,95 · 767 cliques</div>
+                </div>
+            </div>
+            <div class="met-col">
+                <div class="met-col-title">Alcance e Impressões</div>
+                <div class="met-item">
+                    <div class="met-label">Impressões</div>
+                    <div class="met-value lg">11.657</div>
+                    <div class="met-vs">Agosto: 11.602 &nbsp;<span class="delta d-pos">↑0,5%</span></div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Alcance</div>
+                    <div class="met-value">7.736</div>
+                    <div class="met-vs">Agosto: 8.225 &nbsp;<span class="delta d-warn">↓6%</span></div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Frequência · CTR</div>
+                    <div class="met-value sm">1,51× &nbsp;·&nbsp; 6,13%</div>
+                    <div class="met-vs">Agosto: 1,41× · 6,61%</div>
+                </div>
+            </div>
+            <div class="met-col">
+                <div class="met-col-title">Resultados de Performance</div>
+                <div class="met-item">
+                    <div class="met-label">Contatos Gerados</div>
+                    <div class="met-value lg orange">48</div>
+                    <div class="met-vs">Agosto: 55 &nbsp;<span class="delta d-warn">↓13%</span></div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Custo por Contato (média)</div>
+                    <div class="met-value orange">R$ 24,78</div>
+                    <div class="met-vs">Agosto: R$ 22,56 &nbsp;<span class="delta d-warn">↑10%</span></div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Melhor eficiência</div>
+                    <div class="met-value sm">AD11 Conv. New 02 &nbsp;·&nbsp; único criativo com contato</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="note-box">Diferente das outras duas, essa campanha é a mais estável do mês (CPL +10% só) — reforça a suspeita de que o problema das outras duas é de rastreamento (pixel), não de público ou criativo, já que o Quiz usa o InLead como fonte de verdade e não depende só do pixel "Contato" do Meta.</div>
+
+        <div class="ads-section">
+            <div class="ads-heading">Detalhamento por Criativo</div>
+            <table>
+                <thead>
+                    <tr><th>Criativo</th><th>Investido</th><th>Contatos</th><th>Custo / Contato</th><th>CTR</th><th>Impressões</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="bold"><a class="ad-link" href="https://www.instagram.com/p/DZ59-7cgC1p/" target="_blank">AD11 — Conv. New 02 · "Dra. você faz blefaro com Cantoplastia..."</a> <span class="chip chip-vol">Único com contato</span></td>
+                        <td>R$ 1.176,23</td><td class="green">48</td><td class="orange">R$ 24,51</td><td>6,14%</td><td>11.446</td>
+                    </tr>
+                    <tr class="muted">
+                        <td class="muted"><a class="ad-link" href="https://www.instagram.com/p/DZ59_AMgaW7/" target="_blank">AD04 — Conv. 05 Caixa de Perguntas · "O que você acha do plasma?"</a></td>
+                        <td class="muted">R$ 5,90</td><td class="muted">—</td><td class="muted">—</td><td class="muted">5,38%</td><td class="muted">93</td>
+                    </tr>
+                    <tr class="muted">
+                        <td class="muted"><a class="ad-link" href="https://www.instagram.com/p/DZ59-84g7pn/" target="_blank">AD01 — Conv. 01 · "Seu olhar cansado"</a></td>
+                        <td class="muted">R$ 4,41</td><td class="muted">—</td><td class="muted">—</td><td class="muted">8,20%</td><td class="muted">61</td>
+                    </tr>
+                    <tr class="muted">
+                        <td class="muted"><a class="ad-link" href="https://www.instagram.com/p/DZ59-2ngI4g/" target="_blank">AD14 — Conv. New 05 · "Esse aqui é o caso mais comum..."</a></td>
+                        <td class="muted">R$ 2,29</td><td class="muted">—</td><td class="muted">—</td><td class="muted">2,44%</td><td class="muted">41</td>
+                    </tr>
+                    <tr class="muted">
+                        <td class="muted">AD13 — Conv. New 04 · "Por que realizar minha cirurgia com o Laser de CO2?"</td>
+                        <td class="muted">R$ 0,73</td><td class="muted">—</td><td class="muted">—</td><td class="muted">0,00%</td><td class="muted">15</td>
+                    </tr>
+                    <tr class="muted">
+                        <td class="muted">AD12 — Conv. New 03 · "O que é um cirurgião Oculoplástico?"</td>
+                        <td class="muted">R$ 0,05</td><td class="muted">—</td><td class="muted">—</td><td class="muted">0,00%</td><td class="muted">1</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- BRANDING -->
+    <div class="section-header" style="margin-top: 40px;">
+        <h3>Branding</h3>
+        <div class="badge badge-brand">Reconhecimento</div>
+        <div class="section-line"></div>
+    </div>
+
+    <!-- POST 1 -->
+    <div class="campaign-card">
+        <div class="camp-header brand-grad">
+            <div>
+                <div class="camp-title">Post: <a class="title-link" href="https://www.instagram.com/p/DHTOExwsVgb/" target="_blank">"A blefaroplastia é mais do que..."</a></div>
+                <div class="camp-sub">Objetivo: Visitas ao Perfil do Instagram</div>
+            </div>
+            <div class="camp-badges">
+                <div class="badge badge-brand">Branding</div>
+                <div class="badge badge-off">Ativo</div>
+            </div>
+        </div>
+        <div class="metrics-grid">
+            <div class="met-col">
+                <div class="met-col-title">Período e Investimento</div>
+                <div class="met-item">
+                    <div class="met-label">Período</div>
+                    <div class="met-value sm">01/09/2026 — 30/09/2026</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Valor Investido</div>
+                    <div class="met-value lg purple">R$ 210,76</div>
+                    <div class="met-vs">Agosto: R$ 218,20 &nbsp;<span class="delta d-pos">↓3%</span></div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">CPM</div>
+                    <div class="met-value">R$ 17,52</div>
+                    <div class="met-vs">Agosto: R$ 15,44</div>
+                </div>
+            </div>
+            <div class="met-col">
+                <div class="met-col-title">Alcance e Impressões</div>
+                <div class="met-item">
+                    <div class="met-label">Impressões</div>
+                    <div class="met-value lg">12.031</div>
+                    <div class="met-vs">Agosto: 14.131 &nbsp;<span class="delta d-warn">↓15%</span></div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Alcance</div>
+                    <div class="met-value">10.583</div>
+                    <div class="met-vs">Agosto: 12.205</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Frequência</div>
+                    <div class="met-value">1,14×</div>
+                </div>
+            </div>
+            <div class="met-col">
+                <div class="met-col-title">Resultados de Branding</div>
+                <div class="met-item">
+                    <div class="met-label">Visitas ao Perfil</div>
+                    <div class="met-value lg teal">382</div>
+                    <div class="met-vs">Agosto: 492 &nbsp;<span class="delta d-warn">↓22%</span></div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">CTR · Custo por Visita</div>
+                    <div class="met-value sm">3,53% · R$ 0,55</div>
+                    <div class="met-vs">Agosto: 4,22% · R$ 0,44</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- POST 2 -->
+    <div class="campaign-card">
+        <div class="camp-header brand-grad">
+            <div>
+                <div class="camp-title">Post: <a class="title-link" href="https://www.instagram.com/p/DIbiCpas-YE/" target="_blank">"Hoje eu trago para vocês o..."</a></div>
+                <div class="camp-sub">Objetivo: Visitas ao Perfil do Instagram</div>
+            </div>
+            <div class="camp-badges">
+                <div class="badge badge-brand">Branding</div>
+                <div class="badge badge-off">Ativo</div>
+            </div>
+        </div>
+        <div class="metrics-grid">
+            <div class="met-col">
+                <div class="met-col-title">Período e Investimento</div>
+                <div class="met-item">
+                    <div class="met-label">Período</div>
+                    <div class="met-value sm">01/09/2026 — 30/09/2026</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Valor Investido</div>
+                    <div class="met-value lg purple">R$ 210,14</div>
+                    <div class="met-vs">Agosto: R$ 217,44 &nbsp;<span class="delta d-pos">↓3%</span></div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">CPM</div>
+                    <div class="met-value">R$ 27,73</div>
+                    <div class="met-vs">Agosto: R$ 23,67</div>
+                </div>
+            </div>
+            <div class="met-col">
+                <div class="met-col-title">Alcance e Impressões</div>
+                <div class="met-item">
+                    <div class="met-label">Impressões</div>
+                    <div class="met-value lg">7.579</div>
+                    <div class="met-vs">Agosto: 9.187 &nbsp;<span class="delta d-warn">↓18%</span></div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Alcance</div>
+                    <div class="met-value">6.778</div>
+                    <div class="met-vs">Agosto: 8.282</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Frequência</div>
+                    <div class="met-value">1,12×</div>
+                </div>
+            </div>
+            <div class="met-col">
+                <div class="met-col-title">Resultados de Branding</div>
+                <div class="met-item">
+                    <div class="met-label">Visitas ao Perfil</div>
+                    <div class="met-value lg teal">530 <span class="chip chip-best">Mais visitas do mês</span></div>
+                    <div class="met-vs">Agosto: 580 &nbsp;<span class="delta d-warn">↓9%</span></div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">CTR · Custo por Visita</div>
+                    <div class="met-value sm">7,11% · <span style="color:var(--green);font-weight:700;">R$ 0,40</span></div>
+                    <div class="met-vs">Agosto: 6,64% · R$ 0,37</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- POST 3 -->
+    <div class="campaign-card">
+        <div class="camp-header brand-grad">
+            <div>
+                <div class="camp-title">Post: <a class="title-link" href="https://www.instagram.com/p/DaWN_8lgbui/" target="_blank">"O laser de CO₂ piora a cicatriz da blefaroplastia?"</a></div>
+                <div class="camp-sub">Objetivo: Visitas ao Perfil e à Página</div>
+            </div>
+            <div class="camp-badges">
+                <div class="badge badge-brand">Branding</div>
+                <div class="badge badge-off">Ativo</div>
+            </div>
+        </div>
+        <div class="metrics-grid">
+            <div class="met-col">
+                <div class="met-col-title">Período e Investimento</div>
+                <div class="met-item">
+                    <div class="met-label">Período</div>
+                    <div class="met-value sm">01/09/2026 — 30/09/2026</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Valor Investido</div>
+                    <div class="met-value lg purple">R$ 181,21</div>
+                    <div class="met-vs">Agosto: R$ 186,13 &nbsp;<span class="delta d-pos">↓3%</span></div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">CPM</div>
+                    <div class="met-value">R$ 27,67</div>
+                    <div class="met-vs">Agosto: R$ 22,58</div>
+                </div>
+            </div>
+            <div class="met-col">
+                <div class="met-col-title">Alcance e Impressões</div>
+                <div class="met-item">
+                    <div class="met-label">Impressões</div>
+                    <div class="met-value lg">6.548</div>
+                    <div class="met-vs">Agosto: 8.242 &nbsp;<span class="delta d-warn">↓21%</span></div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Alcance</div>
+                    <div class="met-value">5.586</div>
+                    <div class="met-vs">Agosto: 7.217</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Frequência</div>
+                    <div class="met-value">1,17×</div>
+                </div>
+            </div>
+            <div class="met-col">
+                <div class="met-col-title">Resultados de Branding</div>
+                <div class="met-item">
+                    <div class="met-label">Visitas ao Perfil</div>
+                    <div class="met-value lg teal">270</div>
+                    <div class="met-vs">Agosto: 403 &nbsp;<span class="delta d-warn">↓33%</span></div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">CTR · Custo por Visita</div>
+                    <div class="met-value sm">4,95% · R$ 0,67</div>
+                    <div class="met-vs">Agosto: 5,59% · R$ 0,46</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- POST 4 -->
+    <div class="campaign-card">
+        <div class="camp-header brand-grad">
+            <div>
+                <div class="camp-title">Post: <a class="title-link" href="https://www.instagram.com/p/DclhCdvgPSm/" target="_blank">"A blefaroplastia está em alta,..."</a></div>
+                <div class="camp-sub">Objetivo: Visitas ao Perfil do Instagram &nbsp;·&nbsp; Verba retomada forte em Setembro</div>
+            </div>
+            <div class="camp-badges">
+                <div class="badge badge-brand">Branding</div>
+                <div class="badge badge-off">Ativo</div>
+            </div>
+        </div>
+        <div class="metrics-grid">
+            <div class="met-col">
+                <div class="met-col-title">Período e Investimento</div>
+                <div class="met-item">
+                    <div class="met-label">Período</div>
+                    <div class="met-value sm">01/09/2026 — 30/09/2026</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Valor Investido</div>
+                    <div class="met-value lg purple">R$ 236,52</div>
+                    <div class="met-vs">Agosto: R$ 33,90 &nbsp;<span class="delta d-warn">↑598%</span></div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">CPM</div>
+                    <div class="met-value">R$ 21,30</div>
+                    <div class="met-vs">Agosto: R$ 19,28</div>
+                </div>
+            </div>
+            <div class="met-col">
+                <div class="met-col-title">Alcance e Impressões</div>
+                <div class="met-item">
+                    <div class="met-label">Impressões</div>
+                    <div class="met-value lg">11.105 <span class="chip chip-best">Mais visto do mês</span></div>
+                    <div class="met-vs">Agosto: 1.758 &nbsp;<span class="delta d-warn">↑532%</span></div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Alcance</div>
+                    <div class="met-value">9.216</div>
+                    <div class="met-vs">Agosto: 1.606</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Frequência</div>
+                    <div class="met-value">1,20×</div>
+                </div>
+            </div>
+            <div class="met-col">
+                <div class="met-col-title">Resultados de Branding</div>
+                <div class="met-item">
+                    <div class="met-label">Visitas ao Perfil</div>
+                    <div class="met-value lg teal">567 <span class="chip chip-best">Mais visitas do mês</span></div>
+                    <div class="met-vs">Agosto: 100 &nbsp;<span class="delta d-pos">↑467%</span></div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">CTR · Custo por Visita</div>
+                    <div class="met-value sm">5,45% · <span style="color:var(--green);font-weight:700;">R$ 0,42</span></div>
+                    <div class="met-vs">Agosto: 6,14% · R$ 0,34</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- POST 5 -->
+    <div class="campaign-card">
+        <div class="camp-header brand-grad">
+            <div>
+                <div class="camp-title">Post: <a class="title-link" href="https://www.instagram.com/p/DdHqj6WA82a/" target="_blank">"Quando uma famosa fala que fez..."</a></div>
+                <div class="camp-sub">Objetivo: Visitas ao Perfil do Instagram &nbsp;·&nbsp; Novo em Setembro</div>
+            </div>
+            <div class="camp-badges">
+                <div class="badge badge-brand">Branding</div>
+                <div class="badge badge-off">Ativo</div>
+            </div>
+        </div>
+        <div class="metrics-grid">
+            <div class="met-col">
+                <div class="met-col-title">Período e Investimento</div>
+                <div class="met-item">
+                    <div class="met-label">Período</div>
+                    <div class="met-value sm">01/09/2026 — 30/09/2026</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Valor Investido</div>
+                    <div class="met-value lg purple">R$ 105,09</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">CPM</div>
+                    <div class="met-value">R$ 15,71</div>
+                </div>
+            </div>
+            <div class="met-col">
+                <div class="met-col-title">Alcance e Impressões</div>
+                <div class="met-item">
+                    <div class="met-label">Impressões</div>
+                    <div class="met-value lg">6.688</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Alcance</div>
+                    <div class="met-value">5.896</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Frequência</div>
+                    <div class="met-value">1,13×</div>
+                </div>
+            </div>
+            <div class="met-col">
+                <div class="met-col-title">Resultados de Branding</div>
+                <div class="met-item">
+                    <div class="met-label">Visitas ao Perfil</div>
+                    <div class="met-value lg teal">468</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">CTR · Custo por Visita</div>
+                    <div class="met-value sm">7,46% · <span style="color:var(--green);font-weight:700;">R$ 0,22</span> <span class="chip chip-best">Mais barata do mês</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- POST 6 -->
+    <div class="campaign-card">
+        <div class="camp-header brand-grad">
+            <div>
+                <div class="camp-title">Post: <a class="title-link" href="https://www.instagram.com/p/Dd6lM3RgJz3/" target="_blank">"Gente, ela está certa em uma..."</a></div>
+                <div class="camp-sub">Objetivo: Visitas ao Perfil do Instagram &nbsp;·&nbsp; Novo em Setembro, verba de teste</div>
+            </div>
+            <div class="camp-badges">
+                <div class="badge badge-brand">Branding</div>
+                <div class="badge badge-off">Ativo</div>
+            </div>
+        </div>
+        <div class="metrics-grid">
+            <div class="met-col">
+                <div class="met-col-title">Período e Investimento</div>
+                <div class="met-item">
+                    <div class="met-label">Período</div>
+                    <div class="met-value sm">01/09/2026 — 30/09/2026</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Valor Investido</div>
+                    <div class="met-value lg purple">R$ 3,10</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">CPM</div>
+                    <div class="met-value">R$ 16,85</div>
+                </div>
+            </div>
+            <div class="met-col">
+                <div class="met-col-title">Alcance e Impressões</div>
+                <div class="met-item">
+                    <div class="met-label">Impressões</div>
+                    <div class="met-value lg">184</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Alcance</div>
+                    <div class="met-value">179</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Frequência</div>
+                    <div class="met-value">1,03×</div>
+                </div>
+            </div>
+            <div class="met-col">
+                <div class="met-col-title">Resultados de Branding</div>
+                <div class="met-item">
+                    <div class="met-label">Visitas ao Perfil</div>
+                    <div class="met-value lg teal">9</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">CTR · Custo por Visita</div>
+                    <div class="met-value sm">4,89% · R$ 0,34</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="footer">
+    Relatório gerado por <span>Arrive In Digital</span> &nbsp;·&nbsp; Período: Setembro 2026 &nbsp;·&nbsp; Dados: Meta Ads Manager + InLead (UTM)
+</div>
+
+</body>
+</html>
