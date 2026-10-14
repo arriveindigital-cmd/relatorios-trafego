@@ -37,7 +37,9 @@
   <table>
 
     <tr class="sec"><td colspan="2">Investimento <span class="tag">EDITÁVEL</span></td></tr>
-    <tr class="inp"><td class="lbl">Impulsionamento (Google Ads + Meta Ads)</td><td class="val"><input class="c" id="impulso" type="number" value="700" oninput="calc()"></td></tr>
+    <tr class="inp"><td class="lbl">Impulsionamento — Meta Ads</td><td class="val"><input class="c" id="impulsoMeta" type="number" value="558.36" oninput="calc()"></td></tr>
+    <tr class="inp"><td class="lbl">Impulsionamento — Google Ads</td><td class="val"><input class="c" id="impulsoGoogle" type="number" value="234.77" oninput="calc()"></td></tr>
+    <tr class="calc"><td class="lbl">Impulsionamento Total</td><td class="val" id="impulso">—</td></tr>
 
     <tr class="sec"><td colspan="2">Novos Negócios — Consultório <span class="tag">EDITÁVEL</span></td></tr>
     <tr class="inp"><td class="lbl">Fechamentos novos (qtd.)</td><td class="val"><input class="c" id="qtdConsultorio" type="number" value="7" oninput="calc()"></td></tr>
@@ -49,32 +51,30 @@
 
     <tr class="sec"><td colspan="2">Por Canal de Origem <span class="tag">EDITÁVEL</span></td></tr>
     <tr class="inp"><td class="lbl">Instagram — clientes · valor</td><td class="val"><input class="c" id="qtdInsta" type="number" value="7" style="width:30%; display:inline-block;" oninput="calc()"> &nbsp;<input class="c" id="valInsta" type="number" value="3677" style="width:60%; display:inline-block;" oninput="calc()"></td></tr>
-    <tr class="inp"><td class="lbl">Indicação — clientes · valor</td><td class="val"><input class="c" id="qtdIndic" type="number" value="4" style="width:30%; display:inline-block;" oninput="calc()"> &nbsp;<input class="c" id="valIndic" type="number" value="1974" style="width:60%; display:inline-block;" oninput="calc()"></td></tr>
-    <tr class="inp"><td class="lbl">Presencial — clientes · valor</td><td class="val"><input class="c" id="qtdPresencial" type="number" value="1" style="width:30%; display:inline-block;" oninput="calc()"> &nbsp;<input class="c" id="valPresencial" type="number" value="300" style="width:60%; display:inline-block;" oninput="calc()"></td></tr>
+    <tr class="inp"><td class="lbl">Google — clientes · valor</td><td class="val"><input class="c" id="qtdGoogle" type="number" value="0" style="width:30%; display:inline-block;" oninput="calc()"> &nbsp;<input class="c" id="valGoogle" type="number" value="0" style="width:60%; display:inline-block;" oninput="calc()"></td></tr>
+    <tr class="inp"><td class="lbl">Indicação — clientes · valor <i>(fora do ROI)</i></td><td class="val"><input class="c" id="qtdIndic" type="number" value="4" style="width:30%; display:inline-block;" oninput="calc()"> &nbsp;<input class="c" id="valIndic" type="number" value="1974" style="width:60%; display:inline-block;" oninput="calc()"></td></tr>
+    <tr class="inp"><td class="lbl">Presencial — clientes · valor <i>(fora do ROI)</i></td><td class="val"><input class="c" id="qtdPresencial" type="number" value="1" style="width:30%; display:inline-block;" oninput="calc()"> &nbsp;<input class="c" id="valPresencial" type="number" value="300" style="width:60%; display:inline-block;" oninput="calc()"></td></tr>
 
-    <tr class="sec"><td colspan="2">Retorno Total</td></tr>
-    <tr class="calc"><td class="lbl">Total de clientes novos</td><td class="val" id="qtdTotal">—</td></tr>
-    <tr class="hl"><td class="lbl">Retorno Total (fechamentos + matrículas)</td><td class="val" id="retTotal">—</td></tr>
-
-    <tr class="sec"><td colspan="2">Retorno sobre Investimento — Consolidado</td></tr>
-    <tr class="calc"><td class="lbl">Ticket Médio por Cliente Novo</td><td class="val" id="ticketMedio">—</td></tr>
-    <tr class="hl"><td class="lbl">ROAS Consolidado</td><td class="val" id="roasTotal">—</td></tr>
-    <tr class="hl"><td class="lbl">ROI Consolidado</td><td class="val" id="roiTotal">—</td></tr>
-    <tr class="warn"><td class="lbl">Lucro (Retorno − Investimento em Tráfego)</td><td class="val" id="lucroTotal">—</td></tr>
-
-    <tr class="sec"><td colspan="2">Retorno sobre Investimento — Mídia Paga Isolada</td></tr>
-    <tr class="calc"><td class="lbl">Retorno atribuído (clientes via Instagram)</td><td class="val" id="retMidia">—</td></tr>
+    <tr class="sec"><td colspan="2">Retorno sobre Investimento — Mídia Paga (Instagram + Google)</td></tr>
+    <tr class="calc"><td class="lbl">Clientes novos via mídia paga</td><td class="val" id="qtdMidia">—</td></tr>
+    <tr class="hl"><td class="lbl">Retorno — Mídia Paga</td><td class="val" id="retMidia">—</td></tr>
     <tr class="hl"><td class="lbl">ROAS — Mídia Paga</td><td class="val" id="roasMidia">—</td></tr>
     <tr class="hl"><td class="lbl">ROI — Mídia Paga</td><td class="val" id="roiMidia">—</td></tr>
+    <tr class="warn"><td class="lbl">Lucro (Retorno Mídia Paga − Investimento)</td><td class="val" id="lucroMidia">—</td></tr>
+
+    <tr class="sec"><td colspan="2">Referência — Negócio Total do Mês (todos os canais)</td></tr>
+    <tr class="calc"><td class="lbl">Total de clientes novos</td><td class="val" id="qtdTotal">—</td></tr>
+    <tr class="calc"><td class="lbl">Retorno Total (fechamentos + matrículas)</td><td class="val" id="retTotal">—</td></tr>
 
   </table>
-  <div class="note">Células em <span>amarelo</span> são editáveis. Base: relatório comercial "Resultados Comerciais — Setembro/2026" (Speciale Saúde). O retorno via mídia paga é atribuído ao canal <b>Instagram</b> — não houve, no relatório comercial, fechamento identificado com origem "Google" isoladamente em setembro, mesmo com a campanha de Pesquisa ativa no mês.</div>
+  <div class="note">Células em <span>amarelo</span> são editáveis. Base: relatório comercial "Resultados Comerciais — Setembro/2026" (Speciale Saúde). ROI calculado só sobre o retorno de <b>Instagram + Google</b> (canais ligados ao investimento em tráfego) — Indicação e Presencial entram só como referência do negócio total, não no cálculo de retorno da mídia paga.</div>
 </div>
 <script>
   const fmt = v => v.toLocaleString('pt-BR', {style:'currency',currency:'BRL'});
   function calc() {
-    const impulso = +document.getElementById('impulso').value || 0;
-    const invTotal = impulso;
+    const impulsoMeta = +document.getElementById('impulsoMeta').value || 0;
+    const impulsoGoogle = +document.getElementById('impulsoGoogle').value || 0;
+    const impulso = impulsoMeta + impulsoGoogle;
 
     const qtdConsultorio = +document.getElementById('qtdConsultorio').value || 0;
     const valConsultorio = +document.getElementById('valConsultorio').value || 0;
@@ -83,6 +83,8 @@
 
     const qtdInsta = +document.getElementById('qtdInsta').value || 0;
     const valInsta = +document.getElementById('valInsta').value || 0;
+    const qtdGoogle = +document.getElementById('qtdGoogle').value || 0;
+    const valGoogle = +document.getElementById('valGoogle').value || 0;
     const qtdIndic = +document.getElementById('qtdIndic').value || 0;
     const valIndic = +document.getElementById('valIndic').value || 0;
     const qtdPresencial = +document.getElementById('qtdPresencial').value || 0;
@@ -90,26 +92,22 @@
 
     const qtdTotal = qtdConsultorio + qtdPilates;
     const retTotal = valConsultorio + valPilates;
-    const ticketMedio = qtdTotal > 0 ? retTotal / qtdTotal : 0;
 
-    const roasTotal = invTotal > 0 ? retTotal / invTotal : 0;
-    const roiTotal = invTotal > 0 ? (retTotal - invTotal) / invTotal : 0;
-    const lucroTotal = retTotal - invTotal;
-
-    const retMidia = valInsta;
+    const qtdMidia = qtdInsta + qtdGoogle;
+    const retMidia = valInsta + valGoogle;
     const roasMidia = impulso > 0 ? retMidia / impulso : 0;
     const roiMidia = impulso > 0 ? (retMidia - impulso) / impulso : 0;
+    const lucroMidia = retMidia - impulso;
 
+    document.getElementById('impulso').textContent = fmt(impulso);
     document.getElementById('qtdTotal').textContent = qtdTotal;
     document.getElementById('retTotal').textContent = fmt(retTotal);
-    document.getElementById('ticketMedio').textContent = fmt(ticketMedio);
-    document.getElementById('roasTotal').textContent = roasTotal.toFixed(2).replace('.',',') + 'x';
-    document.getElementById('roiTotal').textContent = (roiTotal*100).toFixed(2).replace('.',',') + '%';
-    document.getElementById('lucroTotal').textContent = fmt(lucroTotal);
 
+    document.getElementById('qtdMidia').textContent = qtdMidia;
     document.getElementById('retMidia').textContent = fmt(retMidia);
     document.getElementById('roasMidia').textContent = roasMidia.toFixed(2).replace('.',',') + 'x';
     document.getElementById('roiMidia').textContent = (roiMidia*100).toFixed(2).replace('.',',') + '%';
+    document.getElementById('lucroMidia').textContent = fmt(lucroMidia);
   }
   calc();
 </script>
