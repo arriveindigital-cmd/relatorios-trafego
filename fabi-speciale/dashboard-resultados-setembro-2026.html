@@ -37,9 +37,7 @@
   <table>
 
     <tr class="sec"><td colspan="2">Investimento <span class="tag">EDITÁVEL</span></td></tr>
-    <tr class="inp"><td class="lbl">Secretária comercial</td><td class="val"><input class="c" id="secretaria" type="number" value="1300" oninput="calc()"></td></tr>
     <tr class="inp"><td class="lbl">Impulsionamento (Google Ads + Meta Ads)</td><td class="val"><input class="c" id="impulso" type="number" value="700" oninput="calc()"></td></tr>
-    <tr class="hl"><td class="lbl">Investimento Total</td><td class="val" id="invTotal">—</td></tr>
 
     <tr class="sec"><td colspan="2">Novos Negócios — Consultório <span class="tag">EDITÁVEL</span></td></tr>
     <tr class="inp"><td class="lbl">Fechamentos novos (qtd.)</td><td class="val"><input class="c" id="qtdConsultorio" type="number" value="7" oninput="calc()"></td></tr>
@@ -62,7 +60,7 @@
     <tr class="calc"><td class="lbl">Ticket Médio por Cliente Novo</td><td class="val" id="ticketMedio">—</td></tr>
     <tr class="hl"><td class="lbl">ROAS Consolidado</td><td class="val" id="roasTotal">—</td></tr>
     <tr class="hl"><td class="lbl">ROI Consolidado</td><td class="val" id="roiTotal">—</td></tr>
-    <tr class="warn"><td class="lbl">Lucro (Retorno − Investimento Total)</td><td class="val" id="lucroTotal">—</td></tr>
+    <tr class="warn"><td class="lbl">Lucro (Retorno − Investimento em Tráfego)</td><td class="val" id="lucroTotal">—</td></tr>
 
     <tr class="sec"><td colspan="2">Retorno sobre Investimento — Mídia Paga Isolada</td></tr>
     <tr class="calc"><td class="lbl">Retorno atribuído (clientes via Instagram)</td><td class="val" id="retMidia">—</td></tr>
@@ -75,9 +73,8 @@
 <script>
   const fmt = v => v.toLocaleString('pt-BR', {style:'currency',currency:'BRL'});
   function calc() {
-    const secretaria = +document.getElementById('secretaria').value || 0;
     const impulso = +document.getElementById('impulso').value || 0;
-    const invTotal = secretaria + impulso;
+    const invTotal = impulso;
 
     const qtdConsultorio = +document.getElementById('qtdConsultorio').value || 0;
     const valConsultorio = +document.getElementById('valConsultorio').value || 0;
@@ -103,7 +100,6 @@
     const roasMidia = impulso > 0 ? retMidia / impulso : 0;
     const roiMidia = impulso > 0 ? (retMidia - impulso) / impulso : 0;
 
-    document.getElementById('invTotal').textContent = fmt(invTotal);
     document.getElementById('qtdTotal').textContent = qtdTotal;
     document.getElementById('retTotal').textContent = fmt(retTotal);
     document.getElementById('ticketMedio').textContent = fmt(ticketMedio);
