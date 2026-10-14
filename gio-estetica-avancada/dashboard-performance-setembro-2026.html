@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard Performance — Gio Estética Avançada (Rochdale) | Setembro 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f0f0; display: flex; justify-content: center; padding: 40px 20px; }
+  .wrapper { width: 620px; }
+  h1 { background: #1a5276; color: #fff; font-size: 15px; font-weight: 700; padding: 12px 16px; }
+  .sub { font-size: 11px; color: #888; text-align: right; padding: 4px 0 10px; }
+  table { width: 100%; border-collapse: collapse; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
+  td { padding: 8px 14px; font-size: 13px; border-bottom: 1px solid #eee; border-right: 1px solid #eee; }
+  td:last-child { border-right: none; }
+  tr:last-child td { border-bottom: none; }
+  td.lbl { color: #222; font-weight: 500; width: 62%; }
+  td.val { text-align: right; font-weight: 600; width: 38%; }
+  tr.sec td { background: #2e4057; color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; padding: 7px 14px; }
+  tr.inp td.lbl { background: #fefde7; }
+  tr.inp td.val { background: #fefde7; }
+  tr.calc td.val { color: #1a5276; }
+  tr.hl td { background: #e8f5e9; }
+  tr.hl td.val { color: #2e7d32; font-size: 14px; }
+  tr.warn td { background: #fff3e0; }
+  tr.warn td.val { color: #e65100; }
+  input.c { border: none; background: transparent; width: 100%; text-align: right; font-size: 13px; font-weight: 600; font-family: inherit; color: #1a1a1a; outline: none; }
+  input.c:focus { background: #fff9c4; border-radius: 3px; }
+  .tag { font-size: 9px; font-weight: 700; background: #fbc02d; color: #fff; padding: 1px 5px; border-radius: 3px; margin-left: 6px; }
+  .note { font-size: 11px; color: #999; text-align: center; margin-top: 10px; }
+  .note span { color: #fbc02d; font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <h1>Dashboard de Performance — Tráfego e Conversão</h1>
+  <div class="sub">Gio Estética Avançada (Rochdale) &nbsp;·&nbsp; Setembro 2026</div>
+  <table>
+
+    <tr class="sec"><td colspan="2">Tráfego — Meta Ads (dados reais)</td></tr>
+    <tr class="calc"><td class="lbl">Conversas geradas (WhatsApp)</td><td class="val">380</td></tr>
+    <tr class="calc"><td class="lbl">Leads gerados (site — Lp-HG)</td><td class="val">61</td></tr>
+    <tr class="calc"><td class="lbl">Total de contatos</td><td class="val">441</td></tr>
+    <tr class="calc"><td class="lbl">Investimento total em Ads</td><td class="val">R$ 3.851,36</td></tr>
+    <tr class="calc"><td class="lbl">Impressões totais</td><td class="val">132.980</td></tr>
+    <tr class="calc"><td class="lbl">Visitas ao perfil (branding)</td><td class="val">914</td></tr>
+
+    <tr class="sec"><td colspan="2">Funil de Agendamento <span class="tag">EDITÁVEL</span></td></tr>
+    <tr class="inp"><td class="lbl">Agendamentos</td><td class="val"><input class="c" id="agend" type="number" value="46" oninput="calc()"></td></tr>
+    <tr class="inp"><td class="lbl">Compareceram</td><td class="val"><input class="c" id="compare" type="number" value="14" oninput="calc()"></td></tr>
+    <tr class="inp"><td class="lbl">Não compareceram (no-show)</td><td class="val"><input class="c" id="naoCompare" type="number" value="32" oninput="calc()"></td></tr>
+    <tr class="inp"><td class="lbl">Protocolos/vendas fechados</td><td class="val"><input class="c" id="fechados" type="number" value="6" oninput="calc()"></td></tr>
+
+    <tr class="sec"><td colspan="2">Faturamento <span class="tag">EDITÁVEL</span></td></tr>
+    <tr class="inp"><td class="lbl">Faturamento Total (informado)</td><td class="val"><input class="c" id="fTotal" type="number" value="24000" oninput="calc()"></td></tr>
+
+    <tr class="sec"><td colspan="2">Taxas de Conversão do Funil</td></tr>
+    <tr class="calc"><td class="lbl">Contato → Agendamento</td><td class="val" id="t0">—</td></tr>
+    <tr class="calc"><td class="lbl">Agendamento → Compareceu</td><td class="val" id="t1">—</td></tr>
+    <tr class="calc"><td class="lbl">Compareceu → Fechado</td><td class="val" id="t2">—</td></tr>
+    <tr class="calc"><td class="lbl">Agendamento → Fechado</td><td class="val" id="t3">—</td></tr>
+    <tr class="hl"><td class="lbl">Contato → Fechado (funil completo)</td><td class="val" id="t4">—</td></tr>
+
+    <tr class="sec"><td colspan="2">Eficiência de Aquisição</td></tr>
+    <tr class="calc"><td class="lbl">Custo por Contato (CPL geral)</td><td class="val" id="cpl">—</td></tr>
+    <tr class="calc"><td class="lbl">Custo por Agendamento</td><td class="val" id="cpa">—</td></tr>
+    <tr class="calc"><td class="lbl">Custo por Comparecimento</td><td class="val" id="cpc">—</td></tr>
+    <tr class="hl"><td class="lbl">CAC Geral (por fechamento)</td><td class="val" id="cacF">—</td></tr>
+
+    <tr class="sec"><td colspan="2">Retorno sobre Investimento</td></tr>
+    <tr class="hl"><td class="lbl">ROAS Total</td><td class="val" id="roas">—</td></tr>
+    <tr class="hl"><td class="lbl">ROI Total</td><td class="val" id="roi">—</td></tr>
+    <tr class="warn"><td class="lbl">Lucro Gerado (Faturamento − Ads)</td><td class="val" id="lucro">—</td></tr>
+
+  </table>
+  <div class="note">Células em <span>amarelo</span> são editáveis. Tráfego fixo — dados reais de Setembro 2026 (Meta Ads: CBO + WPP + Lp-HG). CPL geral considera os 441 contatos (conversas de WhatsApp + leads do site) como base do funil, já que ambos os canais alimentam a mesma agenda.</div>
+</div>
+<script>
+  const CONTATOS = 441, INV = 3851.36;
+  const fmt = v => v.toLocaleString('pt-BR', {style:'currency',currency:'BRL'});
+  const pct = v => isFinite(v) ? (v*100).toFixed(2).replace('.',',') + '%' : '—';
+  function calc() {
+    const agend = +document.getElementById('agend').value || 0;
+    const compare = +document.getElementById('compare').value || 0;
+    const fechados = +document.getElementById('fechados').value || 0;
+    const fT = +document.getElementById('fTotal').value || 0;
+
+    document.getElementById('t0').textContent = pct(agend / CONTATOS);
+    document.getElementById('t1').textContent = agend > 0 ? pct(compare / agend) : '—';
+    document.getElementById('t2').textContent = compare > 0 ? pct(fechados / compare) : '—';
+    document.getElementById('t3').textContent = agend > 0 ? pct(fechados / agend) : '—';
+    document.getElementById('t4').textContent = pct(fechados / CONTATOS);
+
+    document.getElementById('cpl').textContent = fmt(INV / CONTATOS);
+    document.getElementById('cpa').textContent = agend > 0 ? fmt(INV / agend) : '—';
+    document.getElementById('cpc').textContent = compare > 0 ? fmt(INV / compare) : '—';
+    document.getElementById('cacF').textContent = fechados > 0 ? fmt(INV / fechados) : '—';
+
+    document.getElementById('roas').textContent = (fT / INV).toFixed(2).replace('.',',') + 'x';
+    document.getElementById('roi').textContent = ((fT - INV) / INV).toFixed(2).replace('.',',') + 'x';
+    document.getElementById('lucro').textContent = fmt(fT - INV);
+  }
+  calc();
+</script>
+</body>
+</html>
