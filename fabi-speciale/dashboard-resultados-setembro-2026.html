@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard de Resultados — Speciale Saúde | Setembro 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f0f0; display: flex; justify-content: center; padding: 40px 20px; }
+  .wrapper { width: 620px; }
+  h1 { background: #1a5276; color: #fff; font-size: 15px; font-weight: 700; padding: 12px 16px; }
+  .sub { font-size: 11px; color: #888; text-align: right; padding: 4px 0 10px; }
+  table { width: 100%; border-collapse: collapse; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
+  td { padding: 8px 14px; font-size: 13px; border-bottom: 1px solid #eee; border-right: 1px solid #eee; }
+  td:last-child { border-right: none; }
+  tr:last-child td { border-bottom: none; }
+  td.lbl { color: #222; font-weight: 500; width: 58%; }
+  td.val { text-align: right; font-weight: 600; width: 42%; }
+  tr.sec td { background: #2e4057; color: #fff; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; padding: 7px 14px; }
+  tr.inp td.lbl { background: #fefde7; }
+  tr.inp td.val { background: #fefde7; }
+  tr.calc td.val { color: #1a5276; }
+  tr.hl td { background: #e8f5e9; }
+  tr.hl td.val { color: #2e7d32; font-size: 14px; }
+  tr.warn td { background: #fff3e0; }
+  tr.warn td.val { color: #e65100; }
+  input.c { border: none; background: transparent; width: 100%; text-align: right; font-size: 13px; font-weight: 600; font-family: inherit; color: #1a1a1a; outline: none; }
+  input.c:focus { background: #fff9c4; border-radius: 3px; }
+  .tag { font-size: 9px; font-weight: 700; background: #fbc02d; color: #fff; padding: 1px 5px; border-radius: 3px; margin-left: 6px; }
+  .note { font-size: 11px; color: #999; text-align: center; margin-top: 10px; }
+  .note span { color: #fbc02d; font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <h1>Dashboard de Resultados — Comercial e Marketing</h1>
+  <div class="sub">Speciale Saúde &nbsp;·&nbsp; Setembro 2026</div>
+  <table>
+
+    <tr class="sec"><td colspan="2">Investimento <span class="tag">EDITÁVEL</span></td></tr>
+    <tr class="inp"><td class="lbl">Secretária comercial</td><td class="val"><input class="c" id="secretaria" type="number" value="1300" oninput="calc()"></td></tr>
+    <tr class="inp"><td class="lbl">Impulsionamento (Google Ads + Meta Ads)</td><td class="val"><input class="c" id="impulso" type="number" value="700" oninput="calc()"></td></tr>
+    <tr class="hl"><td class="lbl">Investimento Total</td><td class="val" id="invTotal">—</td></tr>
+
+    <tr class="sec"><td colspan="2">Novos Negócios — Consultório <span class="tag">EDITÁVEL</span></td></tr>
+    <tr class="inp"><td class="lbl">Fechamentos novos (qtd.)</td><td class="val"><input class="c" id="qtdConsultorio" type="number" value="7" oninput="calc()"></td></tr>
+    <tr class="inp"><td class="lbl">Valor total fechado</td><td class="val"><input class="c" id="valConsultorio" type="number" value="4258" oninput="calc()"></td></tr>
+
+    <tr class="sec"><td colspan="2">Novos Negócios — Pilates <span class="tag">EDITÁVEL</span></td></tr>
+    <tr class="inp"><td class="lbl">Novas matrículas (qtd.)</td><td class="val"><input class="c" id="qtdPilates" type="number" value="5" oninput="calc()"></td></tr>
+    <tr class="inp"><td class="lbl">Valor total matriculado</td><td class="val"><input class="c" id="valPilates" type="number" value="1693" oninput="calc()"></td></tr>
+
+    <tr class="sec"><td colspan="2">Por Canal de Origem <span class="tag">EDITÁVEL</span></td></tr>
+    <tr class="inp"><td class="lbl">Instagram — clientes · valor</td><td class="val"><input class="c" id="qtdInsta" type="number" value="7" style="width:30%; display:inline-block;" oninput="calc()"> &nbsp;<input class="c" id="valInsta" type="number" value="3677" style="width:60%; display:inline-block;" oninput="calc()"></td></tr>
+    <tr class="inp"><td class="lbl">Indicação — clientes · valor</td><td class="val"><input class="c" id="qtdIndic" type="number" value="4" style="width:30%; display:inline-block;" oninput="calc()"> &nbsp;<input class="c" id="valIndic" type="number" value="1974" style="width:60%; display:inline-block;" oninput="calc()"></td></tr>
+    <tr class="inp"><td class="lbl">Presencial — clientes · valor</td><td class="val"><input class="c" id="qtdPresencial" type="number" value="1" style="width:30%; display:inline-block;" oninput="calc()"> &nbsp;<input class="c" id="valPresencial" type="number" value="300" style="width:60%; display:inline-block;" oninput="calc()"></td></tr>
+
+    <tr class="sec"><td colspan="2">Retorno Total</td></tr>
+    <tr class="calc"><td class="lbl">Total de clientes novos</td><td class="val" id="qtdTotal">—</td></tr>
+    <tr class="hl"><td class="lbl">Retorno Total (fechamentos + matrículas)</td><td class="val" id="retTotal">—</td></tr>
+
+    <tr class="sec"><td colspan="2">Retorno sobre Investimento — Consolidado</td></tr>
+    <tr class="calc"><td class="lbl">Ticket Médio por Cliente Novo</td><td class="val" id="ticketMedio">—</td></tr>
+    <tr class="hl"><td class="lbl">ROAS Consolidado</td><td class="val" id="roasTotal">—</td></tr>
+    <tr class="hl"><td class="lbl">ROI Consolidado</td><td class="val" id="roiTotal">—</td></tr>
+    <tr class="warn"><td class="lbl">Lucro (Retorno − Investimento Total)</td><td class="val" id="lucroTotal">—</td></tr>
+
+    <tr class="sec"><td colspan="2">Retorno sobre Investimento — Mídia Paga Isolada</td></tr>
+    <tr class="calc"><td class="lbl">Retorno atribuído (clientes via Instagram)</td><td class="val" id="retMidia">—</td></tr>
+    <tr class="hl"><td class="lbl">ROAS — Mídia Paga</td><td class="val" id="roasMidia">—</td></tr>
+    <tr class="hl"><td class="lbl">ROI — Mídia Paga</td><td class="val" id="roiMidia">—</td></tr>
+
+  </table>
+  <div class="note">Células em <span>amarelo</span> são editáveis. Base: relatório comercial "Resultados Comerciais — Setembro/2026" (Speciale Saúde). O retorno via mídia paga é atribuído ao canal <b>Instagram</b> — não houve, no relatório comercial, fechamento identificado com origem "Google" isoladamente em setembro, mesmo com a campanha de Pesquisa ativa no mês.</div>
+</div>
+<script>
+  const fmt = v => v.toLocaleString('pt-BR', {style:'currency',currency:'BRL'});
+  function calc() {
+    const secretaria = +document.getElementById('secretaria').value || 0;
+    const impulso = +document.getElementById('impulso').value || 0;
+    const invTotal = secretaria + impulso;
+
+    const qtdConsultorio = +document.getElementById('qtdConsultorio').value || 0;
+    const valConsultorio = +document.getElementById('valConsultorio').value || 0;
+    const qtdPilates = +document.getElementById('qtdPilates').value || 0;
+    const valPilates = +document.getElementById('valPilates').value || 0;
+
+    const qtdInsta = +document.getElementById('qtdInsta').value || 0;
+    const valInsta = +document.getElementById('valInsta').value || 0;
+    const qtdIndic = +document.getElementById('qtdIndic').value || 0;
+    const valIndic = +document.getElementById('valIndic').value || 0;
+    const qtdPresencial = +document.getElementById('qtdPresencial').value || 0;
+    const valPresencial = +document.getElementById('valPresencial').value || 0;
+
+    const qtdTotal = qtdConsultorio + qtdPilates;
+    const retTotal = valConsultorio + valPilates;
+    const ticketMedio = qtdTotal > 0 ? retTotal / qtdTotal : 0;
+
+    const roasTotal = invTotal > 0 ? retTotal / invTotal : 0;
+    const roiTotal = invTotal > 0 ? (retTotal - invTotal) / invTotal : 0;
+    const lucroTotal = retTotal - invTotal;
+
+    const retMidia = valInsta;
+    const roasMidia = impulso > 0 ? retMidia / impulso : 0;
+    const roiMidia = impulso > 0 ? (retMidia - impulso) / impulso : 0;
+
+    document.getElementById('invTotal').textContent = fmt(invTotal);
+    document.getElementById('qtdTotal').textContent = qtdTotal;
+    document.getElementById('retTotal').textContent = fmt(retTotal);
+    document.getElementById('ticketMedio').textContent = fmt(ticketMedio);
+    document.getElementById('roasTotal').textContent = roasTotal.toFixed(2).replace('.',',') + 'x';
+    document.getElementById('roiTotal').textContent = (roiTotal*100).toFixed(2).replace('.',',') + '%';
+    document.getElementById('lucroTotal').textContent = fmt(lucroTotal);
+
+    document.getElementById('retMidia').textContent = fmt(retMidia);
+    document.getElementById('roasMidia').textContent = roasMidia.toFixed(2).replace('.',',') + 'x';
+    document.getElementById('roiMidia').textContent = (roiMidia*100).toFixed(2).replace('.',',') + '%';
+  }
+  calc();
+</script>
+</body>
+</html>
