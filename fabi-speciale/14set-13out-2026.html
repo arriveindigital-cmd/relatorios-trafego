@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Relatório de Tráfego — Dra. Fabi Speciale</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    @page { size: A4; margin: 12mm 0; }
+
+    html { background: #E8E5E0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: #F7F6F4;
+      color: #181818;
+      -webkit-font-smoothing: antialiased;
+      width: 210mm;
+      margin: 0 auto;
+      padding: 36px 44px 48px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding-bottom: 18px;
+      border-bottom: 1.5px solid #181818;
+      margin-bottom: 28px;
+    }
+
+    .header-title { font-size: 20px; font-weight: 600; letter-spacing: -0.025em; }
+    .header-meta { text-align: right; font-size: 11px; color: #ABABAB; line-height: 1.7; }
+
+    .section { margin-bottom: 24px; }
+
+    .section-title {
+      font-size: 9px; letter-spacing: 0.13em; text-transform: uppercase; color: #C0BCB5; margin-bottom: 10px;
+    }
+
+    .kpi-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+
+    .kpi { background: #fff; padding: 14px 16px; border-radius: 3px; }
+    .kpi-label { font-size: 10px; color: #C0BCB5; letter-spacing: 0.03em; margin-bottom: 7px; }
+    .kpi-value { font-size: 22px; font-weight: 700; letter-spacing: -0.04em; line-height: 1; }
+    .kpi-sub { font-size: 10px; color: #D4D0CA; margin-top: 4px; }
+
+    .cards-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+    .card { background: #fff; border-radius: 3px; padding: 18px 20px; position: relative; }
+    .card.winner { border-left: 3px solid #2F7A57; }
+
+    .card-name { font-size: 13px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 2px; }
+    .card-sub { font-size: 10px; color: #C0BCB5; margin-bottom: 16px; }
+
+    .card-metrics { display: flex; }
+    .card-metric { flex: 1; }
+    .card-metric + .card-metric { border-left: 1px solid #F0EDE8; padding-left: 14px; }
+
+    .cm-label { font-size: 9px; letter-spacing: 0.07em; text-transform: uppercase; color: #C0BCB5; margin-bottom: 5px; }
+    .cm-value { font-size: 18px; font-weight: 600; letter-spacing: -0.02em; }
+    .cm-value.good { color: #2F7A57; }
+
+    .card-metrics-row2 { display: flex; margin-top: 12px; padding-top: 12px; border-top: 1px solid #F0EDE8; }
+    .card-metrics-row2 .card-metric .cm-value { font-size: 14px; }
+
+    .badge {
+      position: absolute; top: 14px; right: 14px; font-size: 8px; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: #2F7A57; background: #EBF5EF; border-radius: 20px; padding: 3px 9px;
+    }
+
+    .table-wrap { background: #fff; border-radius: 3px; overflow: hidden; }
+    .creatives-table { width: 100%; border-collapse: collapse; }
+    .creatives-table thead tr { border-bottom: 1px solid #F0EDE8; }
+    .creatives-table th {
+      font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: #C0BCB5;
+      font-weight: 500; padding: 11px 14px; text-align: left; white-space: nowrap;
+    }
+    .creatives-table td { font-size: 11.5px; padding: 10px 14px; border-bottom: 1px solid #F7F6F4; vertical-align: middle; }
+    .creatives-table tbody tr:last-child td { border-bottom: none; }
+    .creatives-table tbody tr:hover td { background: #FAFAF9; }
+    .creatives-table tbody tr.row-top td:first-child { border-left: 3px solid #2F7A57; padding-left: 11px; }
+    .creatives-table tbody tr.row-zero td { color: #C0BCB5; }
+
+    .creative-link {
+      color: #181818; text-decoration: none; font-weight: 500; display: inline-flex; align-items: center; gap: 4px;
+    }
+    .creative-link:hover { color: #2F7A57; }
+    .link-arrow { font-size: 10px; color: #C0BCB5; flex-shrink: 0; }
+
+    .tag {
+      display: inline-block; font-size: 8px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase;
+      padding: 2px 8px; border-radius: 20px; white-space: nowrap;
+    }
+    .tag-wpp { color: #2F7A57; background: #EBF5EF; }
+
+    .cpl-good { color: #2F7A57; font-weight: 700; }
+    .cpl-mid  { color: #181818; font-weight: 600; }
+    .cpl-high { color: #B45309; font-weight: 600; }
+
+    td.num { text-align: right; }
+    th.num { text-align: right; }
+
+    .insight { background: #181818; border-radius: 3px; padding: 24px 28px; }
+    .insight-text { font-size: 13px; line-height: 1.8; color: #D8D4CE; }
+    .insight-text strong { color: #fff; }
+
+    .note-box { background: #fff; border-left: 3px solid #C0BCB5; border-radius: 3px; padding: 14px 18px; font-size: 11.5px; color: #6B6B6B; line-height: 1.6; }
+
+    .footer {
+      margin-top: 28px; padding-top: 14px; border-top: 1px solid #E5E2DC;
+      display: flex; justify-content: space-between; font-size: 10px; color: #D0CCC6;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="header-title">Relatório de Tráfego Pago</div>
+    <div class="header-meta">
+      <div>Dra. Fabi Speciale</div>
+      <div>Meta Ads &middot; 14 set &ndash; 13 out &middot; 2026 (últimos 30 dias)</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="note-box">Primeiro relatório gerado pra esse cliente — a pasta e o cadastro completo ainda estavam pendentes (só a conta de anúncio foi encontrada em varredura recente). Período cobre os últimos 30 dias corridos, não o mês calendário — não há relatório anterior pra comparação mês a mês ainda.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Resultados do período</div>
+    <div class="kpi-row">
+      <div class="kpi">
+        <div class="kpi-label">Investimento total</div>
+        <div class="kpi-value">R$840,27</div>
+        <div class="kpi-sub">Uma campanha ativa</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Conversas geradas</div>
+        <div class="kpi-value">115</div>
+        <div class="kpi-sub">Via WhatsApp</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Custo por conversa</div>
+        <div class="kpi-value">R$7,31</div>
+        <div class="kpi-sub">Média da campanha</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Pessoas alcançadas</div>
+        <div class="kpi-value">10.939</div>
+        <div class="kpi-sub">Frequência 2,19×</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">CPM médio</div>
+        <div class="kpi-value">R$35,08</div>
+        <div class="kpi-sub">CTR 3,00%</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Campanha ativa</div>
+    <div class="cards-2">
+      <div class="card winner" style="grid-column: span 2;">
+        <div class="badge">Única campanha do período</div>
+        <div class="card-name">[Leads] [WPP] - Pacientes Local - Adv+</div>
+        <div class="card-sub">7 criativos testados &middot; Advantage+ Local</div>
+        <div class="card-metrics">
+          <div class="card-metric">
+            <div class="cm-label">Investido</div>
+            <div class="cm-value">R$840,27</div>
+          </div>
+          <div class="card-metric">
+            <div class="cm-label">Conversas</div>
+            <div class="cm-value good">115</div>
+          </div>
+          <div class="card-metric">
+            <div class="cm-label">Custo / conv.</div>
+            <div class="cm-value good">R$7,31</div>
+          </div>
+        </div>
+        <div class="card-metrics card-metrics-row2">
+          <div class="card-metric">
+            <div class="cm-label">CTR</div>
+            <div class="cm-value">3,00%</div>
+          </div>
+          <div class="card-metric">
+            <div class="cm-label">Cliques</div>
+            <div class="cm-value">718</div>
+          </div>
+          <div class="card-metric">
+            <div class="cm-label">CPM</div>
+            <div class="cm-value">R$35,08</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Criativos — ordenado por CPL (menor = melhor)</div>
+    <div class="table-wrap">
+      <table class="creatives-table">
+        <thead>
+          <tr>
+            <th>Criativo</th>
+            <th>Campanha</th>
+            <th class="num">Invest.</th>
+            <th class="num">Conv.</th>
+            <th class="num">CPL</th>
+            <th class="num">CTR</th>
+            <th class="num">CPM</th>
+            <th class="num">Impressões</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="row-top">
+            <td><a class="creative-link" href="https://www.instagram.com/p/DdHo-JugzLY/" target="_blank">AD03 — Caso cirúrgico <span class="link-arrow">↗</span></a></td>
+            <td><span class="tag tag-wpp">WhatsApp</span></td>
+            <td class="num">R$11,80</td>
+            <td class="num">3</td>
+            <td class="num cpl-good">R$3,93</td>
+            <td class="num">4,69%</td>
+            <td class="num">R$36,88</td>
+            <td class="num">320</td>
+          </tr>
+          <tr>
+            <td><a class="creative-link" href="https://www.instagram.com/p/DdZimuZAFEv/" target="_blank">AD05 — Fez exame e apareceu... <span class="link-arrow">↗</span></a></td>
+            <td><span class="tag tag-wpp">WhatsApp</span></td>
+            <td class="num">R$703,95</td>
+            <td class="num">101</td>
+            <td class="num cpl-good">R$6,97</td>
+            <td class="num">3,05%</td>
+            <td class="num">R$34,24</td>
+            <td class="num">20.558</td>
+          </tr>
+          <tr>
+            <td><a class="creative-link" href="https://www.instagram.com/p/DdZimekAc2x/" target="_blank">AD07 — Esse resultado de exame <span class="link-arrow">↗</span></a></td>
+            <td><span class="tag tag-wpp">WhatsApp</span></td>
+            <td class="num">R$21,38</td>
+            <td class="num">3</td>
+            <td class="num cpl-good">R$7,13</td>
+            <td class="num">2,78%</td>
+            <td class="num">R$45,68</td>
+            <td class="num">468</td>
+          </tr>
+          <tr>
+            <td><a class="creative-link" href="https://www.instagram.com/p/DdZimlEAZFz/" target="_blank">AD04 — Sabe porque aquele remédio não resolve sua dor? <span class="link-arrow">↗</span></a></td>
+            <td><span class="tag tag-wpp">WhatsApp</span></td>
+            <td class="num">R$40,84</td>
+            <td class="num">5</td>
+            <td class="num cpl-mid">R$8,17</td>
+            <td class="num">2,25%</td>
+            <td class="num">R$38,28</td>
+            <td class="num">1.067</td>
+          </tr>
+          <tr>
+            <td><a class="creative-link" href="https://www.instagram.com/p/DdZimjdgVij/" target="_blank">AD06 — E se existisse um vídeo que te explica <span class="link-arrow">↗</span></a></td>
+            <td><span class="tag tag-wpp">WhatsApp</span></td>
+            <td class="num">R$62,30</td>
+            <td class="num">3</td>
+            <td class="num cpl-high">R$20,77</td>
+            <td class="num">2,59%</td>
+            <td class="num">R$40,38</td>
+            <td class="num">1.543</td>
+          </tr>
+          <tr class="row-zero">
+            <td>AD01 — Atenção, tenho um convite</td>
+            <td><span class="tag tag-wpp">WhatsApp</span></td>
+            <td class="num">R$0,00</td>
+            <td class="num">—</td>
+            <td class="num">—</td>
+            <td class="num">—</td>
+            <td class="num">—</td>
+            <td class="num">0</td>
+          </tr>
+          <tr class="row-zero">
+            <td>AD02 — Sua dor melhora por alguns dias e volta</td>
+            <td><span class="tag tag-wpp">WhatsApp</span></td>
+            <td class="num">R$0,00</td>
+            <td class="num">—</td>
+            <td class="num">—</td>
+            <td class="num">—</td>
+            <td class="num">—</td>
+            <td class="num">0</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Análise do período</div>
+    <div class="insight">
+      <div class="insight-text">
+        Nos últimos 30 dias a conta gerou <strong>115 conversas</strong> ao custo médio de <strong>R$7,31</strong> — bom patamar pra uma campanha que roda só com Advantage+ Local, sem concorrência de outras campanhas na conta. O resultado é quase todo puxado por um único criativo: <strong>AD05 — "Fez exame e apareceu..."</strong> concentrou 84% do investimento (R$703,95) e 88% das conversas (101), com CPL de R$6,97 — abaixo da média da campanha. O <strong>AD03 — "Caso cirúrgico"</strong> teve o menor CPL absoluto (R$3,93), mas com volume baixo (R$11,80 investidos, 3 conversas) — vale testar mais verba nele pra ver se escala mantendo esse custo. O <strong>AD06 — "E se existisse um vídeo..."</strong> ficou bem atrás (R$20,77/conversa) e é candidato a pausa. Dois criativos (AD01 e AD02) não rodaram no período — seja porque foram pausados ou porque o Advantage+ priorizou os outros cinco. Prioridade: escalar AD03 com mais orçamento pra validar o CPL baixo em volume maior, manter AD05 como base, e pausar ou revisar o AD06.
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>Dra. Fabi Speciale &middot; Meta Ads &middot; 14 set &ndash; 13 out 2026</span>
+    <span>Gerado em outubro de 2026</span>
+  </div>
+
+</body>
+</html>
