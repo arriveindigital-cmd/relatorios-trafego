@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Relatório de Tráfego — Gio Estética Avançada</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    @page { size: A4; margin: 12mm 0; }
+
+    html { background: #E8E5E0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: #F7F6F4;
+      color: #181818;
+      -webkit-font-smoothing: antialiased;
+      width: 210mm;
+      margin: 0 auto;
+      padding: 36px 44px 48px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding-bottom: 18px;
+      border-bottom: 1.5px solid #181818;
+      margin-bottom: 28px;
+    }
+
+    .header-title { font-size: 20px; font-weight: 600; letter-spacing: -0.025em; }
+    .header-meta { text-align: right; font-size: 11px; color: #ABABAB; line-height: 1.7; }
+
+    .section { margin-bottom: 24px; }
+
+    .section-title {
+      font-size: 9px; letter-spacing: 0.13em; text-transform: uppercase; color: #C0BCB5; margin-bottom: 10px;
+    }
+
+    .kpi-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+
+    .kpi { background: #fff; padding: 14px 16px; border-radius: 3px; }
+    .kpi-label { font-size: 10px; color: #C0BCB5; letter-spacing: 0.03em; margin-bottom: 7px; }
+    .kpi-value { font-size: 22px; font-weight: 700; letter-spacing: -0.04em; line-height: 1; }
+    .kpi-sub { font-size: 10px; color: #D4D0CA; margin-top: 4px; }
+
+    .cards-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+
+    .card { background: #fff; border-radius: 3px; padding: 14px 15px; position: relative; }
+    .card.winner { border-left: 3px solid #2F7A57; }
+    .card.brand { border-left: 3px solid #8B7FD6; }
+    .card.new { border-left: 3px solid #6B7280; }
+
+    .card-name { font-size: 11.5px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 2px; padding-right: 54px; }
+    .card-sub { font-size: 9px; color: #C0BCB5; margin-bottom: 12px; }
+
+    .card-metrics { display: flex; flex-wrap: wrap; gap: 8px 0; }
+    .card-metric { flex: 1 1 50%; }
+
+    .cm-label { font-size: 8px; letter-spacing: 0.06em; text-transform: uppercase; color: #C0BCB5; margin-bottom: 4px; }
+    .cm-value { font-size: 14px; font-weight: 600; letter-spacing: -0.02em; }
+    .cm-value.good { color: #2F7A57; }
+    .cm-value.brand { color: #8B7FD6; }
+
+    .card-metrics-row2 {
+      display: flex; margin-top: 10px; padding-top: 10px; border-top: 1px solid #F0EDE8;
+      flex-wrap: wrap; gap: 8px 0;
+    }
+    .card-metrics-row2 .card-metric { flex: 1 1 33%; }
+    .card-metrics-row2 .card-metric .cm-value { font-size: 11px; }
+
+    .badge {
+      position: absolute; top: 12px; right: 12px; font-size: 7px; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: #2F7A57; background: #EBF5EF; border-radius: 20px; padding: 3px 7px;
+    }
+    .badge.brand { color: #8B7FD6; background: #F1EEFB; }
+    .badge.new { color: #6B7280; background: #F3F4F6; }
+
+    .table-wrap { background: #fff; border-radius: 3px; overflow: hidden; }
+    .creatives-table { width: 100%; border-collapse: collapse; }
+    .creatives-table thead tr { border-bottom: 1px solid #F0EDE8; }
+    .creatives-table th {
+      font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: #C0BCB5;
+      font-weight: 500; padding: 10px 13px; text-align: left; white-space: nowrap;
+    }
+    .creatives-table td { font-size: 11px; padding: 9px 13px; border-bottom: 1px solid #F7F6F4; vertical-align: middle; }
+    .creatives-table tbody tr:last-child td { border-bottom: none; }
+    .creatives-table tbody tr:hover td { background: #FAFAF9; }
+    .creatives-table tbody tr.row-top td:first-child { border-left: 3px solid #2F7A57; padding-left: 10px; }
+    .creatives-table tbody tr.row-zero td { color: #C0BCB5; }
+    .creatives-table tbody tr.row-rest td { color: #ABABAB; font-style: italic; }
+
+    .creative-link {
+      color: #181818; text-decoration: none; font-weight: 500; display: inline-flex; align-items: center; gap: 4px;
+    }
+    .creative-link:hover { color: #2F7A57; }
+    .link-arrow { font-size: 10px; color: #C0BCB5; flex-shrink: 0; }
+
+    .cpl-good { color: #2F7A57; font-weight: 700; }
+    .cpl-mid  { color: #181818; font-weight: 600; }
+    .cpl-high { color: #B45309; font-weight: 600; }
+
+    td.num { text-align: right; }
+    th.num { text-align: right; }
+
+    .insight { background: #181818; border-radius: 3px; padding: 24px 28px; }
+    .insight-text { font-size: 12.5px; line-height: 1.8; color: #D8D4CE; }
+    .insight-text strong { color: #fff; }
+
+    .footer {
+      margin-top: 28px; padding-top: 14px; border-top: 1px solid #E5E2DC;
+      display: flex; justify-content: space-between; font-size: 10px; color: #D0CCC6;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-title">Relatório de Tráfego Pago</div>
+    <div class="header-meta">
+      <div>Gio Estética Avançada (Rochdale)</div>
+      <div>Meta Ads &middot; 1&ndash;30 set &middot; 2026</div>
+    </div>
+  </div>
+
+  <!-- KPIs -->
+  <div class="section">
+    <div class="section-title">Resultados do período</div>
+    <div class="kpi-row">
+      <div class="kpi">
+        <div class="kpi-label">Investimento total</div>
+        <div class="kpi-value">R$3.851</div>
+        <div class="kpi-sub">R$3.440 performance &middot; R$412 branding</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Conversas (WhatsApp)</div>
+        <div class="kpi-value">380</div>
+        <div class="kpi-sub">Custo R$7,06 &middot; CBO + WPP</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Leads (site — Lp-HG)</div>
+        <div class="kpi-value">61</div>
+        <div class="kpi-sub">Custo R$12,39</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Pessoas alcançadas</div>
+        <div class="kpi-value">73.022</div>
+        <div class="kpi-sub">Soma das campanhas</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">CPM médio</div>
+        <div class="kpi-value">R$34,44</div>
+        <div class="kpi-sub">Campanhas de performance</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Cliques no link</div>
+        <div class="kpi-value">2.791</div>
+        <div class="kpi-sub">Total performance</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Campanhas -->
+  <div class="section">
+    <div class="section-title">Comparativo de campanhas</div>
+    <div class="cards-4">
+
+      <div class="card">
+        <div class="card-name">[ENG] [CBO] 07.10</div>
+        <div class="card-sub">4 criativos ativos &middot; CBO</div>
+        <div class="card-metrics">
+          <div class="card-metric">
+            <div class="cm-label">Investido</div>
+            <div class="cm-value">R$1.399,26</div>
+          </div>
+          <div class="card-metric">
+            <div class="cm-label">Conversas</div>
+            <div class="cm-value">196</div>
+          </div>
+        </div>
+        <div class="card-metrics card-metrics-row2">
+          <div class="card-metric">
+            <div class="cm-label">Custo/conv.</div>
+            <div class="cm-value">R$7,14</div>
+          </div>
+          <div class="card-metric">
+            <div class="cm-label">CTR</div>
+            <div class="cm-value">2,32%</div>
+          </div>
+          <div class="card-metric">
+            <div class="cm-label">CPM</div>
+            <div class="cm-value">R$29,66</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card winner">
+        <div class="badge">Melhor CPL</div>
+        <div class="card-name">[ENG][WPP] Ads L1 — Adv+</div>
+        <div class="card-sub">14 criativos ativos &middot; Advantage+</div>
+        <div class="card-metrics">
+          <div class="card-metric">
+            <div class="cm-label">Investido</div>
+            <div class="cm-value">R$1.284,85</div>
+          </div>
+          <div class="card-metric">
+            <div class="cm-label">Conversas</div>
+            <div class="cm-value good">184</div>
+          </div>
+        </div>
+        <div class="card-metrics card-metrics-row2">
+          <div class="card-metric">
+            <div class="cm-label">Custo/conv.</div>
+            <div class="cm-value good">R$6,98</div>
+          </div>
+          <div class="card-metric">
+            <div class="cm-label">CTR</div>
+            <div class="cm-value">2,55%</div>
+          </div>
+          <div class="card-metric">
+            <div class="cm-label">CPM</div>
+            <div class="cm-value">R$39,19</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card new">
+        <div class="badge new">Novo no mês</div>
+        <div class="card-name">[Leads][Lp-HG] Adv+</div>
+        <div class="card-sub">Formulário no site &middot; 14 criativos</div>
+        <div class="card-metrics">
+          <div class="card-metric">
+            <div class="cm-label">Investido</div>
+            <div class="cm-value">R$755,72</div>
+          </div>
+          <div class="card-metric">
+            <div class="cm-label">Leads (site)</div>
+            <div class="cm-value">61</div>
+          </div>
+        </div>
+        <div class="card-metrics card-metrics-row2">
+          <div class="card-metric">
+            <div class="cm-label">Custo/lead</div>
+            <div class="cm-value">R$12,39</div>
+          </div>
+          <div class="card-metric">
+            <div class="cm-label">CTR</div>
+            <div class="cm-value">4,31%</div>
+          </div>
+          <div class="card-metric">
+            <div class="cm-label">CPM</div>
+            <div class="cm-value">R$37,94</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card brand">
+        <div class="badge brand">Branding</div>
+        <div class="card-name">Posts de Branding</div>
+        <div class="card-sub">4 posts &middot; mês inteiro</div>
+        <div class="card-metrics">
+          <div class="card-metric">
+            <div class="cm-label">Investido</div>
+            <div class="cm-value">R$411,53</div>
+          </div>
+          <div class="card-metric">
+            <div class="cm-label">Visitas</div>
+            <div class="cm-value brand">914</div>
+          </div>
+        </div>
+        <div class="card-metrics card-metrics-row2">
+          <div class="card-metric">
+            <div class="cm-label">Custo/visita</div>
+            <div class="cm-value brand">R$0,45</div>
+          </div>
+          <div class="card-metric">
+            <div class="cm-label">CTR</div>
+            <div class="cm-value">3,24%</div>
+          </div>
+          <div class="card-metric">
+            <div class="cm-label">CPM</div>
+            <div class="cm-value">R$12,43</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Criativos CBO -->
+  <div class="section">
+    <div class="section-title">Criativos — CBO 07.10 — ordenado por CPL (menor = melhor)</div>
+    <div class="table-wrap">
+      <table class="creatives-table">
+        <thead>
+          <tr><th>Criativo</th><th class="num">Invest.</th><th class="num">Conv.</th><th class="num">CPL</th><th class="num">CTR</th><th class="num">CPM</th><th class="num">Impressões</th></tr>
+        </thead>
+        <tbody>
+          <tr class="row-top">
+            <td><a class="creative-link" href="https://www.instagram.com/p/DU3MipxAGXy/" target="_blank">AD — Harmonização começa na análise (v2) <span class="link-arrow">↗</span></a></td>
+            <td class="num">R$561,77</td><td class="num">84</td><td class="num cpl-good">R$6,69</td><td class="num">2,70%</td><td class="num">R$30,84</td><td class="num">18.216</td>
+          </tr>
+          <tr>
+            <td><a class="creative-link" href="https://www.instagram.com/p/DU3M188ADIe/" target="_blank">AD — Harmonização começa na análise (v1) <span class="link-arrow">↗</span></a></td>
+            <td class="num">R$813,36</td><td class="num">111</td><td class="num cpl-good">R$7,33</td><td class="num">2,12%</td><td class="num">R$29,26</td><td class="num">27.793</td>
+          </tr>
+          <tr class="row-zero">
+            <td><a class="creative-link" href="https://www.instagram.com/p/DUtfShVAB0T/" target="_blank">AD — Depilação Gio (v1) <span class="link-arrow">↗</span></a></td>
+            <td class="num">R$16,05</td><td class="num">1</td><td class="num cpl-high">R$16,05</td><td class="num">1,42%</td><td class="num">R$18,93</td><td class="num">848</td>
+          </tr>
+          <tr class="row-zero">
+            <td><a class="creative-link" href="https://www.instagram.com/p/DUtfo7ZAFAt/" target="_blank">AD — Depilação Gio (v2) <span class="link-arrow">↗</span></a></td>
+            <td class="num">R$8,08</td><td class="num">0</td><td class="num">—</td><td class="num">1,23%</td><td class="num">R$24,79</td><td class="num">326</td>
+          </tr>
+          <tr class="row-rest">
+            <td>+ 10 outros criativos (cadastrados, zero veiculação no mês)</td>
+            <td class="num">R$0,00</td><td class="num">0</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">0</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Criativos WPP -->
+  <div class="section">
+    <div class="section-title">Criativos — WPP Adv+ — ordenado por CPL (menor = melhor)</div>
+    <div class="table-wrap">
+      <table class="creatives-table">
+        <thead>
+          <tr><th>Criativo</th><th class="num">Invest.</th><th class="num">Conv.</th><th class="num">CPL</th><th class="num">CTR</th><th class="num">CPM</th><th class="num">Impressões</th></tr>
+        </thead>
+        <tbody>
+          <tr class="row-top">
+            <td><a class="creative-link" href="https://www.instagram.com/p/DaDpZ74Aj9N/" target="_blank">AD12 — Limpeza de Pele: Mito vs Verdade <span class="link-arrow">↗</span></a></td>
+            <td class="num">R$6,40</td><td class="num">2</td><td class="num cpl-good">R$3,20</td><td class="num">3,05%</td><td class="num">R$24,43</td><td class="num">262</td>
+          </tr>
+          <tr>
+            <td><a class="creative-link" href="https://www.instagram.com/p/DaDpaWBgotG/" target="_blank">AD13 — O que são aqueles pontinhos no nariz <span class="link-arrow">↗</span></a></td>
+            <td class="num">R$44,16</td><td class="num">11</td><td class="num cpl-good">R$4,01</td><td class="num">1,27%</td><td class="num">R$15,60</td><td class="num">2.831</td>
+          </tr>
+          <tr>
+            <td><a class="creative-link" href="https://www.instagram.com/p/DaDpaFjg0_3/" target="_blank">AD08 — Harmonização Glútea <span class="link-arrow">↗</span></a></td>
+            <td class="num">R$22,25</td><td class="num">4</td><td class="num cpl-good">R$5,56</td><td class="num">3,58%</td><td class="num">R$39,87</td><td class="num">558</td>
+          </tr>
+          <tr>
+            <td><a class="creative-link" href="https://www.instagram.com/p/DZ563OFgmYc/" target="_blank">AD05 — Sua testa está marcando <span class="link-arrow">↗</span></a></td>
+            <td class="num">R$143,95</td><td class="num">22</td><td class="num cpl-good">R$6,54</td><td class="num">2,60%</td><td class="num">R$43,50</td><td class="num">3.309</td>
+          </tr>
+          <tr>
+            <td><a class="creative-link" href="https://www.instagram.com/p/DaDpaN5AVnv/" target="_blank">AD11 — Volumização <span class="link-arrow">↗</span></a></td>
+            <td class="num">R$487,28</td><td class="num">66</td><td class="num cpl-mid">R$7,38</td><td class="num">3,07%</td><td class="num">R$49,18</td><td class="num">9.909</td>
+          </tr>
+          <tr>
+            <td><a class="creative-link" href="https://www.instagram.com/p/DaDpav0gude/" target="_blank">AD15 — Vem fazer uma limpeza de pele comigo <span class="link-arrow">↗</span></a></td>
+            <td class="num">R$554,67</td><td class="num">75</td><td class="num cpl-mid">R$7,40</td><td class="num">2,35%</td><td class="num">R$36,47</td><td class="num">15.211</td>
+          </tr>
+          <tr>
+            <td><a class="creative-link" href="https://www.instagram.com/p/DZ56zzmgObs/" target="_blank">AD02 — Botox vs Bioestimulador <span class="link-arrow">↗</span></a></td>
+            <td class="num">R$13,96</td><td class="num">1</td><td class="num cpl-high">R$13,96</td><td class="num">3,58%</td><td class="num">R$41,67</td><td class="num">335</td>
+          </tr>
+          <tr class="row-rest">
+            <td>+ 8 outros criativos (cauda de teste, baixo investimento)</td>
+            <td class="num">R$12,18</td><td class="num">3</td><td class="num">R$4,06</td><td class="num">—</td><td class="num">—</td><td class="num">366</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Criativos Lp-HG -->
+  <div class="section">
+    <div class="section-title">Criativos — Lp-HG (leads pelo site) — ordenado por CPL (menor = melhor)</div>
+    <div class="table-wrap">
+      <table class="creatives-table">
+        <thead>
+          <tr><th>Criativo</th><th class="num">Invest.</th><th class="num">Leads</th><th class="num">CPL</th><th class="num">CTR</th><th class="num">CPM</th><th class="num">Impressões</th></tr>
+        </thead>
+        <tbody>
+          <tr class="row-top">
+            <td><a class="creative-link" href="https://www.instagram.com/p/DdFO6E8gMDi/" target="_blank">AD08 — Harmonização Glútea — Cópia <span class="link-arrow">↗</span></a></td>
+            <td class="num">R$64,95</td><td class="num">12</td><td class="num cpl-good">R$5,41</td><td class="num">5,09%</td><td class="num">R$33,04</td><td class="num">1.966</td>
+          </tr>
+          <tr>
+            <td><a class="creative-link" href="https://www.instagram.com/p/DdFO54CAeIm/" target="_blank">AD07 — Quando eu era mais jovem eu tinha bumbum — Cópia <span class="link-arrow">↗</span></a></td>
+            <td class="num">R$5,69</td><td class="num">1</td><td class="num cpl-good">R$5,69</td><td class="num">6,48%</td><td class="num">R$52,69</td><td class="num">108</td>
+          </tr>
+          <tr>
+            <td><a class="creative-link" href="https://www.instagram.com/p/DdFO6nigRay/" target="_blank">AD11 — Volumização — Cópia <span class="link-arrow">↗</span></a></td>
+            <td class="num">R$312,94</td><td class="num">27</td><td class="num cpl-mid">R$11,59</td><td class="num">5,71%</td><td class="num">R$51,46</td><td class="num">6.081</td>
+          </tr>
+          <tr>
+            <td><a class="creative-link" href="https://www.instagram.com/p/DdFPnr2AX4C/" target="_blank">AD13 — O que são aqueles pontinhos no nariz — Cópia <span class="link-arrow">↗</span></a></td>
+            <td class="num">R$226,33</td><td class="num">17</td><td class="num cpl-mid">R$13,31</td><td class="num">1,99%</td><td class="num">R$23,03</td><td class="num">9.828</td>
+          </tr>
+          <tr>
+            <td><a class="creative-link" href="https://www.instagram.com/p/DdFO6VEg7u6/" target="_blank">AD05 — Sua testa está marcando — Cópia <span class="link-arrow">↗</span></a></td>
+            <td class="num">R$98,05</td><td class="num">3</td><td class="num cpl-high">R$32,68</td><td class="num">9,60%</td><td class="num">R$73,50</td><td class="num">1.334</td>
+          </tr>
+          <tr class="row-zero">
+            <td><a class="creative-link" href="https://www.instagram.com/p/DdFO7PigfgT/" target="_blank">AD06 — 3 mitos — Cópia <span class="link-arrow">↗</span></a></td>
+            <td class="num">R$24,43</td><td class="num">0</td><td class="num">—</td><td class="num">26,96%</td><td class="num">R$212,43</td><td class="num">115</td>
+          </tr>
+          <tr class="row-zero">
+            <td><a class="creative-link" href="https://www.instagram.com/p/DdFO5v-Ahkq/" target="_blank">AD01 — Queixas que podem ser resolvidas com botox — Cópia <span class="link-arrow">↗</span></a></td>
+            <td class="num">R$7,21</td><td class="num">0</td><td class="num">—</td><td class="num">9,00%</td><td class="num">R$72,10</td><td class="num">100</td>
+          </tr>
+          <tr class="row-zero">
+            <td><a class="creative-link" href="https://www.instagram.com/p/DdFPyfjAZwt/" target="_blank">AD15 — Vem fazer uma limpeza de pele comigo — Cópia <span class="link-arrow">↗</span></a></td>
+            <td class="num">R$5,29</td><td class="num">0</td><td class="num">—</td><td class="num">10,00%</td><td class="num">R$35,27</td><td class="num">150</td>
+          </tr>
+          <tr class="row-rest">
+            <td>+ 7 outros criativos (cauda de teste, baixo investimento)</td>
+            <td class="num">R$10,83</td><td class="num">1</td><td class="num">R$10,83</td><td class="num">—</td><td class="num">—</td><td class="num">237</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Branding -->
+  <div class="section">
+    <div class="section-title">Posts impulsionados — branding — ordenado por custo/visita (menor = melhor)</div>
+    <div class="table-wrap">
+      <table class="creatives-table">
+        <thead>
+          <tr><th>Post</th><th class="num">Invest.</th><th class="num">Visitas</th><th class="num">Custo/visita</th><th class="num">Alcance</th><th class="num">CTR</th><th class="num">CPM</th><th class="num">Impressões</th></tr>
+        </thead>
+        <tbody>
+          <tr class="row-top">
+            <td><a class="creative-link" href="https://www.instagram.com/p/DZpd8VSAE8I/" target="_blank">Você finalmente perdeu o peso... <span class="link-arrow">↗</span></a></td>
+            <td class="num">R$52,39</td><td class="num">265</td><td class="num cpl-good">R$0,20</td><td class="num">4.281</td><td class="num">5,40%</td><td class="num">R$10,40</td><td class="num">5.039</td>
+          </tr>
+          <tr>
+            <td><a class="creative-link" href="https://www.instagram.com/p/DZpdHPNgCD1/" target="_blank">A maioria das pessoas acha que... <span class="link-arrow">↗</span></a></td>
+            <td class="num">R$53,73</td><td class="num">134</td><td class="num cpl-good">R$0,40</td><td class="num">5.511</td><td class="num">1,64%</td><td class="num">R$6,29</td><td class="num">8.540</td>
+          </tr>
+          <tr>
+            <td><a class="creative-link" href="https://www.instagram.com/p/DZpfijUAJpU/" target="_blank">Aqueles pontinhos acinzentados... <span class="link-arrow">↗</span></a></td>
+            <td class="num">R$152,89</td><td class="num">308</td><td class="num">R$0,50</td><td class="num">10.753</td><td class="num">2,78%</td><td class="num">R$11,69</td><td class="num">13.079</td>
+          </tr>
+          <tr>
+            <td><a class="creative-link" href="https://www.instagram.com/p/DZpfTGOACyk/" target="_blank">Você passa a lâmina, inflama,... <span class="link-arrow">↗</span></a></td>
+            <td class="num">R$152,52</td><td class="num">207</td><td class="num">R$0,74</td><td class="num">4.928</td><td class="num">4,58%</td><td class="num">R$23,69</td><td class="num">6.439</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Análise -->
+  <div class="section">
+    <div class="section-title">Análise do período</div>
+    <div class="insight">
+      <div class="insight-text">
+        Setembro fechou com <strong>380 conversas</strong> de WhatsApp (CBO + WPP) a <strong>R$7,06</strong> e mais <strong>61 leads</strong> pelo site via <strong>Lp-HG</strong> a R$12,39 — a campanha nova do mês, que veio pra ficar: custo mais alto que o WhatsApp direto, mas ainda dentro da faixa produtiva. A <strong>WPP Adv+</strong> bateu a CBO no mês inteiro (R$6,98 vs R$7,14), confirmando a virada que já aparecia no corte parcial de meio de mês. Dentro da WPP, o <strong>AD12 — Limpeza de Pele: Mito vs Verdade</strong> foi o mais barato (R$3,20), mas com volume baixo (2 conversas); quem realmente sustentou o mês foram o <strong>AD11 — Volumização</strong> (R$487, 66 conversas, R$7,38) e o <strong>AD15 — Vem fazer uma limpeza de pele comigo</strong> (R$555, 75 conversas, R$7,40) — os dois concentraram 81% do investimento da campanha com CPL ainda saudável. Na Lp-HG, o mesmo <strong>AD08 — Harmonização Glútea</strong> que foi destaque na WPP (R$5,56) repetiu a boa performance lá (R$5,41) — é o criativo mais consistente entre canais. Já o <strong>AD05 — Sua testa está marcando</strong> confirma o padrão visto no corte parcial: R$32,68 no formulário do site contra R$6,54 no WhatsApp — esse ângulo converte mal fora do chat direto, vale repensar antes de escalar mais verba nele pela Lp-HG. No branding, <strong>"Você finalmente perdeu o peso..."</strong> fechou o mês como o post mais eficiente (R$0,20/visita), com <strong>"Aqueles pontinhos acinzentados..."</strong> puxando o maior volume absoluto (308 visitas). Prioridade para outubro: manter AD11 e AD15 como núcleo da WPP, escalar AD08 nos dois canais, revisar o ângulo "Sua testa está marcando" antes de repetir na Lp-HG, e decidir orçamento fixo pra Lp-HG com base no CAC alvo da clínica (ainda não cruzado com faturamento real).
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <span>Gio Estética Avançada (Rochdale) &middot; Meta Ads &middot; 1&ndash;30 set 2026</span>
+    <span>Gerado em outubro de 2026</span>
+  </div>
+
+</body>
+</html>
