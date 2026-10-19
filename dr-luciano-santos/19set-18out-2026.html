@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Relatório de Tráfego — Dr. Luciano Santos</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    @page { size: A4; margin: 12mm 0; }
+
+    html { background: #E8E5E0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: #F7F6F4;
+      color: #181818;
+      -webkit-font-smoothing: antialiased;
+      width: 210mm;
+      margin: 0 auto;
+      padding: 36px 44px 48px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding-bottom: 18px;
+      border-bottom: 1.5px solid #181818;
+      margin-bottom: 28px;
+    }
+
+    .header-title { font-size: 20px; font-weight: 600; letter-spacing: -0.025em; }
+    .header-meta { text-align: right; font-size: 11px; color: #ABABAB; line-height: 1.7; }
+
+    .section { margin-bottom: 24px; }
+
+    .section-title {
+      font-size: 9px; letter-spacing: 0.13em; text-transform: uppercase; color: #C0BCB5; margin-bottom: 10px;
+    }
+
+    .kpi-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+
+    .kpi { background: #fff; padding: 14px 16px; border-radius: 3px; }
+    .kpi-label { font-size: 10px; color: #C0BCB5; letter-spacing: 0.03em; margin-bottom: 7px; }
+    .kpi-value { font-size: 22px; font-weight: 700; letter-spacing: -0.04em; line-height: 1; }
+    .kpi-sub { font-size: 10px; color: #D4D0CA; margin-top: 4px; }
+
+    .cards-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+    .card { background: #fff; border-radius: 3px; padding: 18px 20px; position: relative; }
+    .card.winner { border-left: 3px solid #2F7A57; }
+    .card.brand { border-left: 3px solid #8B7FD6; }
+
+    .card-name { font-size: 13px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 2px; }
+    .card-sub { font-size: 10px; color: #C0BCB5; margin-bottom: 16px; }
+
+    .card-metrics { display: flex; }
+    .card-metric { flex: 1; }
+    .card-metric + .card-metric { border-left: 1px solid #F0EDE8; padding-left: 14px; }
+
+    .cm-label { font-size: 9px; letter-spacing: 0.07em; text-transform: uppercase; color: #C0BCB5; margin-bottom: 5px; }
+    .cm-value { font-size: 18px; font-weight: 600; letter-spacing: -0.02em; }
+    .cm-value.good { color: #2F7A57; }
+    .cm-value.brand { color: #8B7FD6; }
+
+    .card-metrics-row2 { display: flex; margin-top: 12px; padding-top: 12px; border-top: 1px solid #F0EDE8; }
+    .card-metrics-row2 .card-metric .cm-value { font-size: 14px; }
+
+    .badge {
+      position: absolute; top: 14px; right: 14px; font-size: 8px; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: #2F7A57; background: #EBF5EF; border-radius: 20px; padding: 3px 9px;
+    }
+    .badge.brand { color: #8B7FD6; background: #F1EEFB; }
+
+    .table-wrap { background: #fff; border-radius: 3px; overflow: hidden; }
+    .creatives-table { width: 100%; border-collapse: collapse; }
+    .creatives-table thead tr { border-bottom: 1px solid #F0EDE8; }
+    .creatives-table th {
+      font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: #C0BCB5;
+      font-weight: 500; padding: 11px 14px; text-align: left; white-space: nowrap;
+    }
+    .creatives-table td { font-size: 11.5px; padding: 10px 14px; border-bottom: 1px solid #F7F6F4; vertical-align: middle; }
+    .creatives-table tbody tr:last-child td { border-bottom: none; }
+    .creatives-table tbody tr:hover td { background: #FAFAF9; }
+    .creatives-table tbody tr.row-top td:first-child { border-left: 3px solid #2F7A57; padding-left: 11px; }
+    .creatives-table tbody tr.row-zero td { color: #C0BCB5; }
+    .creatives-table tbody tr.row-rest td { color: #ABABAB; font-style: italic; }
+
+    .creative-link {
+      color: #181818; text-decoration: none; font-weight: 500; display: inline-flex; align-items: center; gap: 4px;
+    }
+    .creative-link:hover { color: #2F7A57; }
+    .link-arrow { font-size: 10px; color: #C0BCB5; flex-shrink: 0; }
+
+    .tag {
+      display: inline-block; font-size: 8px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase;
+      padding: 2px 8px; border-radius: 20px; white-space: nowrap;
+    }
+    .tag-wpp { color: #2F7A57; background: #EBF5EF; }
+
+    .cpl-good { color: #2F7A57; font-weight: 700; }
+    .cpl-mid  { color: #181818; font-weight: 600; }
+    .cpl-high { color: #B45309; font-weight: 600; }
+
+    td.num { text-align: right; }
+    th.num { text-align: right; }
+
+    .insight { background: #181818; border-radius: 3px; padding: 24px 28px; }
+    .insight-text { font-size: 13px; line-height: 1.8; color: #D8D4CE; }
+    .insight-text strong { color: #fff; }
+
+    .footer {
+      margin-top: 28px; padding-top: 14px; border-top: 1px solid #E5E2DC;
+      display: flex; justify-content: space-between; font-size: 10px; color: #D0CCC6;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="header-title">Relatório de Tráfego Pago</div>
+    <div class="header-meta">
+      <div>Dr. Luciano Santos</div>
+      <div>Meta Ads &middot; 19 set &ndash; 18 out &middot; 2026 (últimos 30 dias)</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Resultados do período</div>
+    <div class="kpi-row">
+      <div class="kpi">
+        <div class="kpi-label">Investimento total</div>
+        <div class="kpi-value">R$1.465,81</div>
+        <div class="kpi-sub">R$430,35 performance &middot; R$1.035,46 branding</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Conversas (WhatsApp)</div>
+        <div class="kpi-value">55</div>
+        <div class="kpi-sub">Custo R$7,82 &middot; 2 campanhas</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Visitas ao perfil (branding)</div>
+        <div class="kpi-value">4.380</div>
+        <div class="kpi-sub">Custo R$0,24/visita</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Pessoas alcançadas</div>
+        <div class="kpi-value">101.897</div>
+        <div class="kpi-sub">Soma das campanhas</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">CPM médio</div>
+        <div class="kpi-value">R$19,95</div>
+        <div class="kpi-sub">Campanhas de performance</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Cliques no link</div>
+        <div class="kpi-value">5.350</div>
+        <div class="kpi-sub">Total do período</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Comparativo de campanhas — performance</div>
+    <div class="cards-2">
+
+      <div class="card">
+        <div class="card-name">[LEADS][WPP] - [NEW ADS] - Adv+</div>
+        <div class="card-sub">6 criativos testados &middot; Advantage+</div>
+        <div class="card-metrics">
+          <div class="card-metric">
+            <div class="cm-label">Investido</div>
+            <div class="cm-value">R$229,27</div>
+          </div>
+          <div class="card-metric">
+            <div class="cm-label">Conversas</div>
+            <div class="cm-value">4</div>
+          </div>
+        </div>
+        <div class="card-metrics card-metrics-row2">
+          <div class="card-metric">
+            <div class="cm-label">Custo/conv.</div>
+            <div class="cm-value">R$57,32</div>
+          </div>
+          <div class="card-metric">
+            <div class="cm-label">CTR</div>
+            <div class="cm-value">2,50%</div>
+          </div>
+          <div class="card-metric">
+            <div class="cm-label">CPM</div>
+            <div class="cm-value">R$32,18</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card winner">
+        <div class="badge">Melhor CPL</div>
+        <div class="card-name">[LEADS][WPP] - [Ads L2 Set] - Adv+</div>
+        <div class="card-sub">4 criativos testados &middot; Advantage+</div>
+        <div class="card-metrics">
+          <div class="card-metric">
+            <div class="cm-label">Investido</div>
+            <div class="cm-value">R$201,08</div>
+          </div>
+          <div class="card-metric">
+            <div class="cm-label">Conversas</div>
+            <div class="cm-value good">51</div>
+          </div>
+        </div>
+        <div class="card-metrics card-metrics-row2">
+          <div class="card-metric">
+            <div class="cm-label">Custo/conv.</div>
+            <div class="cm-value good">R$3,94</div>
+          </div>
+          <div class="card-metric">
+            <div class="cm-label">CTR</div>
+            <div class="cm-value">4,78%</div>
+          </div>
+          <div class="card-metric">
+            <div class="cm-label">CPM</div>
+            <div class="cm-value">R$13,92</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Criativos — [NEW ADS] — ordenado por CPL (menor = melhor)</div>
+    <div class="table-wrap">
+      <table class="creatives-table">
+        <thead>
+          <tr><th>Criativo</th><th class="num">Invest.</th><th class="num">Conv.</th><th class="num">CPL</th><th class="num">CTR</th><th class="num">CPM</th><th class="num">Impressões</th></tr>
+        </thead>
+        <tbody>
+          <tr class="row-top">
+            <td><a class="creative-link" href="https://www.instagram.com/p/DZVU_u9MpW9/" target="_blank">AD04 — Depoimento Casal <span class="link-arrow">↗</span></a></td>
+            <td class="num">R$201,09</td><td class="num">4</td><td class="num cpl-mid">R$50,27</td><td class="num">2,49%</td><td class="num">R$33,61</td><td class="num">5.983</td>
+          </tr>
+          <tr class="row-zero">
+            <td>AD02 — O que fazer quando se tem uma hérnia com inflamação</td>
+            <td class="num">R$11,87</td><td class="num">—</td><td class="num">—</td><td class="num">3,27%</td><td class="num">R$27,73</td><td class="num">428</td>
+          </tr>
+          <tr class="row-zero">
+            <td>AD05 — Tipo de Hérnia Discal</td>
+            <td class="num">R$7,94</td><td class="num">—</td><td class="num">—</td><td class="num">1,56%</td><td class="num">R$24,81</td><td class="num">320</td>
+          </tr>
+          <tr class="row-zero">
+            <td>AD06 — O maior erro de quem tem dor no ciático</td>
+            <td class="num">R$4,23</td><td class="num">—</td><td class="num">—</td><td class="num">1,34%</td><td class="num">R$18,88</td><td class="num">224</td>
+          </tr>
+          <tr class="row-zero">
+            <td>AD01 — Quem tem hérnia disco pode fazer caminhada e fisio?</td>
+            <td class="num">R$4,14</td><td class="num">—</td><td class="num">—</td><td class="num">4,14%</td><td class="num">R$24,50</td><td class="num">169</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Criativos — [Ads L2 Set] — ordenado por CPL (menor = melhor)</div>
+    <div class="table-wrap">
+      <table class="creatives-table">
+        <thead>
+          <tr><th>Criativo</th><th class="num">Invest.</th><th class="num">Conv.</th><th class="num">CPL</th><th class="num">CTR</th><th class="num">CPM</th><th class="num">Impressões</th></tr>
+        </thead>
+        <tbody>
+          <tr class="row-top">
+            <td><a class="creative-link" href="https://www.instagram.com/p/DeId3nHMQmp/" target="_blank">AD03 — Chegeui com 1000% de dor <span class="link-arrow">↗</span></a></td>
+            <td class="num">R$173,47</td><td class="num">46</td><td class="num cpl-good">R$3,77</td><td class="num">5,12%</td><td class="num">R$13,63</td><td class="num">12.723</td>
+          </tr>
+          <tr>
+            <td><a class="creative-link" href="https://www.instagram.com/p/DeId3pMsBu0/" target="_blank">AD04 — Chegou com tontura e dor na coluna <span class="link-arrow">↗</span></a></td>
+            <td class="num">R$20,76</td><td class="num">4</td><td class="num cpl-good">R$5,19</td><td class="num">2,38%</td><td class="num">R$14,99</td><td class="num">1.385</td>
+          </tr>
+          <tr>
+            <td><a class="creative-link" href="https://www.instagram.com/p/DeId4JgM99P/" target="_blank">AD01 — A tensão era tanta <span class="link-arrow">↗</span></a></td>
+            <td class="num">R$5,03</td><td class="num">1</td><td class="num cpl-good">R$5,03</td><td class="num">1,31%</td><td class="num">R$21,97</td><td class="num">229</td>
+          </tr>
+          <tr class="row-zero">
+            <td>AD02 — Era uma indicação de cirurgia</td>
+            <td class="num">R$1,82</td><td class="num">—</td><td class="num">—</td><td class="num">2,78%</td><td class="num">R$16,85</td><td class="num">108</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Posts impulsionados — branding — ordenado por custo/visita (menor = melhor)</div>
+    <div class="table-wrap">
+      <table class="creatives-table">
+        <thead>
+          <tr><th>Post</th><th class="num">Invest.</th><th class="num">Visitas</th><th class="num">Custo/visita</th><th class="num">Alcance</th><th class="num">CTR</th><th class="num">CPM</th><th class="num">Impressões</th></tr>
+        </thead>
+        <tbody>
+          <tr class="row-top">
+            <td><a class="creative-link" href="https://www.instagram.com/p/DdfopPCsTsl/" target="_blank">MAIS UM RESULTADO SURPREENDENTE!... <span class="link-arrow">↗</span></a></td>
+            <td class="num">R$161,55</td><td class="num">1.253</td><td class="num cpl-good">R$0,13</td><td class="num">12.805</td><td class="num">7,16%</td><td class="num">R$8,93</td><td class="num">18.094</td>
+          </tr>
+          <tr>
+            <td><a class="creative-link" href="https://www.instagram.com/p/DdzvTN2sHiy/" target="_blank">*Aos 68 anos, ele já não sabia... (v2) <span class="link-arrow">↗</span></a></td>
+            <td class="num">R$41,95</td><td class="num">269</td><td class="num cpl-good">R$0,16</td><td class="num">6.233</td><td class="num">3,67%</td><td class="num">R$5,65</td><td class="num">7.430</td>
+          </tr>
+          <tr>
+            <td><a class="creative-link" href="https://www.instagram.com/p/Ddgz9iHsMiG/" target="_blank">O mais importante desse caso não... <span class="link-arrow">↗</span></a></td>
+            <td class="num">R$213,20</td><td class="num">686</td><td class="num cpl-good">R$0,31</td><td class="num">17.622</td><td class="num">2,67%</td><td class="num">R$7,91</td><td class="num">26.951</td>
+          </tr>
+          <tr>
+            <td><a class="creative-link" href="https://www.instagram.com/p/DdKaSZXMBbJ/" target="_blank">*Durante anos ela conviveu com a... <span class="link-arrow">↗</span></a></td>
+            <td class="num">R$185,09</td><td class="num">622</td><td class="num">R$0,30</td><td class="num">16.351</td><td class="num">2,76%</td><td class="num">R$8,14</td><td class="num">22.748</td>
+          </tr>
+          <tr>
+            <td><a class="creative-link" href="https://www.instagram.com/p/DbjpmcyML_t/" target="_blank">O que aconteceu foi que, pela... <span class="link-arrow">↗</span></a></td>
+            <td class="num">R$185,80</td><td class="num">579</td><td class="num">R$0,32</td><td class="num">14.569</td><td class="num">2,54%</td><td class="num">R$8,27</td><td class="num">22.471</td>
+          </tr>
+          <tr>
+            <td><a class="creative-link" href="https://www.instagram.com/p/DVCfy0EjDUk/" target="_blank">Sr. Charles de alta na 4ª sessão!... <span class="link-arrow">↗</span></a></td>
+            <td class="num">R$140,33</td><td class="num">530</td><td class="num">R$0,26</td><td class="num">12.712</td><td class="num">3,44%</td><td class="num">R$8,93</td><td class="num">15.717</td>
+          </tr>
+          <tr class="row-rest">
+            <td>+ 4 outros posts (cauda, menor investimento)</td>
+            <td class="num">R$107,54</td><td class="num">441</td><td class="num">R$0,24</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Análise do período</div>
+    <div class="insight">
+      <div class="insight-text">
+        Nos últimos 30 dias (19 set–18 out), a conta gerou <strong>55 conversas</strong> ao custo médio de R$7,82 — puxado quase todo pela campanha <strong>[Ads L2 Set]</strong>, que fechou a R$3,94/conversa contra R$57,32 da <strong>[NEW ADS]</strong>. A diferença é concentrada num único criativo: <strong>AD03 — "Chegeui com 1000% de dor"</strong> sozinho trouxe 46 das 55 conversas do período a R$3,77 — o melhor CPL da conta e o criativo a escalar em outubro. A campanha [NEW ADS] não encontrou o mesmo ritmo: só o <strong>AD04 — Depoimento Casal</strong> teve volume relevante (R$201,09, 4 conversas, R$50,27/conversa) — os outros 4 criativos dessa campanha não geraram nenhuma conversa e consumiram R$28,18 combinados, candidatos a pausa. No branding, o post <strong>"MAIS UM RESULTADO SURPREENDENTE!"</strong> foi disparado o melhor do período — R$0,13/visita e 1.253 visitas, o maior CTR da conta (7,16%). Prioridade para o próximo período: escalar o AD03 na L2 Set, pausar os criativos sem conversão da NEW ADS, e repetir o ângulo de depoimento/resultado que funcionou em "MAIS UM RESULTADO SURPREENDENTE" em novos posts de branding.
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>Dr. Luciano Santos &middot; Meta Ads &middot; 19 set&ndash;18 out 2026</span>
+    <span>Gerado em outubro de 2026</span>
+  </div>
+
+</body>
+</html>
