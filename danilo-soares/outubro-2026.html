@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Relatório de Tráfego — Danilo Soares</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    @page { size: A4; margin: 12mm 0; }
+    html { background: #E8E5E0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: #F7F6F4; color: #181818; -webkit-font-smoothing: antialiased;
+      width: 210mm; margin: 0 auto; padding: 36px 44px 48px;
+    }
+    .header { display: flex; justify-content: space-between; align-items: flex-end; padding-bottom: 18px; border-bottom: 1.5px solid #181818; margin-bottom: 28px; }
+    .header-title { font-size: 20px; font-weight: 600; letter-spacing: -0.025em; }
+    .header-meta { text-align: right; font-size: 11px; color: #ABABAB; line-height: 1.7; }
+    .section { margin-bottom: 24px; }
+    .section-title { font-size: 9px; letter-spacing: 0.13em; text-transform: uppercase; color: #C0BCB5; margin-bottom: 10px; }
+    .kpi-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+    .kpi { background: #fff; padding: 14px 16px; border-radius: 3px; }
+    .kpi-label { font-size: 10px; color: #C0BCB5; letter-spacing: 0.03em; margin-bottom: 7px; }
+    .kpi-value { font-size: 22px; font-weight: 700; letter-spacing: -0.04em; line-height: 1; }
+    .kpi-sub { font-size: 10px; color: #D4D0CA; margin-top: 4px; }
+    .cards-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+    .card { background: #fff; border-radius: 3px; padding: 16px 18px; position: relative; }
+    .card.winner { border-left: 3px solid #2F7A57; }
+    .card.loser { border-left: 3px solid #B45309; }
+    .card.new { border-left: 3px solid #6B7280; }
+    .card-name { font-size: 12.5px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 2px; }
+    .card-sub { font-size: 9.5px; color: #C0BCB5; margin-bottom: 14px; }
+    .card-metrics { display: flex; }
+    .card-metric { flex: 1; }
+    .card-metric + .card-metric { border-left: 1px solid #F0EDE8; padding-left: 12px; }
+    .cm-label { font-size: 8.5px; letter-spacing: 0.07em; text-transform: uppercase; color: #C0BCB5; margin-bottom: 4px; }
+    .cm-value { font-size: 16px; font-weight: 600; letter-spacing: -0.02em; }
+    .cm-value.good { color: #2F7A57; }
+    .cm-value.bad { color: #B45309; }
+    .badge { position: absolute; top: 12px; right: 12px; font-size: 7.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #2F7A57; background: #EBF5EF; border-radius: 20px; padding: 3px 8px; }
+    .badge.bad { color: #B45309; background: #FDF1E5; }
+    .badge.new { color: #6B7280; background: #F3F4F6; }
+    .table-wrap { background: #fff; border-radius: 3px; overflow: hidden; margin-bottom: 20px; }
+    .creatives-table { width: 100%; border-collapse: collapse; }
+    .creatives-table thead tr { border-bottom: 1px solid #F0EDE8; }
+    .creatives-table th { font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: #C0BCB5; font-weight: 500; padding: 9px 12px; text-align: left; white-space: nowrap; }
+    .creatives-table td { font-size: 11px; padding: 8px 12px; border-bottom: 1px solid #F7F6F4; vertical-align: middle; }
+    .creatives-table tbody tr:last-child td { border-bottom: none; }
+    .creatives-table tbody tr:hover td { background: #FAFAF9; }
+    .creatives-table tbody tr.row-top td:first-child { border-left: 3px solid #2F7A57; padding-left: 9px; }
+    .creatives-table tbody tr.row-zero td { color: #C0BCB5; }
+    .creative-link { color: #181818; text-decoration: none; font-weight: 500; display: inline-flex; align-items: center; gap: 4px; }
+    .creative-link:hover { color: #2F7A57; }
+    .link-arrow { font-size: 9px; color: #C0BCB5; flex-shrink: 0; }
+    .cpl-good { color: #2F7A57; font-weight: 700; }
+    .cpl-mid  { color: #181818; font-weight: 600; }
+    .cpl-high { color: #B45309; font-weight: 600; }
+    td.num { text-align: right; }
+    th.num { text-align: right; }
+    .insight { background: #181818; border-radius: 3px; padding: 22px 26px; }
+    .insight-text { font-size: 12.5px; line-height: 1.75; color: #D8D4CE; }
+    .insight-text strong { color: #fff; }
+    .campaign-block { margin-bottom: 30px; }
+    .campaign-block-title { font-size: 13px; font-weight: 700; margin-bottom: 10px; color: #181818; }
+    .footer { margin-top: 28px; padding-top: 14px; border-top: 1px solid #E5E2DC; display: flex; justify-content: space-between; font-size: 10px; color: #D0CCC6; }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="header-title">Relatório de Tráfego Pago</div>
+    <div class="header-meta">
+      <div>Danilo Soares — TMA (fisioterapeutas)</div>
+      <div>Meta Ads &middot; 1&ndash;21 out &middot; 2026 (parcial)</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Resultados do período — todas as campanhas TMA</div>
+    <div class="kpi-row">
+      <div class="kpi">
+        <div class="kpi-label">Investimento total</div>
+        <div class="kpi-value">R$4.012,97</div>
+        <div class="kpi-sub">7 campanhas ativas</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Leads gerados</div>
+        <div class="kpi-value">253</div>
+        <div class="kpi-sub">Pixel — Contato/Lead</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Custo por lead</div>
+        <div class="kpi-value">R$15,86</div>
+        <div class="kpi-sub">Média geral</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Pessoas alcançadas</div>
+        <div class="kpi-value">56.461</div>
+        <div class="kpi-sub">Soma das campanhas</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">CPM médio</div>
+        <div class="kpi-value">R$27,96</div>
+        <div class="kpi-sub">CTR médio 3,27%</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Cliques no link</div>
+        <div class="kpi-value">4.693</div>
+        <div class="kpi-sub">Total do período</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Comparativo de campanhas</div>
+    <div class="cards-2">
+      <div class="card">
+        <div class="card-name">[LEADS] [CBO] - TMA GERAL 2026</div>
+        <div class="card-sub">5 criativos &middot; CBO contínuo</div>
+        <div class="card-metrics">
+          <div class="card-metric"><div class="cm-label">Investido</div><div class="cm-value">R$663,56</div></div>
+          <div class="card-metric"><div class="cm-label">Leads</div><div class="cm-value">47</div></div>
+          <div class="card-metric"><div class="cm-label">CPL</div><div class="cm-value">R$14,12</div></div>
+        </div>
+      </div>
+      <div class="card winner">
+        <div class="badge">Melhor CPL</div>
+        <div class="card-name">[CBO] Curso Online — Dez/26</div>
+        <div class="card-sub">13 criativos &middot; curso gravado</div>
+        <div class="card-metrics">
+          <div class="card-metric"><div class="cm-label">Investido</div><div class="cm-value">R$1.003,28</div></div>
+          <div class="card-metric"><div class="cm-label">Leads</div><div class="cm-value good">83</div></div>
+          <div class="card-metric"><div class="cm-label">CPL</div><div class="cm-value good">R$12,09</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-name">BH — 13-15 Nov</div>
+        <div class="card-sub">12 criativos &middot; evento presencial</div>
+        <div class="card-metrics">
+          <div class="card-metric"><div class="cm-label">Investido</div><div class="cm-value">R$807,45</div></div>
+          <div class="card-metric"><div class="cm-label">Leads</div><div class="cm-value">51</div></div>
+          <div class="card-metric"><div class="cm-label">CPL</div><div class="cm-value">R$15,83</div></div>
+        </div>
+      </div>
+      <div class="card loser">
+        <div class="badge bad">Pior CPL (ativa)</div>
+        <div class="card-name">João Pessoa — 30 Out-1 Nov</div>
+        <div class="card-sub">8 criativos &middot; evento presencial</div>
+        <div class="card-metrics">
+          <div class="card-metric"><div class="cm-label">Investido</div><div class="cm-value">R$546,44</div></div>
+          <div class="card-metric"><div class="cm-label">Leads</div><div class="cm-value bad">19</div></div>
+          <div class="card-metric"><div class="cm-label">CPL</div><div class="cm-value bad">R$28,76</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-name">RJ — 20-22 Nov</div>
+        <div class="card-sub">12 criativos &middot; evento presencial</div>
+        <div class="card-metrics">
+          <div class="card-metric"><div class="cm-label">Investido</div><div class="cm-value">R$960,55</div></div>
+          <div class="card-metric"><div class="cm-label">Leads</div><div class="cm-value">49</div></div>
+          <div class="card-metric"><div class="cm-label">CPL</div><div class="cm-value">R$19,60</div></div>
+        </div>
+      </div>
+      <div class="card new" style="grid-column: span 2;">
+        <div class="badge new">Novas — começando</div>
+        <div class="card-name">BRASÍLIA (04-06 Dez) + CAMPINAS (11-13 Dez)</div>
+        <div class="card-sub">4 criativos cada &middot; campanhas recém-criadas, verba de teste ainda baixa</div>
+        <div class="card-metrics">
+          <div class="card-metric"><div class="cm-label">Investido (soma)</div><div class="cm-value">R$31,69</div></div>
+          <div class="card-metric"><div class="cm-label">Leads (soma)</div><div class="cm-value">4</div></div>
+          <div class="card-metric"><div class="cm-label">CPL (soma)</div><div class="cm-value">R$7,92</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="campaign-block">
+    <div class="campaign-block-title">Criativos — [CBO] TMA GERAL 2026</div>
+    <div class="table-wrap">
+      <table class="creatives-table">
+        <thead><tr><th>Criativo</th><th class="num">Invest.</th><th class="num">Leads</th><th class="num">CPL</th><th class="num">CTR</th><th class="num">CPM</th><th class="num">Impr.</th></tr></thead>
+        <tbody>
+          <tr class="row-top"><td><a class="creative-link" href="https://www.instagram.com/p/DZqVFvQADk1/" target="_blank">C8 — Teste Lasègue <span class="link-arrow">↗</span></a></td><td class="num">R$519,97</td><td class="num">37</td><td class="num cpl-good">R$14,05</td><td class="num">4,48%</td><td class="num">R$26,81</td><td class="num">19.395</td></tr>
+          <tr><td><a class="creative-link" href="https://www.instagram.com/p/DZqVFzbAHrX/" target="_blank">C9 — Slump Teste <span class="link-arrow">↗</span></a></td><td class="num">R$141,66</td><td class="num">10</td><td class="num cpl-good">R$14,17</td><td class="num">5,87%</td><td class="num">R$37,31</td><td class="num">3.797</td></tr>
+          <tr class="row-zero"><td>C7 — "Você atende coluna mas não gera resultados expressivos..."</td><td class="num">R$1,05</td><td class="num">—</td><td class="num">—</td><td class="num">5,71%</td><td class="num">R$30,00</td><td class="num">35</td></tr>
+          <tr class="row-zero"><td>C6 — Acabei de sair da faculdade, o curso de Hérnia de Disco é pra mim?</td><td class="num">R$0,52</td><td class="num">—</td><td class="num">—</td><td class="num">6,67%</td><td class="num">R$34,67</td><td class="num">15</td></tr>
+          <tr class="row-zero"><td>C6 — Reels — Fisio, atenção</td><td class="num">R$0,36</td><td class="num">—</td><td class="num">—</td><td class="num">0,00%</td><td class="num">R$18,95</td><td class="num">19</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="campaign-block">
+    <div class="campaign-block-title">Criativos — [CBO] Curso Online (Dez/26)</div>
+    <div class="table-wrap">
+      <table class="creatives-table">
+        <thead><tr><th>Criativo</th><th class="num">Invest.</th><th class="num">Leads</th><th class="num">CPL</th><th class="num">CTR</th><th class="num">CPM</th><th class="num">Impr.</th></tr></thead>
+        <tbody>
+          <tr class="row-top"><td><a class="creative-link" href="https://www.instagram.com/p/DdHenqCAT8r/" target="_blank">C12 — Reels — Fisio, vc trabalha com coluna <span class="link-arrow">↗</span></a></td><td class="num">R$256,91</td><td class="num">28</td><td class="num cpl-good">R$9,18</td><td class="num">1,30%</td><td class="num">R$26,30</td><td class="num">9.768</td></tr>
+          <tr><td><a class="creative-link" href="https://www.instagram.com/p/DdHenIrgHdW/" target="_blank">C11 — REELS — Atenção Fisio <span class="link-arrow">↗</span></a></td><td class="num">R$281,00</td><td class="num">30</td><td class="num cpl-good">R$9,37</td><td class="num">1,58%</td><td class="num">R$28,58</td><td class="num">9.831</td></tr>
+          <tr><td><a class="creative-link" href="https://www.instagram.com/p/DdHevRbAgq5/" target="_blank">AD03 — Se você é fisio <span class="link-arrow">↗</span></a></td><td class="num">R$333,18</td><td class="num">22</td><td class="num cpl-mid">R$15,14</td><td class="num">1,33%</td><td class="num">R$23,23</td><td class="num">14.341</td></tr>
+          <tr><td><a class="creative-link" href="https://www.instagram.com/p/DdHeuNTAn4K/" target="_blank">AD02 — NATIVO — Passo a Passo <span class="link-arrow">↗</span></a></td><td class="num">R$79,78</td><td class="num">2</td><td class="num cpl-high">R$39,89</td><td class="num">0,88%</td><td class="num">R$29,22</td><td class="num">2.730</td></tr>
+          <tr><td><a class="creative-link" href="https://www.instagram.com/p/DdHeuRFAmvl/" target="_blank">C7 — REELS — SOU QUIRO <span class="link-arrow">↗</span></a></td><td class="num">R$27,27</td><td class="num">1</td><td class="num cpl-high">R$27,27</td><td class="num">1,90%</td><td class="num">R$27,24</td><td class="num">1.001</td></tr>
+          <tr class="row-zero"><td>C6 — Reels — Sou Osteopata</td><td class="num">R$5,13</td><td class="num">—</td><td class="num">—</td><td class="num">2,78%</td><td class="num">R$28,50</td><td class="num">180</td></tr>
+          <tr class="row-zero"><td>C9 — FEED — Como alguns se tornam...</td><td class="num">R$4,76</td><td class="num">—</td><td class="num">—</td><td class="num">1,95%</td><td class="num">R$23,22</td><td class="num">205</td></tr>
+          <tr class="row-zero"><td>AD01 — O fisio que não sabe subclassificar</td><td class="num">R$4,26</td><td class="num">—</td><td class="num">—</td><td class="num">0,67%</td><td class="num">R$28,40</td><td class="num">150</td></tr>
+          <tr class="row-zero"><td>C5 — REELS — Fisio vc tem Medo</td><td class="num">R$3,49</td><td class="num">—</td><td class="num">—</td><td class="num">0,00%</td><td class="num">R$33,88</td><td class="num">103</td></tr>
+          <tr class="row-zero"><td>C10 — FEED — A maioria dos fisios</td><td class="num">R$2,66</td><td class="num">—</td><td class="num">—</td><td class="num">2,14%</td><td class="num">R$19,00</td><td class="num">140</td></tr>
+          <tr class="row-zero"><td>AD05 — Travo na hora de subclassificar</td><td class="num">R$2,26</td><td class="num">—</td><td class="num">—</td><td class="num">1,27%</td><td class="num">R$14,30</td><td class="num">158</td></tr>
+          <tr class="row-zero"><td>AD06 — Fisio, veja esses depoimentos</td><td class="num">R$1,82</td><td class="num">—</td><td class="num">—</td><td class="num">1,39%</td><td class="num">R$12,64</td><td class="num">144</td></tr>
+          <tr class="row-zero"><td>AD04 — Tem algum curso que me indica</td><td class="num">R$0,76</td><td class="num">—</td><td class="num">—</td><td class="num">2,33%</td><td class="num">R$17,67</td><td class="num">43</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="campaign-block">
+    <div class="campaign-block-title">Criativos — BH (13-15 Nov)</div>
+    <div class="table-wrap">
+      <table class="creatives-table">
+        <thead><tr><th>Criativo</th><th class="num">Invest.</th><th class="num">Leads</th><th class="num">CPL</th><th class="num">CTR</th><th class="num">CPM</th><th class="num">Impr.</th></tr></thead>
+        <tbody>
+          <tr class="row-top"><td><a class="creative-link" href="https://www.instagram.com/p/DdHG9CRAWgB/" target="_blank">AD12 — Modic <span class="link-arrow">↗</span></a></td><td class="num">R$302,77</td><td class="num">23</td><td class="num cpl-good">R$13,16</td><td class="num">4,77%</td><td class="num">R$21,77</td><td class="num">13.909</td></tr>
+          <tr><td><a class="creative-link" href="https://www.instagram.com/p/DdHHDaEgKGm/" target="_blank">AD10 — Radiculopatia <span class="link-arrow">↗</span></a></td><td class="num">R$118,94</td><td class="num">8</td><td class="num cpl-good">R$14,87</td><td class="num">4,45%</td><td class="num">R$27,31</td><td class="num">4.355</td></tr>
+          <tr><td><a class="creative-link" href="https://www.instagram.com/p/DdHG855Afha/" target="_blank">AD11 — Manipulação t12 <span class="link-arrow">↗</span></a></td><td class="num">R$327,28</td><td class="num">18</td><td class="num cpl-mid">R$18,18</td><td class="num">4,27%</td><td class="num">R$24,81</td><td class="num">13.193</td></tr>
+          <tr><td><a class="creative-link" href="https://www.instagram.com/p/DdHG8K3ggGZ/" target="_blank">AD05 — Os 4 Pilares do Método TMA <span class="link-arrow">↗</span></a></td><td class="num">R$31,99</td><td class="num">1</td><td class="num cpl-high">R$31,99</td><td class="num">1,58%</td><td class="num">R$20,20</td><td class="num">1.584</td></tr>
+          <tr><td><a class="creative-link" href="https://www.instagram.com/p/DdHHDQsATKN/" target="_blank">AD07 — A confiança que o paciente tem em você <span class="link-arrow">↗</span></a></td><td class="num">R$3,72</td><td class="num">1</td><td class="num cpl-good">R$3,72</td><td class="num">0,00%</td><td class="num">R$19,58</td><td class="num">190</td></tr>
+          <tr class="row-zero"><td><a class="creative-link" href="https://www.instagram.com/p/DdHNjOlgqbF/" target="_blank">AD03 — Quer dobrar seu faturamento? <span class="link-arrow">↗</span></a></td><td class="num">R$7,81</td><td class="num">—</td><td class="num">—</td><td class="num">2,38%</td><td class="num">R$30,99</td><td class="num">252</td></tr>
+          <tr class="row-zero"><td>AD09 — Você tem mais de 10 anos de formado</td><td class="num">R$7,47</td><td class="num">—</td><td class="num">—</td><td class="num">0,88%</td><td class="num">R$32,91</td><td class="num">227</td></tr>
+          <tr class="row-zero"><td><a class="creative-link" href="https://www.instagram.com/p/DdHG8xEgAOw/" target="_blank">AD08 — Em 3 dias aprenda a tratar <span class="link-arrow">↗</span></a></td><td class="num">R$5,91</td><td class="num">—</td><td class="num">—</td><td class="num">0,36%</td><td class="num">R$21,57</td><td class="num">274</td></tr>
+          <tr class="row-zero"><td>AD06 — No Brasil são quase 30k fisios</td><td class="num">R$0,63</td><td class="num">—</td><td class="num">—</td><td class="num">0,00%</td><td class="num">R$19,69</td><td class="num">32</td></tr>
+          <tr class="row-zero"><td>AD04 — Agenda vazia, faturando R$5 mil. Não consigo achar o erro</td><td class="num">R$0,42</td><td class="num">—</td><td class="num">—</td><td class="num">0,00%</td><td class="num">R$22,11</td><td class="num">19</td></tr>
+          <tr class="row-zero"><td>AD02 — Você não fatura nem 10 mil por mês.</td><td class="num">R$0,28</td><td class="num">—</td><td class="num">—</td><td class="num">0,00%</td><td class="num">R$18,67</td><td class="num">15</td></tr>
+          <tr class="row-zero"><td>AD01 — Quer dominar coluna?</td><td class="num">R$0,23</td><td class="num">—</td><td class="num">—</td><td class="num">0,00%</td><td class="num">R$17,69</td><td class="num">13</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="campaign-block">
+    <div class="campaign-block-title">Criativos — João Pessoa (30 Out–1 Nov)</div>
+    <div class="table-wrap">
+      <table class="creatives-table">
+        <thead><tr><th>Criativo</th><th class="num">Invest.</th><th class="num">Leads</th><th class="num">CPL</th><th class="num">CTR</th><th class="num">CPM</th><th class="num">Impr.</th></tr></thead>
+        <tbody>
+          <tr class="row-top"><td><a class="creative-link" href="https://www.instagram.com/p/DdHKZMBgkU0/" target="_blank">AD11 — Manipulação t12 <span class="link-arrow">↗</span></a></td><td class="num">R$156,10</td><td class="num">8</td><td class="num cpl-good">R$19,51</td><td class="num">2,42%</td><td class="num">R$24,70</td><td class="num">6.321</td></tr>
+          <tr><td><a class="creative-link" href="https://www.instagram.com/p/DdHKY_jgGKb/" target="_blank">AD10 — Radiculopatia <span class="link-arrow">↗</span></a></td><td class="num">R$119,50</td><td class="num">5</td><td class="num cpl-mid">R$23,90</td><td class="num">2,92%</td><td class="num">R$37,95</td><td class="num">3.149</td></tr>
+          <tr><td><a class="creative-link" href="https://www.instagram.com/p/DdHKZGfADKH/" target="_blank">AD12 — Modic <span class="link-arrow">↗</span></a></td><td class="num">R$84,22</td><td class="num">3</td><td class="num cpl-mid">R$28,07</td><td class="num">2,44%</td><td class="num">R$25,42</td><td class="num">3.313</td></tr>
+          <tr><td><a class="creative-link" href="https://www.instagram.com/p/DdIXw12AwWX/" target="_blank">AD01 — Quer dominar coluna? <span class="link-arrow">↗</span></a></td><td class="num">R$24,37</td><td class="num">1</td><td class="num cpl-high">R$24,37</td><td class="num">1,66%</td><td class="num">R$40,48</td><td class="num">602</td></tr>
+          <tr><td><a class="creative-link" href="https://www.instagram.com/p/DdHKi7UAtb3/" target="_blank">AD08 — Em 3 dias aprenda a tratar <span class="link-arrow">↗</span></a></td><td class="num">R$122,37</td><td class="num">1</td><td class="num cpl-high">R$122,37</td><td class="num">1,25%</td><td class="num">R$26,32</td><td class="num">4.650</td></tr>
+          <tr><td><a class="creative-link" href="https://www.instagram.com/p/DdHKZGfADKH/" target="_blank">AD03 — Quer dobrar seu faturamento? <span class="link-arrow">↗</span></a></td><td class="num">R$11,88</td><td class="num">1</td><td class="num cpl-good">R$11,88</td><td class="num">0,19%</td><td class="num">R$22,21</td><td class="num">535</td></tr>
+          <tr class="row-zero"><td><a class="creative-link" href="https://www.instagram.com/p/DdHKZGfADKH/" target="_blank">AD05 — Os 4 Pilares do Método TMA <span class="link-arrow">↗</span></a></td><td class="num">R$18,42</td><td class="num">—</td><td class="num">—</td><td class="num">0,90%</td><td class="num">R$27,62</td><td class="num">667</td></tr>
+          <tr class="row-zero"><td>AD07 — A confiança que o paciente tem em você</td><td class="num">R$9,58</td><td class="num">—</td><td class="num">—</td><td class="num">0,88%</td><td class="num">R$28,18</td><td class="num">340</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="campaign-block">
+    <div class="campaign-block-title">Criativos — RJ (20-22 Nov)</div>
+    <div class="table-wrap">
+      <table class="creatives-table">
+        <thead><tr><th>Criativo</th><th class="num">Invest.</th><th class="num">Leads</th><th class="num">CPL</th><th class="num">CTR</th><th class="num">CPM</th><th class="num">Impr.</th></tr></thead>
+        <tbody>
+          <tr class="row-top"><td><a class="creative-link" href="https://www.instagram.com/p/DdHNjItA9Xx/" target="_blank">AD10 — Radiculopatia <span class="link-arrow">↗</span></a></td><td class="num">R$240,93</td><td class="num">13</td><td class="num cpl-good">R$18,53</td><td class="num">5,79%</td><td class="num">R$46,96</td><td class="num">5.130</td></tr>
+          <tr><td><a class="creative-link" href="https://www.instagram.com/p/DdHNjOlgqbF/" target="_blank">AD12 — Modic <span class="link-arrow">↗</span></a></td><td class="num">R$340,19</td><td class="num">17</td><td class="num cpl-mid">R$20,01</td><td class="num">4,60%</td><td class="num">R$32,35</td><td class="num">10.515</td></tr>
+          <tr><td><a class="creative-link" href="https://www.instagram.com/p/DdHNi_KA6ZJ/" target="_blank">AD11 — Manipulação t12 <span class="link-arrow">↗</span></a></td><td class="num">R$312,47</td><td class="num">15</td><td class="num cpl-mid">R$20,83</td><td class="num">3,92%</td><td class="num">R$34,48</td><td class="num">9.062</td></tr>
+          <tr><td><a class="creative-link" href="https://www.instagram.com/p/DdHNrdTgvx-/" target="_blank">AD05 — Os 4 Pilares do Método TMA <span class="link-arrow">↗</span></a></td><td class="num">R$40,19</td><td class="num">3</td><td class="num cpl-good">R$13,40</td><td class="num">0,73%</td><td class="num">R$26,53</td><td class="num">1.515</td></tr>
+          <tr><td><a class="creative-link" href="https://www.instagram.com/p/DdHNtRUAcNR/" target="_blank">AD08 — Em 3 dias aprenda a tratar <span class="link-arrow">↗</span></a></td><td class="num">R$11,80</td><td class="num">1</td><td class="num cpl-good">R$11,80</td><td class="num">2,40%</td><td class="num">R$28,30</td><td class="num">417</td></tr>
+          <tr class="row-zero"><td>AD09 — Você tem mais de 10 anos de formado</td><td class="num">R$5,02</td><td class="num">—</td><td class="num">—</td><td class="num">1,79%</td><td class="num">R$29,88</td><td class="num">168</td></tr>
+          <tr class="row-zero"><td><a class="creative-link" href="https://www.instagram.com/p/DdHNqicAocO/" target="_blank">AD07 — A confiança que o paciente tem em você <span class="link-arrow">↗</span></a></td><td class="num">R$4,94</td><td class="num">—</td><td class="num">—</td><td class="num">0,00%</td><td class="num">R$21,96</td><td class="num">225</td></tr>
+          <tr class="row-zero"><td>AD04 — Agenda vazia, faturando R$5 mil. Não consigo achar o erro</td><td class="num">R$1,71</td><td class="num">—</td><td class="num">—</td><td class="num">2,33%</td><td class="num">R$39,77</td><td class="num">43</td></tr>
+          <tr class="row-zero"><td>AD01 — Quer dominar coluna?</td><td class="num">R$1,34</td><td class="num">—</td><td class="num">—</td><td class="num">1,69%</td><td class="num">R$22,71</td><td class="num">59</td></tr>
+          <tr class="row-zero"><td>AD02 — Você não fatura nem 10 mil por mês.</td><td class="num">R$0,95</td><td class="num">—</td><td class="num">—</td><td class="num">0,00%</td><td class="num">R$32,76</td><td class="num">29</td></tr>
+          <tr class="row-zero"><td>AD03 — Quer dobrar seu faturamento?</td><td class="num">R$0,73</td><td class="num">—</td><td class="num">—</td><td class="num">0,00%</td><td class="num">R$19,21</td><td class="num">38</td></tr>
+          <tr class="row-zero"><td>AD06 — No Brasil são quase 30k fisios</td><td class="num">R$0,28</td><td class="num">—</td><td class="num">—</td><td class="num">0,00%</td><td class="num">R$35,00</td><td class="num">8</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="campaign-block">
+    <div class="campaign-block-title">Criativos — BRASÍLIA (04-06 Dez) &middot; nova, verba de teste</div>
+    <div class="table-wrap">
+      <table class="creatives-table">
+        <thead><tr><th>Criativo</th><th class="num">Invest.</th><th class="num">Leads</th><th class="num">CPL</th><th class="num">CTR</th><th class="num">CPM</th><th class="num">Impr.</th></tr></thead>
+        <tbody>
+          <tr class="row-top"><td><a class="creative-link" href="https://www.instagram.com/p/DevkuRegKCG/" target="_blank">AD12 — Modic <span class="link-arrow">↗</span></a></td><td class="num">R$8,79</td><td class="num">2</td><td class="num cpl-good">R$4,40</td><td class="num">7,34%</td><td class="num">R$49,66</td><td class="num">177</td></tr>
+          <tr class="row-zero"><td><a class="creative-link" href="https://www.instagram.com/p/DevktcKAv0G/" target="_blank">AD11 — Manipulação t12 <span class="link-arrow">↗</span></a></td><td class="num">R$6,36</td><td class="num">—</td><td class="num">—</td><td class="num">2,11%</td><td class="num">R$44,79</td><td class="num">142</td></tr>
+          <tr class="row-zero"><td>AD06 — No Brasil são quase 30k fisios</td><td class="num">R$0,11</td><td class="num">—</td><td class="num">—</td><td class="num">0,00%</td><td class="num">R$55,00</td><td class="num">2</td></tr>
+          <tr class="row-zero"><td>AD13 — Quer dominar coluna? - mod2</td><td class="num">R$0,01</td><td class="num">—</td><td class="num">—</td><td class="num">0,00%</td><td class="num">R$10,00</td><td class="num">1</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="campaign-block">
+    <div class="campaign-block-title">Criativos — CAMPINAS (11-13 Dez) &middot; nova, verba de teste</div>
+    <div class="table-wrap">
+      <table class="creatives-table">
+        <thead><tr><th>Criativo</th><th class="num">Invest.</th><th class="num">Leads</th><th class="num">CPL</th><th class="num">CTR</th><th class="num">CPM</th><th class="num">Impr.</th></tr></thead>
+        <tbody>
+          <tr class="row-top"><td><a class="creative-link" href="https://www.instagram.com/p/DevnRTjgczj/" target="_blank">AD12 — Modic <span class="link-arrow">↗</span></a></td><td class="num">R$15,07</td><td class="num">2</td><td class="num cpl-good">R$7,54</td><td class="num">10,08%</td><td class="num">R$63,32</td><td class="num">238</td></tr>
+          <tr class="row-zero"><td><a class="creative-link" href="https://www.instagram.com/p/DevnQ0Cgn3X/" target="_blank">AD10 — Radiculopatia <span class="link-arrow">↗</span></a></td><td class="num">R$0,67</td><td class="num">—</td><td class="num">—</td><td class="num">10,53%</td><td class="num">R$35,26</td><td class="num">19</td></tr>
+          <tr class="row-zero"><td><a class="creative-link" href="https://www.instagram.com/p/DevnQ1pALUL/" target="_blank">AD11 — Manipulação t12 <span class="link-arrow">↗</span></a></td><td class="num">R$0,65</td><td class="num">—</td><td class="num">—</td><td class="num">0,00%</td><td class="num">R$20,97</td><td class="num">31</td></tr>
+          <tr class="row-zero"><td>AD02 — Você não fatura nem 10 mil por mês.</td><td class="num">R$0,03</td><td class="num">—</td><td class="num">—</td><td class="num">0,00%</td><td class="num">R$30,00</td><td class="num">1</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Análise do período (parcial — 21 de ~30 dias)</div>
+    <div class="insight">
+      <div class="insight-text">
+        Outubro já tem <strong>7 campanhas ativas</strong> — Foz saiu de cena (evento concluído em setembro) e entraram duas novas (Brasília e Campinas), ainda em verba de teste. O destaque do mês é o <strong>Curso Online</strong>, que virou o canal mais eficiente da conta: R$12,09/lead, puxado por três Reels — <strong>C12 "Fisio, vc trabalha com coluna"</strong> (R$9,18), <strong>C11 "Atenção Fisio"</strong> (R$9,37) e <strong>AD03 "Se você é fisio"</strong> (R$15,14) — juntos 80 dos 83 leads da campanha. A <strong>TMA Geral</strong> segue estável (R$14,12), ainda toda sustentada pelo C8 "Teste Lasègue". Nos eventos presenciais, o quadro virou em relação a setembro: <strong>BH</strong> segue sólido (R$15,83) com <strong>AD12 — Modic</strong> como melhor custo (R$13,16), mas agora é a <strong>João Pessoa</strong> que preocupa — R$28,76/lead, puxado pelo <strong>AD08 "Em 3 dias aprenda a tratar"</strong> rodando a R$122,37 por um único lead, bem fora do padrão dos outros criativos "Em 3 dias" que performam bem em BH e RJ. A <strong>RJ</strong> está em ritmo razoável (R$19,60), com Radiculopatia e Modic carregando o volume, igual no padrão já visto em BH. As duas campanhas novas (Brasília, Campinas) ainda têm verba mínima — cedo pra tirar conclusão, mas o <strong>AD12 — Modic</strong> já apareceu como primeiro lead gerado nas duas, reforçando que esse ângulo é o mais consistente entre todas as cidades. Prioridade com o mês ainda em andamento: pausar ou revisar o AD08 de João Pessoa antes que continue queimando verba, escalar Curso Online enquanto o CPL está no menor patamar do ano, e manter Modic/Manipulação t12/Radiculopatia como os três ângulos padrão pra abrir qualquer evento novo.
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>Danilo Soares &middot; Meta Ads (TMA) &middot; 1&ndash;21 out 2026 (parcial)</span>
+    <span>Gerado em outubro de 2026</span>
+  </div>
+
+</body>
+</html>
