@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Relatório Comercial — Dra. Fabi Speciale</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    @page { size: A4; margin: 12mm 0; }
+
+    html { background: #E8E5E0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: #F7F6F4;
+      color: #181818;
+      -webkit-font-smoothing: antialiased;
+      width: 210mm;
+      margin: 0 auto;
+      padding: 36px 44px 48px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding-bottom: 18px;
+      border-bottom: 1.5px solid #181818;
+      margin-bottom: 28px;
+    }
+
+    .header-title { font-size: 20px; font-weight: 600; letter-spacing: -0.025em; }
+    .header-meta { text-align: right; font-size: 11px; color: #ABABAB; line-height: 1.7; }
+
+    .section { margin-bottom: 24px; }
+
+    .section-title {
+      font-size: 9px; letter-spacing: 0.13em; text-transform: uppercase; color: #C0BCB5; margin-bottom: 10px;
+    }
+
+    .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+
+    .kpi { background: #fff; padding: 14px 16px; border-radius: 3px; }
+    .kpi-label { font-size: 10px; color: #C0BCB5; letter-spacing: 0.03em; margin-bottom: 7px; }
+    .kpi-value { font-size: 22px; font-weight: 700; letter-spacing: -0.04em; line-height: 1; }
+    .kpi-value.good { color: #2F7A57; }
+    .kpi-sub { font-size: 10px; color: #D4D0CA; margin-top: 4px; }
+
+    .table-wrap { background: #fff; border-radius: 3px; overflow: hidden; }
+    .creatives-table { width: 100%; border-collapse: collapse; }
+    .creatives-table thead tr { border-bottom: 1px solid #F0EDE8; }
+    .creatives-table th {
+      font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: #C0BCB5;
+      font-weight: 500; padding: 11px 14px; text-align: left; white-space: nowrap;
+    }
+    .creatives-table td { font-size: 11.5px; padding: 10px 14px; border-bottom: 1px solid #F7F6F4; vertical-align: middle; }
+    .creatives-table tbody tr:last-child td { border-bottom: none; }
+    .creatives-table tbody tr:hover td { background: #FAFAF9; }
+    .creatives-table tbody tr.row-top td:first-child { border-left: 3px solid #2F7A57; padding-left: 11px; }
+    .creatives-table tbody tr.row-zero td { color: #C0BCB5; }
+    .creatives-table tfoot td { font-size: 11.5px; font-weight: 700; padding: 10px 14px; border-top: 1.5px solid #181818; }
+
+    .tag {
+      display: inline-block; font-size: 8px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase;
+      padding: 2px 8px; border-radius: 20px; white-space: nowrap;
+    }
+    .tag-meta { color: #B45309; background: #FBF1E3; }
+    .tag-google { color: #2F7A57; background: #EBF5EF; }
+    .tag-insta { color: #8A3B8F; background: #F6EBF7; }
+    .tag-ref { color: #6B6B6B; background: #F0EDE8; }
+
+    td.num { text-align: right; }
+    th.num { text-align: right; }
+
+    .note-box { background: #fff; border-left: 3px solid #C0BCB5; border-radius: 3px; padding: 14px 18px; font-size: 11.5px; color: #6B6B6B; line-height: 1.6; }
+    .note-box + .note-box { margin-top: 8px; }
+    .note-box strong { color: #181818; }
+
+    .footer {
+      margin-top: 28px; padding-top: 14px; border-top: 1px solid #E5E2DC;
+      display: flex; justify-content: space-between; font-size: 10px; color: #D0CCC6;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="header-title">Relatório Comercial</div>
+    <div class="header-meta">
+      <div>Dra. Fabi Speciale — Speciale Saúde</div>
+      <div>ROI e CAC das campanhas &middot; 01 &ndash; 31 out &middot; 2026</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Resultado das campanhas (Meta + Google + Instagram)</div>
+    <div class="kpi-row">
+      <div class="kpi">
+        <div class="kpi-label">CAC</div>
+        <div class="kpi-value">R$171,43</div>
+        <div class="kpi-sub">Investimento ÷ clientes novos</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">ROI</div>
+        <div class="kpi-value good">736,8%</div>
+        <div class="kpi-sub">(Retorno - investimento) ÷ investimento</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Retorno por R$1,00</div>
+        <div class="kpi-value">R$8,37</div>
+        <div class="kpi-sub">Investido em anúncios</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label">Clientes de campanha</div>
+        <div class="kpi-value">7 de 22</div>
+        <div class="kpi-sub">Do total de clientes novos do mês</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Resumo do mês</div>
+    <div class="table-wrap">
+      <table class="creatives-table">
+        <tbody>
+          <tr><td>Leads novos na Gabi (telefones únicos)</td><td class="num">210</td></tr>
+          <tr><td>Clientes novos (todas as origens)</td><td class="num">22</td></tr>
+          <tr><td>Retorno dos clientes novos (planos inteiros)</td><td class="num">R$30.146,37</td></tr>
+          <tr><td>Investimento geral (anúncios R$1.200 + secretária R$1.300)</td><td class="num">R$2.500,00</td></tr>
+          <tr><td>ROI geral (todas as origens, com secretária)</td><td class="num">1105,85%</td></tr>
+          <tr><td>Retorno por R$1,00 (geral)</td><td class="num">R$12,06</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note-box" style="margin-top:8px;">
+      O ROI geral e o ROI das campanhas são indicadores diferentes: o geral inclui indicação, presencial e a secretária;
+      o das campanhas considera só Meta, Google e Instagram e o gasto com anúncios.
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Funil das campanhas</div>
+    <div class="table-wrap">
+      <table class="creatives-table">
+        <thead>
+          <tr>
+            <th>Origem</th>
+            <th class="num">Leads</th>
+            <th class="num">Chegaram ao valor</th>
+            <th class="num">Agendaram*</th>
+            <th class="num">Fecharam</th>
+            <th class="num">Valor fechado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="row-zero">
+            <td><span class="tag tag-meta">Meta Ads</span></td>
+            <td class="num">93</td>
+            <td class="num">20</td>
+            <td class="num">3</td>
+            <td class="num">0</td>
+            <td class="num">R$0,00</td>
+          </tr>
+          <tr class="row-top">
+            <td><span class="tag tag-google">Google</span></td>
+            <td class="num">8</td>
+            <td class="num">4</td>
+            <td class="num">5</td>
+            <td class="num">5</td>
+            <td class="num">R$4.411,03</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-insta">Instagram (bio)</span></td>
+            <td class="num">5</td>
+            <td class="num">4</td>
+            <td class="num">2</td>
+            <td class="num">2</td>
+            <td class="num">R$5.630,59</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td>Total</td>
+            <td class="num">106</td>
+            <td class="num">28</td>
+            <td class="num">10</td>
+            <td class="num">7</td>
+            <td class="num">R$10.041,62</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <div class="note-box" style="margin-top:8px;">
+      Conversões: lead → valor 26,4%; lead → fechamento 6,6%; agendamento → fechamento 70,0%. Custo por lead R$11,32,
+      custo por agendamento R$120,00.<br><br>
+      <strong>Leitura:</strong> o Meta concentra 88% dos leads (93 de 106) e 20 deles receberam valor, mas nenhum virou
+      cliente novo em outubro. O Google, com só 8 leads, gerou 5 clientes novos e R$4.411,03. O Instagram (bio) gerou 2
+      clientes e R$5.630,59 — o maior retorno por lead. O gargalo do Meta está depois do valor: vale revisar o
+      follow-up desses 20 leads e a qualidade da mensagem do anúncio.<br><br>
+      *Agendaram: o Meta usa a etapa "Agendado" da Gabi (3 leads); Google e Instagram usam as vendas do SeuFisio,
+      porque quem agenda sai do pipeline. Como o critério não é o mesmo nos três, essa conversão é aproximada.
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Clientes de campanha — outubro</div>
+    <div class="table-wrap">
+      <table class="creatives-table">
+        <thead>
+          <tr>
+            <th>Cliente</th>
+            <th>Origem</th>
+            <th>Plano</th>
+            <th class="num">Pagamento</th>
+            <th class="num">Valor</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Cátia Regina Francisco Lopes</td>
+            <td><span class="tag tag-insta">Instagram</span></td>
+            <td>Pilates 2x</td>
+            <td class="num">08/10</td>
+            <td class="num">R$3.772,09</td>
+          </tr>
+          <tr>
+            <td>Telma Eneida Correia Dantas</td>
+            <td><span class="tag tag-insta">Instagram</span></td>
+            <td>Consultório · Coluna Livre 10</td>
+            <td class="num">22/10</td>
+            <td class="num">R$1.858,50</td>
+          </tr>
+          <tr>
+            <td>Aline Souza da Silva Fonseca</td>
+            <td><span class="tag tag-google">Google</span></td>
+            <td>Consultório · Fisioterapia geral 10</td>
+            <td class="num">26/10</td>
+            <td class="num">R$1.858,50</td>
+          </tr>
+          <tr>
+            <td>Solange Trindade T. Alves</td>
+            <td><span class="tag tag-google">Google</span></td>
+            <td>Consultório · Coluna Livre 10</td>
+            <td class="num">01/10</td>
+            <td class="num">R$1.770,00</td>
+          </tr>
+          <tr>
+            <td>Rafael Vinícius Pereira dos Santos</td>
+            <td><span class="tag tag-google">Google</span></td>
+            <td>Pilates 2x</td>
+            <td class="num">23/10</td>
+            <td class="num">R$370,53</td>
+          </tr>
+          <tr>
+            <td>Neide Cardim de Souza</td>
+            <td><span class="tag tag-google">Google</span></td>
+            <td>Consultório · Sessão única</td>
+            <td class="num">24/10</td>
+            <td class="num">R$235,00</td>
+          </tr>
+          <tr>
+            <td>Lyses Caldas Nascimento</td>
+            <td><span class="tag tag-google">Google</span></td>
+            <td>Consultório · Sessão única</td>
+            <td class="num">14/10</td>
+            <td class="num">R$177,00</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4">Total</td>
+            <td class="num">R$10.041,62</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Contexto — todos os clientes novos do mês</div>
+    <div class="table-wrap">
+      <table class="creatives-table">
+        <thead>
+          <tr>
+            <th>Canal de origem</th>
+            <th class="num">Clientes</th>
+            <th class="num">Valor</th>
+            <th class="num">% do total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="row-top">
+            <td><span class="tag tag-ref">Indicação</span></td>
+            <td class="num">11</td>
+            <td class="num">R$18.229,95</td>
+            <td class="num">60,5%</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-insta">Instagram (bio)</span></td>
+            <td class="num">2</td>
+            <td class="num">R$5.630,59</td>
+            <td class="num">18,7%</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-google">Google</span></td>
+            <td class="num">5</td>
+            <td class="num">R$4.411,03</td>
+            <td class="num">14,6%</td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-ref">Visita presencial</span></td>
+            <td class="num">1</td>
+            <td class="num">R$300,00</td>
+            <td class="num">1,0%</td>
+          </tr>
+          <tr class="row-zero">
+            <td><span class="tag tag-ref">Sem origem no SeuFisio</span></td>
+            <td class="num">3</td>
+            <td class="num">R$1.574,80</td>
+            <td class="num">5,2%</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td>Total de clientes novos</td>
+            <td class="num">22</td>
+            <td class="num">R$30.146,37</td>
+            <td class="num">100,0%</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <div class="note-box" style="margin-top:8px;">
+      Indicação foi a maior fonte (60% do valor), sem custo de mídia. Três clientes estão sem etiqueta de origem no
+      SeuFisio (Eliza C., Ana Cláudia e Vitor Brito): se a Fabi informar a origem, o quadro se completa.
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Comparativo com setembro</div>
+    <div class="table-wrap">
+      <table class="creatives-table">
+        <thead>
+          <tr>
+            <th>Indicador</th>
+            <th class="num">Setembro*</th>
+            <th class="num">Outubro</th>
+            <th class="num">Variação</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Investimento em anúncios</td><td class="num">R$700,00</td><td class="num">R$1.200,00</td><td class="num">+71,4%</td></tr>
+          <tr><td>Clientes novos de campanha</td><td class="num">7</td><td class="num">7</td><td class="num">0</td></tr>
+          <tr><td>Retorno das campanhas</td><td class="num">R$3.677,00</td><td class="num">R$10.041,62</td><td class="num">+173,1%</td></tr>
+          <tr><td>CAC</td><td class="num">R$100,00</td><td class="num">R$171,43</td><td class="num">+71,4%</td></tr>
+          <tr class="row-top"><td>ROI</td><td class="num">425,3%</td><td class="num">736,8%</td><td class="num">+312 p.p.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note-box" style="margin-top:8px;">
+      *Setembro foi apurado em outro critério (impulsionamento de R$700 contra clientes de origem Instagram, base de
+      valor mais baixa). A comparação é indicativa; vale reapurar setembro pela regra nova.
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Como os números foram apurados</div>
+    <div class="note-box">
+      <strong>Regra de cliente novo:</strong> primeira compra de consulta ou plano com pagamento lançado em outubro,
+      mesmo que o cadastro seja anterior. Gympass, TotalPass e Wellhub ficam de fora, assim como renovação, retorno
+      e migração.
+    </div>
+    <div class="note-box">
+      <strong>Excluídos de outubro:</strong> 5 clientes com compra anterior — Isabela Santiago, Telma Martins, Tiago
+      Elias, Luiz Antonio, Railda Prates (renovações) — além de Ana Maria (veio do Gympass, migração) e José Lemos
+      (cliente não pagante).
+    </div>
+    <div class="note-box">
+      <strong>Reconciliação:</strong> a apuração anterior do relatório de gestão trazia 23 clientes e R$30.551,50; a
+      regra atual dá 22 e R$30.146,37 (diferença de 1 cliente e R$405,13, ainda não itemizada). O levantamento por
+      data de cadastro (14 clientes, R$14.093,89) usava outro critério e ficou 8 clientes abaixo — a lista nominal
+      dessa diferença ainda não foi conferida.
+    </div>
+    <div class="note-box">
+      <strong>Aline Souza:</strong> o levantamento manual a tinha tratado como cliente antiga; pelo SeuFisio ela foi
+      cadastrada em julho/2026 e fez a primeira compra em 26/10, então entra. Falta a Fabi confirmar se ela já teve
+      plano antes.
+    </div>
+    <div class="note-box">
+      <strong>Meta sem cliente novo:</strong> a Gabi tem 1 lead do Meta na etapa "Cliente - Fechou Plano", mas não há
+      cliente novo com etiqueta Meta no SeuFisio em outubro — pode ser etiqueta faltando no cadastro.
+    </div>
+    <div class="note-box">
+      <strong>Valores:</strong> valor da venda lançada no SeuFisio (plano inteiro). Contas a receber não foram
+      conferidas nesta versão.
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>Dra. Fabi Speciale &middot; Relatório comercial &middot; 01 &ndash; 31 out 2026</span>
+    <span>Gerado em novembro de 2026</span>
+  </div>
+
+</body>
+</html>
