@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório de Marketing — Gio Estética Avançada (Rochdale) | Outubro 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #101012;
+            --card: #18181B;
+            --purple: #52525B;
+            --purple-light: #A1A1AA;
+            --teal: #94A3B8;
+            --green: #4ADE80;
+            --orange: #FB923C;
+            --red: #F87171;
+            --text: #F1F0FF;
+            --text-muted: #8E8E96;
+            --border: #27272A;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', -apple-system, sans-serif;
+            line-height: 1.6;
+            min-width: 900px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #151517 0%, #1D1D20 40%, #151517 100%);
+            padding: 24px 56px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+        .header::after {
+            content: '';
+            position: absolute;
+            top: -60px; right: -60px;
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(139,127,214,0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .avatar {
+            width: 52px; height: 52px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #8B7FD6, var(--teal));
+            display: flex; align-items: center; justify-content: center;
+            font-size: 22px; flex-shrink: 0;
+            box-shadow: 0 0 0 4px rgba(139,127,214,0.2);
+        }
+        .header-text h1 { font-size: 20px; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
+        .header-text h2 { font-size: 13px; font-weight: 400; color: var(--text-muted); margin-top: 2px; }
+        .header-text .period-tag {
+            display: inline-block; margin-top: 6px;
+            font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px;
+            background: rgba(139,127,214,0.2); color: #B8AEF0;
+            border: 1px solid rgba(139,127,214,0.3);
+        }
+
+        .overview {
+            display: grid; grid-template-columns: repeat(5, 1fr);
+            gap: 1px; background: var(--border); border-bottom: 1px solid var(--border);
+        }
+        .ov-item { background: var(--card); padding: 24px 28px; }
+        .ov-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); font-weight: 600; margin-bottom: 8px; }
+        .ov-value { font-size: 26px; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
+        .ov-sub { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+        .ov-purple .ov-value { color: #B8AEF0; }
+        .ov-green .ov-value  { color: var(--green); }
+        .ov-teal .ov-value   { color: var(--teal); }
+        .ov-orange .ov-value { color: var(--orange); }
+
+        .delta { font-size: 11px; font-weight: 700; white-space: nowrap; }
+        .d-pos  { color: var(--green); }
+        .d-neg  { color: var(--red); }
+        .d-warn { color: var(--orange); }
+
+        .content { padding: 40px 56px 56px; }
+
+        .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+        .section-header h3 { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: var(--text-muted); white-space: nowrap; }
+        .section-line { flex: 1; height: 1px; background: var(--border); }
+
+        .badge { font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.8px; white-space: nowrap; }
+        .badge-perf  { background: rgba(139,127,214,0.2); color: #B8AEF0; border: 1px solid rgba(139,127,214,0.35); }
+        .badge-brand { background: rgba(148,163,184,0.15); color: var(--teal); border: 1px solid rgba(148,163,184,0.3); }
+        .badge-off   { background: rgba(142,142,150,0.12); color: var(--text-muted); border: 1px solid rgba(142,142,150,0.2); }
+        .badge-new   { background: rgba(74,222,128,0.12); color: var(--green); border: 1px solid rgba(74,222,128,0.25); }
+
+        .campaign-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 20px; }
+        .camp-header {
+            padding: 20px 28px; display: flex; align-items: center; justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+            background: linear-gradient(to right, rgba(139,127,214,0.08) 0%, transparent 100%);
+        }
+        .camp-header.brand-grad { background: linear-gradient(to right, rgba(148,163,184,0.07) 0%, transparent 100%); }
+        .camp-title { font-size: 15px; font-weight: 700; color: #fff; }
+        .camp-sub { font-size: 12px; color: var(--text-muted); margin-top: 3px; }
+        .camp-badges { display: flex; gap: 8px; align-items: center; }
+
+        .metrics-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; }
+        .met-col { padding: 24px 28px; border-right: 1px solid var(--border); }
+        .met-col:last-child { border-right: none; }
+        .met-col-title {
+            font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px;
+            color: var(--text-muted); font-weight: 700; margin-bottom: 20px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .met-col-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+        .met-item { margin-bottom: 16px; }
+        .met-label { font-size: 11px; color: var(--text-muted); margin-bottom: 3px; }
+        .met-value { font-size: 20px; font-weight: 700; color: var(--text); }
+        .met-value.lg { font-size: 28px; letter-spacing: -0.5px; }
+        .met-value.sm { font-size: 14px; font-weight: 500; }
+        .met-value.purple { color: #B8AEF0; }
+        .met-value.green  { color: var(--green); }
+        .met-value.teal   { color: var(--teal); }
+        .met-value.orange { color: var(--orange); }
+        .met-vs { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+
+        .ads-section { border-top: 1px solid var(--border); padding: 20px 28px 24px; }
+        .ads-heading { font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); font-weight: 700; margin-bottom: 14px; }
+        table { width: 100%; border-collapse: collapse; }
+        th { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); font-weight: 600; text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); }
+        td { font-size: 13px; padding: 10px 10px; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--text); vertical-align: middle; }
+        tr:last-child td { border-bottom: none; }
+        td.bold   { font-weight: 600; }
+        td.green  { color: var(--green); font-weight: 600; }
+        td.orange { color: var(--orange); font-weight: 600; }
+        td.muted  { color: var(--text-muted); }
+
+        .chip { display: inline-block; font-size: 10px; padding: 2px 7px; border-radius: 4px; font-weight: 700; margin-left: 6px; vertical-align: middle; }
+        .chip-best { background: rgba(74,222,128,0.15); color: var(--green); }
+        .chip-vol  { background: rgba(161,161,170,0.15); color: var(--purple-light); }
+        .chip-warn { background: rgba(251,146,60,0.15); color: var(--orange); }
+
+        .note-box { margin: 0 28px 20px; padding: 12px 16px; background: rgba(148,163,184,0.06); border: 1px solid rgba(148,163,184,0.25); border-radius: 10px; font-size: 12px; color: var(--text-muted); }
+        .note-box b { color: var(--teal); }
+
+        .ad-link { color: #B8AEF0; text-decoration: none; border-bottom: 1px dotted rgba(184,174,240,0.5); }
+        .ad-link:hover { border-bottom-style: solid; }
+
+        .footer { text-align: center; padding: 28px 56px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 12px; }
+        .footer span { color: #B8AEF0; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="avatar"></div>
+    <div class="header-text">
+        <h1>Gio Estética Avançada (Rochdale)</h1>
+        <h2>Relatório de Marketing Digital — MKBZ</h2>
+        <div class="period-tag">Resultados de Outubro / 2026</div>
+    </div>
+</div>
+
+<div class="overview">
+    <div class="ov-item ov-purple">
+        <div class="ov-label">Investimento Total</div>
+        <div class="ov-value">R$ 5.174,34</div>
+        <div class="ov-sub"><span class="delta d-warn">+34,3%</span> vs. setembro</div>
+    </div>
+    <div class="ov-item ov-green">
+        <div class="ov-label">Conversas (WhatsApp)</div>
+        <div class="ov-value">418</div>
+        <div class="ov-sub"><span class="delta d-pos">+10,0%</span> vs. setembro</div>
+    </div>
+    <div class="ov-item">
+        <div class="ov-label">Leads (Site)</div>
+        <div class="ov-value">86</div>
+        <div class="ov-sub"><span class="delta d-pos">+41,0%</span> vs. setembro</div>
+    </div>
+    <div class="ov-item ov-teal">
+        <div class="ov-label">Visitas ao Perfil</div>
+        <div class="ov-value">495</div>
+        <div class="ov-sub"><span class="delta d-neg">-45,8%</span> vs. setembro</div>
+    </div>
+    <div class="ov-item ov-orange">
+        <div class="ov-label">Alcance</div>
+        <div class="ov-value">116.879</div>
+        <div class="ov-sub"><span class="delta d-pos">+60,1%</span> vs. setembro</div>
+    </div>
+</div>
+
+<div class="content">
+
+    <div class="section-header">
+        <h3>Performance</h3>
+        <div class="badge badge-perf">Conversão</div>
+        <div class="section-line"></div>
+    </div>
+
+    <!-- CAMPANHA CBO -->
+    <div class="campaign-card">
+        <div class="camp-header">
+            <div>
+                <div class="camp-title">[ENG] [CBO] 07.10</div>
+                <div class="camp-sub">Campanha · Meta Ads &nbsp;|&nbsp; Objetivo: Conversas no WhatsApp &nbsp;|&nbsp; 14 criativos cadastrados, 4 com veiculação</div>
+            </div>
+            <div class="camp-badges">
+                <div class="badge badge-perf">Performance</div>
+                <div class="badge badge-off">Ativo</div>
+            </div>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="met-col">
+                <div class="met-col-title">Período e Investimento</div>
+                <div class="met-item">
+                    <div class="met-label">Período de Veiculação</div>
+                    <div class="met-value sm">01/10/2026 — 31/10/2026</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Valor Investido</div>
+                    <div class="met-value lg purple">R$ 1.365,36</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">CPM · Cliques no Link</div>
+                    <div class="met-value sm">R$ 26,28 &nbsp;·&nbsp; 317 cliques</div>
+                </div>
+            </div>
+            <div class="met-col">
+                <div class="met-col-title">Alcance e Impressões</div>
+                <div class="met-item">
+                    <div class="met-label">Impressões</div>
+                    <div class="met-value lg">51.962</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Alcance</div>
+                    <div class="met-value">20.701</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">CTR</div>
+                    <div class="met-value sm">1,80%</div>
+                </div>
+            </div>
+            <div class="met-col">
+                <div class="met-col-title">Resultados de Performance</div>
+                <div class="met-item">
+                    <div class="met-label">Conversas Geradas</div>
+                    <div class="met-value lg orange">181</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Custo por Conversa</div>
+                    <div class="met-value orange">R$ 7,54</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Melhor eficiência</div>
+                    <div class="met-value sm">Depilação Gio (v2) &nbsp;·&nbsp; R$5,17 / conversa</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ads-section">
+            <div class="ads-heading">Detalhamento por Criativo</div>
+            <table>
+                <thead>
+                    <tr><th>Criativo</th><th>Investido</th><th>Conversas</th><th>Custo / Conv.</th><th>CTR</th><th>Impressões</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="bold"><a class="ad-link" href="https://www.instagram.com/p/DU3MipxAGXy/" target="_blank">AD — Harmonização começa na análise (v2)</a> <span class="chip chip-vol">Mais Conversas</span></td>
+                        <td>R$ 891,08</td><td class="green">106</td><td class="orange">R$ 8,41</td><td>1,75%</td><td>32.533</td>
+                    </tr>
+                    <tr>
+                        <td class="bold"><a class="ad-link" href="https://www.instagram.com/p/DU3M188ADIe/" target="_blank">AD — Harmonização começa na análise (v1)</a></td>
+                        <td>R$ 343,55</td><td class="green">59</td><td class="green">R$ 5,82</td><td>2,43%</td><td>11.060</td>
+                    </tr>
+                    <tr>
+                        <td class="bold"><a class="ad-link" href="https://www.instagram.com/p/DUtfShVAB0T/" target="_blank">AD — Depilação Gio (v1)</a></td>
+                        <td>R$ 99,69</td><td class="green">10</td><td class="orange">R$ 9,97</td><td>1,05%</td><td>6.779</td>
+                    </tr>
+                    <tr>
+                        <td class="bold"><a class="ad-link" href="https://www.instagram.com/p/DUtfo7ZAFAt/" target="_blank">AD — Depilação Gio (v2)</a> <span class="chip chip-best">Melhor CPL</span></td>
+                        <td>R$ 31,04</td><td class="green">6</td><td class="green">R$ 5,17</td><td>1,51%</td><td>1.590</td>
+                    </tr>
+                    <tr>
+                        <td class="muted">+ 10 outros criativos cadastrados, zero veiculação no mês</td>
+                        <td class="muted">R$ 0,00</td><td class="muted">—</td><td class="muted">—</td><td class="muted">—</td><td class="muted">0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- CAMPANHA WPP -->
+    <div class="campaign-card">
+        <div class="camp-header">
+            <div>
+                <div class="camp-title">[ENG][WPP] [Ads L1] — Adv+</div>
+                <div class="camp-sub">Campanha · Meta Ads &nbsp;|&nbsp; Objetivo: Conversas no WhatsApp &nbsp;|&nbsp; 15 criativos cadastrados, 11 com veiculação</div>
+            </div>
+            <div class="camp-badges">
+                <div class="badge badge-perf">Performance</div>
+                <div class="badge badge-off">Ativo</div>
+            </div>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="met-col">
+                <div class="met-col-title">Período e Investimento</div>
+                <div class="met-item">
+                    <div class="met-label">Período de Veiculação</div>
+                    <div class="met-value sm">01/10/2026 — 31/10/2026</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Valor Investido</div>
+                    <div class="met-value lg purple">R$ 1.275,33</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">CPM · Cliques no Link</div>
+                    <div class="met-value sm">R$ 18,57 &nbsp;·&nbsp; 392 cliques</div>
+                </div>
+            </div>
+            <div class="met-col">
+                <div class="met-col-title">Alcance e Impressões</div>
+                <div class="met-item">
+                    <div class="met-label">Impressões</div>
+                    <div class="met-value lg">68.661</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Alcance</div>
+                    <div class="met-value">42.288</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">CTR</div>
+                    <div class="met-value sm">1,22%</div>
+                </div>
+            </div>
+            <div class="met-col">
+                <div class="met-col-title">Resultados de Performance</div>
+                <div class="met-item">
+                    <div class="met-label">Conversas Geradas</div>
+                    <div class="met-value lg green">175</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Custo por Conversa</div>
+                    <div class="met-value green">R$ 7,29</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Melhor eficiência</div>
+                    <div class="met-value sm">AD08 — Harmonização Glútea &nbsp;·&nbsp; R$2,67 / conversa</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ads-section">
+            <div class="ads-heading">Detalhamento por Criativo</div>
+            <table>
+                <thead>
+                    <tr><th>Criativo</th><th>Investido</th><th>Conversas</th><th>Custo / Conv.</th><th>CTR</th><th>Impressões</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="bold"><a class="ad-link" href="https://www.instagram.com/p/DaDpaN5AVnv/" target="_blank">AD11 — Volumização</a> <span class="chip chip-vol">Mais Conversas</span></td>
+                        <td>R$ 714,17</td><td class="green">108</td><td class="orange">R$ 6,61</td><td>2,08%</td><td>21.998</td>
+                    </tr>
+                    <tr>
+                        <td class="bold"><a class="ad-link" href="https://www.instagram.com/p/DaDpaWBgotG/" target="_blank">AD13 — O que são aqueles pontinhos no nariz</a></td>
+                        <td>R$ 270,31</td><td class="green">39</td><td class="orange">R$ 6,93</td><td>0,60%</td><td>31.687</td>
+                    </tr>
+                    <tr>
+                        <td class="bold"><a class="ad-link" href="https://www.instagram.com/p/DaDpav0gude/" target="_blank">AD15 — Vem fazer uma limpeza de pele comigo</a></td>
+                        <td>R$ 213,18</td><td class="green">15</td><td class="orange">R$ 14,21</td><td>0,96%</td><td>12.250</td>
+                    </tr>
+                    <tr>
+                        <td class="bold"><a class="ad-link" href="https://www.instagram.com/p/DaDpacyg_BT/" target="_blank">AD10 — O que ninguém te conta</a></td>
+                        <td>R$ 26,15</td><td class="green">1</td><td class="orange">R$ 26,15</td><td>3,21%</td><td>623</td>
+                    </tr>
+                    <tr>
+                        <td class="bold"><a class="ad-link" href="https://www.instagram.com/p/DaDpaFjg0_3/" target="_blank">AD08 — Harmonização Glútea</a> <span class="chip chip-best">Melhor CPL</span></td>
+                        <td>R$ 24,02</td><td class="green">9</td><td class="green">R$ 2,67</td><td>2,85%</td><td>947</td>
+                    </tr>
+                    <tr>
+                        <td class="muted">+ 10 outros criativos (cauda de teste, baixo investimento)</td>
+                        <td class="muted">R$ 27,50</td><td class="muted">3</td><td class="muted">R$ 9,17</td><td class="muted">—</td><td class="muted">1.156</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- CAMPANHA LP-HG -->
+    <div class="campaign-card">
+        <div class="camp-header">
+            <div>
+                <div class="camp-title">[Leads][Lp-HG] [Ads L1] — Adv+</div>
+                <div class="camp-sub">Campanha · Meta Ads → Formulário no site &nbsp;|&nbsp; Objetivo: Leads &nbsp;|&nbsp; 15 criativos cadastrados, 4 com veiculação</div>
+            </div>
+            <div class="camp-badges">
+                <div class="badge badge-perf">Performance</div>
+                <div class="badge badge-off">Ativo</div>
+            </div>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="met-col">
+                <div class="met-col-title">Período e Investimento</div>
+                <div class="met-item">
+                    <div class="met-label">Período de Veiculação</div>
+                    <div class="met-value sm">01/10/2026 — 31/10/2026</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Valor Investido</div>
+                    <div class="met-value lg purple">R$ 1.067,32</div>
+                    <div class="met-vs"><span class="delta d-pos">+41,2%</span> vs. R$755,72 de setembro</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">CPM · Cliques no Link</div>
+                    <div class="met-value sm">R$ 31,68 &nbsp;·&nbsp; 697 cliques</div>
+                </div>
+            </div>
+            <div class="met-col">
+                <div class="met-col-title">Alcance e Impressões</div>
+                <div class="met-item">
+                    <div class="met-label">Impressões</div>
+                    <div class="met-value lg">33.687</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Alcance</div>
+                    <div class="met-value">20.089</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">CTR</div>
+                    <div class="met-value sm">3,42%</div>
+                </div>
+            </div>
+            <div class="met-col">
+                <div class="met-col-title">Resultados de Performance</div>
+                <div class="met-item">
+                    <div class="met-label">Leads Gerados</div>
+                    <div class="met-value lg teal">86</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Custo por Lead</div>
+                    <div class="met-value teal">R$ 12,41</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Melhor eficiência</div>
+                    <div class="met-value sm">AD11 — Volumização &nbsp;·&nbsp; R$10,66 / lead</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ads-section">
+            <div class="ads-heading">Detalhamento por Criativo</div>
+            <table>
+                <thead>
+                    <tr><th>Criativo</th><th>Investido</th><th>Leads</th><th>Custo / Lead</th><th>CTR</th><th>Impressões</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="bold"><a class="ad-link" href="https://www.instagram.com/p/DdFO6nigRay/" target="_blank">AD11 — Volumização — Cópia</a> <span class="chip chip-best">Melhor CPL</span> <span class="chip chip-vol">Mais Leads</span></td>
+                        <td>R$ 735,67</td><td class="green">69</td><td class="green">R$ 10,66</td><td>4,11%</td><td>19.540</td>
+                    </tr>
+                    <tr>
+                        <td class="bold"><a class="ad-link" href="https://www.instagram.com/p/DdFO6E8gMDi/" target="_blank">AD08 — Harmonização Glútea — Cópia</a></td>
+                        <td>R$ 183,96</td><td class="green">12</td><td class="orange">R$ 15,33</td><td>3,47%</td><td>5.799</td>
+                    </tr>
+                    <tr>
+                        <td class="bold"><a class="ad-link" href="https://www.instagram.com/p/DdFPnr2AX4C/" target="_blank">AD13 — O que são aqueles pontinhos no nariz — Cópia</a></td>
+                        <td>R$ 119,73</td><td class="green">4</td><td class="orange">R$ 29,93</td><td>1,55%</td><td>7.699</td>
+                    </tr>
+                    <tr>
+                        <td class="bold"><a class="ad-link" href="https://www.instagram.com/p/DdFO54CAeIm/" target="_blank">AD07 — Quando eu era mais jovem eu tinha bumbum — Cópia</a></td>
+                        <td>R$ 16,54</td><td class="green">1</td><td class="orange">R$ 16,54</td><td>5,07%</td><td>335</td>
+                    </tr>
+                    <tr>
+                        <td class="muted">+ 11 outros criativos (cauda de teste, baixo investimento ou sem lead)</td>
+                        <td class="muted">R$ 11,42</td><td class="muted">—</td><td class="muted">—</td><td class="muted">—</td><td class="muted">314</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- CAMPANHA VERÃO -->
+    <div class="campaign-card">
+        <div class="camp-header">
+            <div>
+                <div class="camp-title">[Campanha Verão] - [eng][WPP] - Adv+</div>
+                <div class="camp-sub">Campanha · Meta Ads &nbsp;|&nbsp; Objetivo: Conversas no WhatsApp &nbsp;|&nbsp; 7 criativos ativos &nbsp;·&nbsp; <span style="color:var(--green);">Nova em outubro</span></div>
+            </div>
+            <div class="camp-badges">
+                <div class="badge badge-new">Nova</div>
+                <div class="badge badge-off">Ativo</div>
+            </div>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="met-col">
+                <div class="met-col-title">Período e Investimento</div>
+                <div class="met-item">
+                    <div class="met-label">Período de Veiculação</div>
+                    <div class="met-value sm">05/10/2026 — 31/10/2026</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Valor Investido</div>
+                    <div class="met-value lg purple">R$ 1.139,65</div>
+                    <div class="met-vs">Campanha nova — sem base de setembro</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">CPM · Cliques no Link</div>
+                    <div class="met-value sm">R$ 42,93 &nbsp;·&nbsp; 234 cliques</div>
+                </div>
+            </div>
+            <div class="met-col">
+                <div class="met-col-title">Alcance e Impressões</div>
+                <div class="met-item">
+                    <div class="met-label">Impressões</div>
+                    <div class="met-value lg">26.548</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Alcance</div>
+                    <div class="met-value">10.124</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">CTR</div>
+                    <div class="met-value sm">1,89%</div>
+                </div>
+            </div>
+            <div class="met-col">
+                <div class="met-col-title">Resultados de Performance</div>
+                <div class="met-item">
+                    <div class="met-label">Conversas Geradas</div>
+                    <div class="met-value lg orange">62</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Custo por Conversa</div>
+                    <div class="met-value orange">R$ 18,38</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Melhor eficiência</div>
+                    <div class="met-value sm">AD05 — O que acontece com seu corpo no verão &nbsp;·&nbsp; R$12,43 / conversa</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ads-section">
+            <div class="ads-heading">Detalhamento por Criativo</div>
+            <table>
+                <thead>
+                    <tr><th>Criativo</th><th>Investido</th><th>Conversas</th><th>Custo / Conv.</th><th>CTR</th><th>Impressões</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="bold"><a class="ad-link" href="https://www.instagram.com/p/DeIWFf0Ai2V/" target="_blank">AD04 — A roupa não apertou.</a> <span class="chip chip-vol">Mais Conversas</span></td>
+                        <td>R$ 689,77</td><td class="green">39</td><td class="orange">R$ 17,69</td><td>2,52%</td><td>12.391</td>
+                    </tr>
+                    <tr>
+                        <td class="bold"><a class="ad-link" href="https://www.instagram.com/p/DeIWF4WA8x_/" target="_blank">AD07 — Comeu muito no inverno?</a></td>
+                        <td>R$ 223,67</td><td class="green">14</td><td class="orange">R$ 15,98</td><td>1,64%</td><td>6.149</td>
+                    </tr>
+                    <tr>
+                        <td class="bold"><a class="ad-link" href="https://www.instagram.com/p/DeIWKNJAfrG/" target="_blank">AD01 — O efeito verão precisa começar agora.</a></td>
+                        <td>R$ 128,26</td><td class="green">5</td><td class="orange">R$ 25,65</td><td>1,06%</td><td>4.798</td>
+                    </tr>
+                    <tr>
+                        <td class="bold"><a class="ad-link" href="https://www.instagram.com/p/DeIWEzngNCB/" target="_blank">AD06 — Eu amo mimar a minha eu do futuro.</a></td>
+                        <td>R$ 39,66</td><td class="green">1</td><td class="orange">R$ 39,66</td><td>1,10%</td><td>1.177</td>
+                    </tr>
+                    <tr>
+                        <td class="bold"><a class="ad-link" href="https://www.instagram.com/p/DeIWFwvA2Su/" target="_blank">AD05 — O que acontece com seu corpo no verão</a> <span class="chip chip-best">Melhor CPL</span></td>
+                        <td>R$ 24,86</td><td class="green">2</td><td class="green">R$ 12,43</td><td>1,19%</td><td>921</td>
+                    </tr>
+                    <tr>
+                        <td class="bold"><a class="ad-link" href="https://www.instagram.com/p/DeIWEFDAFpZ/" target="_blank">AD02 — O corpo em alta mudou.</a></td>
+                        <td>R$ 15,87</td><td class="green">1</td><td class="orange">R$ 15,87</td><td>1,05%</td><td>569</td>
+                    </tr>
+                    <tr>
+                        <td class="muted"><a class="ad-link" href="https://www.instagram.com/p/DeIWDzzA8sl/" target="_blank">AD03 — O corpo que você quer</a></td>
+                        <td class="muted">R$ 17,56</td><td class="muted">—</td><td class="muted">—</td><td class="muted">1,29%</td><td class="muted">543</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- CAMPANHA BLACK GIO VIP -->
+    <div class="campaign-card">
+        <div class="camp-header">
+            <div>
+                <div class="camp-title">[Black GIO 2026] [TRAF] Grupo VIP</div>
+                <div class="camp-sub">Campanha · Meta Ads &nbsp;|&nbsp; Objetivo: Cliques no link (entrada no Grupo VIP) &nbsp;|&nbsp; 5 criativos ativos &nbsp;·&nbsp; <span style="color:var(--green);">Nova em outubro — aquecimento Black Friday</span></div>
+            </div>
+            <div class="camp-badges">
+                <div class="badge badge-new">Nova</div>
+                <div class="badge badge-off">Ativo</div>
+            </div>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="met-col">
+                <div class="met-col-title">Período e Investimento</div>
+                <div class="met-item">
+                    <div class="met-label">Período de Veiculação</div>
+                    <div class="met-value sm">27/10/2026 — 31/10/2026</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Valor Investido</div>
+                    <div class="met-value lg purple">R$ 48,48</div>
+                    <div class="met-vs">Campanha iniciada nos últimos dias do mês — aquecimento pra Black Friday</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">CPM</div>
+                    <div class="met-value sm">R$ 2,90</div>
+                </div>
+            </div>
+            <div class="met-col">
+                <div class="met-col-title">Alcance e Impressões</div>
+                <div class="met-item">
+                    <div class="met-label">Impressões</div>
+                    <div class="met-value lg">16.689</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Alcance</div>
+                    <div class="met-value">5.921</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">CTR</div>
+                    <div class="met-value sm">2,48%</div>
+                </div>
+            </div>
+            <div class="met-col">
+                <div class="met-col-title">Resultados de Performance</div>
+                <div class="met-item">
+                    <div class="met-label">Cliques Gerados</div>
+                    <div class="met-value lg teal">508</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Custo por Clique</div>
+                    <div class="met-value teal">R$ 0,10</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Melhor eficiência</div>
+                    <div class="met-value sm">AD04 — 3 semanas de ofertas &nbsp;·&nbsp; R$0,09 / clique</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ads-section">
+            <div class="ads-heading">Detalhamento por Criativo</div>
+            <table>
+                <thead>
+                    <tr><th>Criativo</th><th>Investido</th><th>Cliques</th><th>Custo / Clique</th><th>CTR</th><th>Impressões</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="bold"><a class="ad-link" href="https://www.instagram.com/p/DfAYqKkAPZW/" target="_blank">AD02 — Feed A maior Black da GIO</a> <span class="chip chip-vol">Mais Cliques</span></td>
+                        <td>R$ 20,94</td><td class="green">227</td><td class="green">R$ 0,09</td><td>2,59%</td><td>7.364</td>
+                    </tr>
+                    <tr>
+                        <td class="bold"><a class="ad-link" href="https://www.instagram.com/p/DfAYo1mATSn/" target="_blank">AD01 — Feed Quer receber as ofertas</a></td>
+                        <td>R$ 17,15</td><td class="green">185</td><td class="green">R$ 0,09</td><td>2,49%</td><td>5.537</td>
+                    </tr>
+                    <tr>
+                        <td class="bold"><a class="ad-link" href="https://www.instagram.com/p/DfAYrSRAnxf/" target="_blank">AD03 — Feed Tratamento há tempos</a></td>
+                        <td>R$ 5,83</td><td class="green">47</td><td class="green">R$ 0,12</td><td>2,20%</td><td>2.095</td>
+                    </tr>
+                    <tr>
+                        <td class="bold"><a class="ad-link" href="https://www.instagram.com/p/DfAYsUXAKnK/" target="_blank">AD04 — Feed 3 semanas de ofertas</a> <span class="chip chip-best">Melhor custo/clique</span></td>
+                        <td>R$ 4,06</td><td class="green">45</td><td class="green">R$ 0,09</td><td>2,13%</td><td>1.641</td>
+                    </tr>
+                    <tr>
+                        <td class="muted"><a class="ad-link" href="https://www.instagram.com/p/DfAYvzDA3y9/" target="_blank">AD05 — Carrossel Luana</a></td>
+                        <td class="muted">R$ 0,50</td><td class="muted">4</td><td class="muted">R$ 0,13</td><td class="muted">7,69%</td><td class="muted">52</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- BRANDING -->
+    <div class="section-header" style="margin-top: 40px;">
+        <h3>Branding</h3>
+        <div class="badge badge-brand">Reconhecimento</div>
+        <div class="section-line"></div>
+    </div>
+
+    <div class="note-box"><b>Sobre "Visitas ao Perfil":</b> os dois posts abaixo seguem rodando desde setembro (mesmos criativos), por isso o volume de visitas caiu — a maior parte do orçamento do mês foi redirecionada pras campanhas de performance (Verão e Black GIO VIP).</div>
+
+    <!-- POST 1 -->
+    <div class="campaign-card">
+        <div class="camp-header brand-grad">
+            <div>
+                <div class="camp-title">Post: <a class="ad-link" href="https://www.instagram.com/p/DZpfijUAJpU/" target="_blank">"Aqueles pontinhos acinzentados..."</a></div>
+                <div class="camp-sub">Objetivo: Visitas ao Perfil do Instagram</div>
+            </div>
+            <div class="camp-badges">
+                <div class="badge badge-brand">Branding</div>
+                <div class="badge badge-off">Ativo</div>
+            </div>
+        </div>
+        <div class="metrics-grid">
+            <div class="met-col">
+                <div class="met-col-title">Período e Investimento</div>
+                <div class="met-item">
+                    <div class="met-label">Período</div>
+                    <div class="met-value sm">01/10/2026 — 31/10/2026</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Valor Investido</div>
+                    <div class="met-value lg purple">R$ 139,49</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">CPM</div>
+                    <div class="met-value">R$ 9,51</div>
+                </div>
+            </div>
+            <div class="met-col">
+                <div class="met-col-title">Alcance e Impressões</div>
+                <div class="met-item">
+                    <div class="met-label">Impressões</div>
+                    <div class="met-value lg">14.666</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Alcance</div>
+                    <div class="met-value">12.449</div>
+                </div>
+            </div>
+            <div class="met-col">
+                <div class="met-col-title">Resultados de Branding</div>
+                <div class="met-item">
+                    <div class="met-label">Visitas ao Perfil</div>
+                    <div class="met-value lg teal">310 <span class="chip chip-best">Mais visitas do mês</span></div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">CTR · Custo por Visita</div>
+                    <div class="met-value sm">2,56% · <span style="color:var(--green);font-weight:700;">R$ 0,45</span> <span class="chip chip-best">Mais barata do mês</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- POST 2 -->
+    <div class="campaign-card">
+        <div class="camp-header brand-grad">
+            <div>
+                <div class="camp-title">Post: <a class="ad-link" href="https://www.instagram.com/p/DZpfTGOACyk/" target="_blank">"Você passa a lâmina, inflama,..."</a></div>
+                <div class="camp-sub">Objetivo: Visitas ao Perfil do Instagram</div>
+            </div>
+            <div class="camp-badges">
+                <div class="badge badge-brand">Branding</div>
+                <div class="badge badge-off">Ativo</div>
+            </div>
+        </div>
+        <div class="metrics-grid">
+            <div class="met-col">
+                <div class="met-col-title">Período e Investimento</div>
+                <div class="met-item">
+                    <div class="met-label">Período</div>
+                    <div class="met-value sm">01/10/2026 — 31/10/2026</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Valor Investido</div>
+                    <div class="met-value lg purple">R$ 138,71</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">CPM</div>
+                    <div class="met-value">R$ 18,54</div>
+                </div>
+            </div>
+            <div class="met-col">
+                <div class="met-col-title">Alcance e Impressões</div>
+                <div class="met-item">
+                    <div class="met-label">Impressões</div>
+                    <div class="met-value lg">7.480</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Alcance</div>
+                    <div class="met-value">5.307</div>
+                </div>
+            </div>
+            <div class="met-col">
+                <div class="met-col-title">Resultados de Branding</div>
+                <div class="met-item">
+                    <div class="met-label">Visitas ao Perfil</div>
+                    <div class="met-value lg teal">185</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">CTR · Custo por Visita</div>
+                    <div class="met-value sm">4,25% · R$ 0,75</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="footer">
+    Relatório gerado por <span>Arrive In Digital</span> &nbsp;·&nbsp; Período: Outubro 2026 &nbsp;·&nbsp; Dados: Meta Ads Manager
+</div>
+
+</body>
+</html>
