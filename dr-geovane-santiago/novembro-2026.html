@@ -86,6 +86,8 @@
         .badge { font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.8px; white-space: nowrap; }
         .badge-perf  { background: rgba(139,127,214,0.2); color: #B8AEF0; border: 1px solid rgba(139,127,214,0.35); }
         .badge-off   { background: rgba(142,142,150,0.12); color: var(--text-muted); border: 1px solid rgba(142,142,150,0.2); }
+        .badge-active  { background: rgba(74,222,128,0.12); color: var(--green); border: 1px solid rgba(74,222,128,0.25); }
+        .badge-paused  { background: rgba(251,146,60,0.12); color: var(--orange); border: 1px solid rgba(251,146,60,0.25); }
 
         .campaign-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 20px; }
         .camp-header {
@@ -138,13 +140,13 @@
 <div class="overview">
     <div class="ov-item ov-purple">
         <div class="ov-label">Investimento Total</div>
-        <div class="ov-value">R$ 550,58</div>
-        <div class="ov-sub">5 campanhas ativas</div>
+        <div class="ov-value">R$ 551,20</div>
+        <div class="ov-sub">5 campanhas com gasto (2 ativas, 3 pausadas)</div>
     </div>
     <div class="ov-item ov-green">
         <div class="ov-label">Conversas (WhatsApp)</div>
-        <div class="ov-value">50</div>
-        <div class="ov-sub">R$10,63 custo médio</div>
+        <div class="ov-value">51</div>
+        <div class="ov-sub">R$10,43 custo médio</div>
     </div>
     <div class="ov-item ov-teal">
         <div class="ov-label">Visitas ao Perfil</div>
@@ -153,17 +155,17 @@
     </div>
     <div class="ov-item">
         <div class="ov-label">Alcance</div>
-        <div class="ov-value">29.146</div>
+        <div class="ov-value">29.174</div>
     </div>
     <div class="ov-item ov-orange">
         <div class="ov-label">Impressões</div>
-        <div class="ov-value">49.875</div>
+        <div class="ov-value">49.943</div>
     </div>
 </div>
 
 <div class="content">
 
-    <div class="note-box"><b>Sobre este cliente:</b> conta Meta Ads ("Giovane Santiago") ainda não está formalmente registrada no roster da Arrive — confirmar com o Erik se é o mesmo Dr. Geovane Santiago já cliente no Google Ads (nome das campanhas usa "DRGEOVANE") antes de faturar/reportar oficialmente. Sem Google Ads rodando neste período (0 campanhas com gasto entre 01/11 e 18/11).</div>
+    <div class="note-box"><b>Sobre este cliente:</b> conta Meta Ads ("Giovane Santiago") ainda não está formalmente registrada no roster da Arrive — confirmar com o Erik se é o mesmo Dr. Geovane Santiago já cliente no Google Ads (nome das campanhas usa "DRGEOVANE") antes de faturar/reportar oficialmente. Sem Google Ads rodando neste período (0 campanhas com gasto entre 01/11 e 18/11). CTR calculado por cliques no link (não CTR "todos os cliques"), pra bater com o padrão do Gerenciador de Anúncios.</div>
 
     <div class="section-header">
         <h3>Performance — Meta Ads</h3>
@@ -179,7 +181,7 @@
                 <div class="camp-sub">Campanha · Meta Ads &nbsp;|&nbsp; Objetivo: Conversas no WhatsApp</div>
             </div>
             <div class="camp-badges">
-                <div class="badge badge-off">Ativa</div>
+                <div class="badge badge-active">Ativa</div>
             </div>
         </div>
         <div class="metrics-grid">
@@ -187,7 +189,7 @@
                 <div class="met-col-title">Investimento</div>
                 <div class="met-item">
                     <div class="met-label">Valor Investido</div>
-                    <div class="met-value lg purple">R$ 278,42</div>
+                    <div class="met-value lg purple">R$ 278,75</div>
                 </div>
                 <div class="met-item">
                     <div class="met-label">CPM · Cliques no Link</div>
@@ -198,15 +200,15 @@
                 <div class="met-col-title">Alcance e Impressões</div>
                 <div class="met-item">
                     <div class="met-label">Impressões</div>
-                    <div class="met-value lg">25.708</div>
+                    <div class="met-value lg">25.740</div>
                 </div>
                 <div class="met-item">
                     <div class="met-label">Alcance</div>
-                    <div class="met-value">12.088</div>
+                    <div class="met-value">12.094</div>
                 </div>
                 <div class="met-item">
-                    <div class="met-label">CTR</div>
-                    <div class="met-value sm">2,11%</div>
+                    <div class="met-label">CTR (link)</div>
+                    <div class="met-value sm">0,41%</div>
                 </div>
             </div>
             <div class="met-col">
@@ -217,7 +219,7 @@
                 </div>
                 <div class="met-item">
                     <div class="met-label">Custo por Conversa</div>
-                    <div class="met-value orange">R$ 8,98</div>
+                    <div class="met-value orange">R$ 8,99</div>
                 </div>
             </div>
         </div>
@@ -231,7 +233,7 @@
                 <div class="camp-sub">Campanha · Meta Ads &nbsp;|&nbsp; Objetivo: Conversas no WhatsApp</div>
             </div>
             <div class="camp-badges">
-                <div class="badge badge-off">Ativa</div>
+                <div class="badge badge-paused">Pausada</div>
             </div>
         </div>
         <div class="metrics-grid">
@@ -257,8 +259,8 @@
                     <div class="met-value">6.799</div>
                 </div>
                 <div class="met-item">
-                    <div class="met-label">CTR</div>
-                    <div class="met-value sm">2,12%</div>
+                    <div class="met-label">CTR (link)</div>
+                    <div class="met-value sm">0,51%</div>
                 </div>
             </div>
             <div class="met-col">
@@ -283,7 +285,7 @@
                 <div class="camp-sub">Campanha · Meta Ads &nbsp;|&nbsp; Objetivo: Conversas no WhatsApp</div>
             </div>
             <div class="camp-badges">
-                <div class="badge badge-off">Ativa</div>
+                <div class="badge badge-paused">Pausada</div>
             </div>
         </div>
         <div class="metrics-grid">
@@ -309,8 +311,8 @@
                     <div class="met-value">5.673</div>
                 </div>
                 <div class="met-item">
-                    <div class="met-label">CTR</div>
-                    <div class="met-value sm">2,51%</div>
+                    <div class="met-label">CTR (link)</div>
+                    <div class="met-value sm">0,75%</div>
                 </div>
             </div>
             <div class="met-col">
@@ -335,7 +337,7 @@
                 <div class="camp-sub">Campanha · Meta Ads &nbsp;|&nbsp; Objetivo: Conversas no WhatsApp</div>
             </div>
             <div class="camp-badges">
-                <div class="badge badge-off">Ativa</div>
+                <div class="badge badge-active">Ativa</div>
             </div>
         </div>
         <div class="metrics-grid">
@@ -343,37 +345,37 @@
                 <div class="met-col-title">Investimento</div>
                 <div class="met-item">
                     <div class="met-label">Valor Investido</div>
-                    <div class="met-value lg purple">R$ 29,37</div>
+                    <div class="met-value lg purple">R$ 29,66</div>
                 </div>
                 <div class="met-item">
                     <div class="met-label">CPM · Cliques no Link</div>
-                    <div class="met-value sm">R$ 8,45 &nbsp;·&nbsp; 10 cliques</div>
+                    <div class="met-value sm">R$ 8,45 &nbsp;·&nbsp; 11 cliques</div>
                 </div>
             </div>
             <div class="met-col">
                 <div class="met-col-title">Alcance e Impressões</div>
                 <div class="met-item">
                     <div class="met-label">Impressões</div>
-                    <div class="met-value lg">3.476</div>
+                    <div class="met-value lg">3.512</div>
                 </div>
                 <div class="met-item">
                     <div class="met-label">Alcance</div>
-                    <div class="met-value">2.438</div>
+                    <div class="met-value">2.460</div>
                 </div>
                 <div class="met-item">
-                    <div class="met-label">CTR</div>
-                    <div class="met-value sm">6,04%</div>
+                    <div class="met-label">CTR (link)</div>
+                    <div class="met-value sm">0,31%</div>
                 </div>
             </div>
             <div class="met-col">
                 <div class="met-col-title">Resultados</div>
                 <div class="met-item">
                     <div class="met-label">Conversas Geradas</div>
-                    <div class="met-value lg orange">2</div>
+                    <div class="met-value lg orange">3</div>
                 </div>
                 <div class="met-item">
                     <div class="met-label">Custo por Conversa</div>
-                    <div class="met-value orange">R$ 14,69</div>
+                    <div class="met-value orange">R$ 9,89</div>
                 </div>
             </div>
         </div>
@@ -387,7 +389,7 @@
                 <div class="camp-sub">Campanha · Meta Ads &nbsp;|&nbsp; Objetivo: Visitas ao Perfil do Instagram</div>
             </div>
             <div class="camp-badges">
-                <div class="badge badge-off">Ativa</div>
+                <div class="badge badge-paused">Pausada</div>
             </div>
         </div>
         <div class="metrics-grid">
@@ -413,8 +415,8 @@
                     <div class="met-value">2.148</div>
                 </div>
                 <div class="met-item">
-                    <div class="met-label">CTR</div>
-                    <div class="met-value sm">6,02%</div>
+                    <div class="met-label">CTR (link)</div>
+                    <div class="met-value sm">5,26%</div>
                 </div>
             </div>
             <div class="met-col">
