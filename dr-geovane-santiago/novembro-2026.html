@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório de Marketing — Dr. Geovane Santiago | Novembro 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #101012;
+            --card: #18181B;
+            --purple: #52525B;
+            --purple-light: #A1A1AA;
+            --teal: #94A3B8;
+            --green: #4ADE80;
+            --orange: #FB923C;
+            --red: #F87171;
+            --text: #F1F0FF;
+            --text-muted: #8E8E96;
+            --border: #27272A;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', -apple-system, sans-serif;
+            line-height: 1.6;
+            min-width: 900px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #151517 0%, #1D1D20 40%, #151517 100%);
+            padding: 24px 56px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+        .header::after {
+            content: '';
+            position: absolute;
+            top: -60px; right: -60px;
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(139,127,214,0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .avatar {
+            width: 52px; height: 52px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #8B7FD6, var(--teal));
+            display: flex; align-items: center; justify-content: center;
+            font-size: 22px; flex-shrink: 0;
+            box-shadow: 0 0 0 4px rgba(139,127,214,0.2);
+        }
+        .header-text h1 { font-size: 20px; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
+        .header-text h2 { font-size: 13px; font-weight: 400; color: var(--text-muted); margin-top: 2px; }
+        .header-text .period-tag {
+            display: inline-block; margin-top: 6px;
+            font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px;
+            background: rgba(139,127,214,0.2); color: #B8AEF0;
+            border: 1px solid rgba(139,127,214,0.3);
+        }
+
+        .overview {
+            display: grid; grid-template-columns: repeat(5, 1fr);
+            gap: 1px; background: var(--border); border-bottom: 1px solid var(--border);
+        }
+        .ov-item { background: var(--card); padding: 24px 28px; }
+        .ov-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); font-weight: 600; margin-bottom: 8px; }
+        .ov-value { font-size: 26px; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
+        .ov-sub { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+        .ov-purple .ov-value { color: #B8AEF0; }
+        .ov-green .ov-value  { color: var(--green); }
+        .ov-teal .ov-value   { color: var(--teal); }
+        .ov-orange .ov-value { color: var(--orange); }
+
+        .content { padding: 40px 56px 56px; }
+
+        .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+        .section-header h3 { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: var(--text-muted); white-space: nowrap; }
+        .section-line { flex: 1; height: 1px; background: var(--border); }
+
+        .badge { font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.8px; white-space: nowrap; }
+        .badge-perf  { background: rgba(139,127,214,0.2); color: #B8AEF0; border: 1px solid rgba(139,127,214,0.35); }
+        .badge-off   { background: rgba(142,142,150,0.12); color: var(--text-muted); border: 1px solid rgba(142,142,150,0.2); }
+
+        .campaign-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 20px; }
+        .camp-header {
+            padding: 20px 28px; display: flex; align-items: center; justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+            background: linear-gradient(to right, rgba(139,127,214,0.08) 0%, transparent 100%);
+        }
+        .camp-title { font-size: 15px; font-weight: 700; color: #fff; }
+        .camp-sub { font-size: 12px; color: var(--text-muted); margin-top: 3px; }
+        .camp-badges { display: flex; gap: 8px; align-items: center; }
+
+        .metrics-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; }
+        .met-col { padding: 24px 28px; border-right: 1px solid var(--border); }
+        .met-col:last-child { border-right: none; }
+        .met-col-title {
+            font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px;
+            color: var(--text-muted); font-weight: 700; margin-bottom: 20px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .met-col-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+        .met-item { margin-bottom: 16px; }
+        .met-item:last-child { margin-bottom: 0; }
+        .met-label { font-size: 11px; color: var(--text-muted); margin-bottom: 3px; }
+        .met-value { font-size: 20px; font-weight: 700; color: var(--text); }
+        .met-value.lg { font-size: 28px; letter-spacing: -0.5px; }
+        .met-value.sm { font-size: 14px; font-weight: 500; }
+        .met-value.purple { color: #B8AEF0; }
+        .met-value.green  { color: var(--green); }
+        .met-value.teal   { color: var(--teal); }
+        .met-value.orange { color: var(--orange); }
+
+        .note-box { margin: 0 0 20px; padding: 12px 16px; background: rgba(148,163,184,0.06); border: 1px solid rgba(148,163,184,0.25); border-radius: 10px; font-size: 12px; color: var(--text-muted); }
+        .note-box b { color: var(--teal); }
+
+        .footer { text-align: center; padding: 28px 56px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 12px; }
+        .footer span { color: #B8AEF0; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="avatar"></div>
+    <div class="header-text">
+        <h1>Dr. Geovane Santiago</h1>
+        <h2>Relatório de Marketing Digital — MKBZ</h2>
+        <div class="period-tag">Novembro 2026 · 01/11 — 18/11</div>
+    </div>
+</div>
+
+<div class="overview">
+    <div class="ov-item ov-purple">
+        <div class="ov-label">Investimento Total</div>
+        <div class="ov-value">R$ 550,58</div>
+        <div class="ov-sub">5 campanhas ativas</div>
+    </div>
+    <div class="ov-item ov-green">
+        <div class="ov-label">Conversas (WhatsApp)</div>
+        <div class="ov-value">50</div>
+        <div class="ov-sub">R$10,63 custo médio</div>
+    </div>
+    <div class="ov-item ov-teal">
+        <div class="ov-label">Visitas ao Perfil</div>
+        <div class="ov-value">115</div>
+        <div class="ov-sub">R$0,17 por visita</div>
+    </div>
+    <div class="ov-item">
+        <div class="ov-label">Alcance</div>
+        <div class="ov-value">29.146</div>
+    </div>
+    <div class="ov-item ov-orange">
+        <div class="ov-label">Impressões</div>
+        <div class="ov-value">49.875</div>
+    </div>
+</div>
+
+<div class="content">
+
+    <div class="note-box"><b>Sobre este cliente:</b> conta Meta Ads ("Giovane Santiago") ainda não está formalmente registrada no roster da Arrive — confirmar com o Erik se é o mesmo Dr. Geovane Santiago já cliente no Google Ads (nome das campanhas usa "DRGEOVANE") antes de faturar/reportar oficialmente. Sem Google Ads rodando neste período (0 campanhas com gasto entre 01/11 e 18/11).</div>
+
+    <div class="section-header">
+        <h3>Performance — Meta Ads</h3>
+        <div class="badge badge-perf">Conversão</div>
+        <div class="section-line"></div>
+    </div>
+
+    <!-- CAMPANHA AQUISIÇÃO DE PACIENTES -->
+    <div class="campaign-card">
+        <div class="camp-header">
+            <div>
+                <div class="camp-title">[Leads] [WPP] - Aquisição de pacientes - ADV+</div>
+                <div class="camp-sub">Campanha · Meta Ads &nbsp;|&nbsp; Objetivo: Conversas no WhatsApp</div>
+            </div>
+            <div class="camp-badges">
+                <div class="badge badge-off">Ativa</div>
+            </div>
+        </div>
+        <div class="metrics-grid">
+            <div class="met-col">
+                <div class="met-col-title">Investimento</div>
+                <div class="met-item">
+                    <div class="met-label">Valor Investido</div>
+                    <div class="met-value lg purple">R$ 278,42</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">CPM · Cliques no Link</div>
+                    <div class="met-value sm">R$ 10,83 &nbsp;·&nbsp; 106 cliques</div>
+                </div>
+            </div>
+            <div class="met-col">
+                <div class="met-col-title">Alcance e Impressões</div>
+                <div class="met-item">
+                    <div class="met-label">Impressões</div>
+                    <div class="met-value lg">25.708</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Alcance</div>
+                    <div class="met-value">12.088</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">CTR</div>
+                    <div class="met-value sm">2,11%</div>
+                </div>
+            </div>
+            <div class="met-col">
+                <div class="met-col-title">Resultados</div>
+                <div class="met-item">
+                    <div class="met-label">Conversas Geradas</div>
+                    <div class="met-value lg orange">31</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Custo por Conversa</div>
+                    <div class="met-value orange">R$ 8,98</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CAMPANHA C36 -->
+    <div class="campaign-card">
+        <div class="camp-header">
+            <div>
+                <div class="camp-title">[VFLOW] [DRGEOVANE] [C36] [CBO] [LEAD] [ZAP] [AMPLO]</div>
+                <div class="camp-sub">Campanha · Meta Ads &nbsp;|&nbsp; Objetivo: Conversas no WhatsApp</div>
+            </div>
+            <div class="camp-badges">
+                <div class="badge badge-off">Ativa</div>
+            </div>
+        </div>
+        <div class="metrics-grid">
+            <div class="met-col">
+                <div class="met-col-title">Investimento</div>
+                <div class="met-item">
+                    <div class="met-label">Valor Investido</div>
+                    <div class="met-value lg purple">R$ 135,62</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">CPM · Cliques no Link</div>
+                    <div class="met-value sm">R$ 13,56 &nbsp;·&nbsp; 51 cliques</div>
+                </div>
+            </div>
+            <div class="met-col">
+                <div class="met-col-title">Alcance e Impressões</div>
+                <div class="met-item">
+                    <div class="met-label">Impressões</div>
+                    <div class="met-value lg">9.999</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Alcance</div>
+                    <div class="met-value">6.799</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">CTR</div>
+                    <div class="met-value sm">2,12%</div>
+                </div>
+            </div>
+            <div class="met-col">
+                <div class="met-col-title">Resultados</div>
+                <div class="met-item">
+                    <div class="met-label">Conversas Geradas</div>
+                    <div class="met-value lg orange">8</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Custo por Conversa</div>
+                    <div class="met-value orange">R$ 16,95</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CAMPANHA C40 -->
+    <div class="campaign-card">
+        <div class="camp-header">
+            <div>
+                <div class="camp-title">[VFLOW] [DRGEOVANE] [C40] [CBO] [LEAD] [ZAP] [AMPLO]</div>
+                <div class="camp-sub">Campanha · Meta Ads &nbsp;|&nbsp; Objetivo: Conversas no WhatsApp</div>
+            </div>
+            <div class="camp-badges">
+                <div class="badge badge-off">Ativa</div>
+            </div>
+        </div>
+        <div class="metrics-grid">
+            <div class="met-col">
+                <div class="met-col-title">Investimento</div>
+                <div class="met-item">
+                    <div class="met-label">Valor Investido</div>
+                    <div class="met-value lg purple">R$ 87,85</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">CPM · Cliques no Link</div>
+                    <div class="met-value sm">R$ 10,40 &nbsp;·&nbsp; 63 cliques</div>
+                </div>
+            </div>
+            <div class="met-col">
+                <div class="met-col-title">Alcance e Impressões</div>
+                <div class="met-item">
+                    <div class="met-label">Impressões</div>
+                    <div class="met-value lg">8.449</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Alcance</div>
+                    <div class="met-value">5.673</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">CTR</div>
+                    <div class="met-value sm">2,51%</div>
+                </div>
+            </div>
+            <div class="met-col">
+                <div class="met-col-title">Resultados</div>
+                <div class="met-item">
+                    <div class="met-label">Conversas Geradas</div>
+                    <div class="met-value lg orange">9</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Custo por Conversa</div>
+                    <div class="met-value orange">R$ 9,76</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CAMPANHA DEPOIMENTOS -->
+    <div class="campaign-card">
+        <div class="camp-header">
+            <div>
+                <div class="camp-title">[Leads] [WPP] - Depoimentos - ADV+</div>
+                <div class="camp-sub">Campanha · Meta Ads &nbsp;|&nbsp; Objetivo: Conversas no WhatsApp</div>
+            </div>
+            <div class="camp-badges">
+                <div class="badge badge-off">Ativa</div>
+            </div>
+        </div>
+        <div class="metrics-grid">
+            <div class="met-col">
+                <div class="met-col-title">Investimento</div>
+                <div class="met-item">
+                    <div class="met-label">Valor Investido</div>
+                    <div class="met-value lg purple">R$ 29,37</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">CPM · Cliques no Link</div>
+                    <div class="met-value sm">R$ 8,45 &nbsp;·&nbsp; 10 cliques</div>
+                </div>
+            </div>
+            <div class="met-col">
+                <div class="met-col-title">Alcance e Impressões</div>
+                <div class="met-item">
+                    <div class="met-label">Impressões</div>
+                    <div class="met-value lg">3.476</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Alcance</div>
+                    <div class="met-value">2.438</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">CTR</div>
+                    <div class="met-value sm">6,04%</div>
+                </div>
+            </div>
+            <div class="met-col">
+                <div class="met-col-title">Resultados</div>
+                <div class="met-item">
+                    <div class="met-label">Conversas Geradas</div>
+                    <div class="met-value lg orange">2</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Custo por Conversa</div>
+                    <div class="met-value orange">R$ 14,69</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CAMPANHA C37 - TRAFEGO IG -->
+    <div class="campaign-card">
+        <div class="camp-header">
+            <div>
+                <div class="camp-title">[VFLOW] [DRGEOVANE] [C37] [CBO] [TRÁFEGO] [IG] [AMPLO]</div>
+                <div class="camp-sub">Campanha · Meta Ads &nbsp;|&nbsp; Objetivo: Visitas ao Perfil do Instagram</div>
+            </div>
+            <div class="camp-badges">
+                <div class="badge badge-off">Ativa</div>
+            </div>
+        </div>
+        <div class="metrics-grid">
+            <div class="met-col">
+                <div class="met-col-title">Investimento</div>
+                <div class="met-item">
+                    <div class="met-label">Valor Investido</div>
+                    <div class="met-value lg purple">R$ 19,32</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">CPM</div>
+                    <div class="met-value sm">R$ 8,61</div>
+                </div>
+            </div>
+            <div class="met-col">
+                <div class="met-col-title">Alcance e Impressões</div>
+                <div class="met-item">
+                    <div class="met-label">Impressões</div>
+                    <div class="met-value lg">2.243</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Alcance</div>
+                    <div class="met-value">2.148</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">CTR</div>
+                    <div class="met-value sm">6,02%</div>
+                </div>
+            </div>
+            <div class="met-col">
+                <div class="met-col-title">Resultados</div>
+                <div class="met-item">
+                    <div class="met-label">Visitas ao Perfil</div>
+                    <div class="met-value lg teal">115</div>
+                </div>
+                <div class="met-item">
+                    <div class="met-label">Custo por Visita</div>
+                    <div class="met-value teal">R$ 0,17</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="footer">
+    Relatório gerado por <span>Arrive In Digital</span> &nbsp;·&nbsp; Período: 01/11/2026 — 18/11/2026 &nbsp;·&nbsp; Dados: Meta Ads Manager
+</div>
+
+</body>
+</html>
